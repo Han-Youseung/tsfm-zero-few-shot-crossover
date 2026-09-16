@@ -1,0 +1,32 @@
+# Data and generated outputs
+dataset/
+data/
+outputs/
+results/
+checkpoints/
+logs/
+
+# Model weights and large files
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Environment and editor
+.env
+.env.*
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
