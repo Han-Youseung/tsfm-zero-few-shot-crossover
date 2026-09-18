@@ -50,7 +50,7 @@ TSFM-Bench에서 Zero-Shot과 5% Few-Shot 결과가 모두 보고된 장기 예�
 ## 핵심 프로토콜
 
 - TSFM-Bench의 공개 설정과 평가 개념을 참고하되 코드는 독립적으로 구현합니다.
-- TTM은 `ibm-research/ttm-research-r2`의 context/horizon별 revision, MOIRAI는 `Salesforce/moirai-1.0-R-base`를 고정해 기록합니다.
+- 모델은 실험 시작 시점의 최신 공식 세대를 사용합니다: `ibm-granite/granite-timeseries-ttm-r3`와 `Salesforce/moirai-2.0-R-small`. 모델·코드 저장소의 정확한 commit/revision을 고정해 기록하고 실험 도중 버전을 바꾸지 않습니다.
 - train/validation/test는 시간순으로 분리하며 scaler는 train 구간에만 fit합니다.
 - 주 분석은 train 후보 window 전체에서 정확한 개수 `k = max(1, floor(rate × N))`를 균등 선택합니다.
 - 작은 학습 비율에서도 batch가 사라지지 않도록 `drop_last=False`를 사용합니다.
