@@ -22,7 +22,7 @@ TSFM-Bench의 Zero-Shot 및 5% Few-Shot 평가를 출발점으로 삼아 학습 
    - 다양한 주기와 다변량 시계열을 지원하는 확률 예측 기반 모델입니다.
    - 구조와 예측 방식이 TTM과 달라 전환점이 모델에 따라 달라지는지 비교할 수 있습니다.
 
-TSFM-Bench에서 사용한 모델 조건을 우선 고정합니다. TTM은 `ibm-research/ttm-research-r2`의 context/horizon별 revision을 기록하고, MOIRAI는 `Salesforce/moirai-1.0-R-base`를 사용합니다. 최신 모델 버전을 실험 도중 혼합하지 않으며, 공식 API 변화로 완전 재현이 불가능하면 차이를 메타데이터와 논문에 명시합니다.
+기준논문의 과거 모델을 재현하는 대신, 실험 시작 시점의 최신 공식 세대를 사용합니다. TTM은 `ibm-granite/granite-timeseries-ttm-r3`, MOIRAI는 `Salesforce/moirai-2.0-R-small`을 1차 후보로 사용합니다. 파일럿에서 4개 horizon의 Zero-Shot과 full-parameter Fine-Tuning 지원 여부를 확인한 뒤 최종 확정하며, 모델 가중치 revision과 공식 코드 commit을 고정합니다. 실험 도중 새 버전이 공개되어도 교체하지 않습니다.
 
 ## 전환점 정의
 
@@ -107,9 +107,9 @@ k = max(1, floor(sampling_rate × 전체 train window 수))
 
 ### 모델별 예측과 비결정성
 
-- MOIRAI는 patch size 64와 100개 확률 표본의 중앙값을 기본 점 예측으로 사용합니다.
-- MOIRAI의 sampling seed를 명시적으로 고정하고 기록합니다.
-- TTM은 context/horizon에 대응하는 checkpoint revision을 결과에 기록합니다.
+- MOIRAI 2.0의 patch/tokenization, quantile 출력과 point forecast 변환은 최신 공식 구현을 따라 파일럿에서 확정하며, MOIRAI 1.x의 patch size 64·100개 확률 표본 중앙값 설정을 그대로 가정하지 않습니다.
+- 확률 또는 quantile 예측에 난수가 사용되면 관련 seed와 point forecast 집계 규칙을 명시적으로 고정하고 기록합니다.
+- TTM-R3의 모델 revision, context length, prediction length 및 모델 변형을 결과에 기록합니다.
 - CUDA 및 확률 sampling 때문에 bitwise 재현이 보장되지 않을 수 있으므로 deterministic 설정 적용 여부와 비결정성 경고를 환경 정보에 저장합니다.
 - 모델별 batch size와 AMP는 메모리에 맞게 다를 수 있지만, 데이터 분할·표본 index·평가 구간·지표는 동일하게 유지합니다.
 
