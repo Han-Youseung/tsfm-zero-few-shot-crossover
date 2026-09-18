@@ -2,7 +2,7 @@
 
 시계열 데이터의 특성과 학습 데이터 양에 따라 Time-Series Foundation Model(TSFM)의 **Zero-Shot 성능을 Few-Shot Fine-Tuning이 언제 넘어서는지** 분석하는 연구 저장소입니다.
 
-> 현재 단계: 연구 주제와 실험 설계 확정 / 데이터 검증 및 실험 환경 구축 전
+> 현재 단계: 연구 주제와 핵심 실험 프로토콜 확정 / 데이터 검증 및 실험 환경 구축 전
 
 ## 연구 질문
 
@@ -35,28 +35,44 @@ TSFM-Bench에서 Zero-Shot과 5% Few-Shot 결과가 모두 보고된 장기 예�
 
 `0% (Zero-Shot), 0.5%, 1%, 2%, 5%, 10%, 20%, 50%, 100%`
 
-비율뿐 아니라 실제 학습 윈도 수도 함께 기록합니다.
+비율뿐 아니라 실제 학습 윈도 수와 실효 비율도 함께 기록합니다.
 
 ### 평가
 
+- 입력 길이 기본값: 512
 - 예측 길이: 96, 192, 336, 720
 - 지표: MAE, MSE
+- 평가: stride 1의 rolling-origin
 - 반복: 1개 시드로 전체 조건 탐색 후 전환 후보 주변을 3개 이상 시드로 검증
 - 주요 분석: Zero-Shot 대비 오차 개선률, 최초 역전 구간, 지속적 역전, 전환점 미관측 사례
 - 데이터 특성: 계절성, 추세, 정상성, 변화·전환, 분포 이동, 채널 상관, 비정규성
+
+## 핵심 프로토콜
+
+- TSFM-Bench의 공개 설정과 평가 개념을 참고하되 코드는 독립적으로 구현합니다.
+- TTM은 `ibm-research/ttm-research-r2`의 context/horizon별 revision, MOIRAI는 `Salesforce/moirai-1.0-R-base`를 고정해 기록합니다.
+- train/validation/test는 시간순으로 분리하며 scaler는 train 구간에만 fit합니다.
+- 주 분석은 train 후보 window 전체에서 정확한 개수 `k = max(1, floor(rate × N))`를 균등 선택합니다.
+- 작은 학습 비율에서도 batch가 사라지지 않도록 `drop_last=False`를 사용합니다.
+- 주 분석은 최대 20 epochs, Adam, MSE, validation early stopping(patience 3), full-parameter fine-tuning을 사용합니다.
+- 실제 epoch, optimizer step, 학습 시간과 GPU 메모리를 기록합니다.
+- 전환 후보 주변 일부 조건에서는 동일 optimizer-step 예산의 강건성 분석을 별도로 수행합니다.
+- 테스트 중 새로 관측된 실제 값이 다음 window의 context가 될 수 있는 rolling-origin 평가임을 명시합니다.
+
+자세한 정의는 [현재 연구계획 요약](docs/research-plan.md)에 기록합니다.
 
 ## 진행 계획
 
 - [x] 연구 질문 및 범위 설정
 - [x] 14개 데이터셋 선정
 - [x] 최종 모델 TTM·MOIRAI 선정
-- [x] 실험 설계 초안 작성
+- [x] 핵심 실험 프로토콜 확정
 - [ ] 공식 데이터 다운로드 및 파일·형식 검증
 - [ ] TTM·MOIRAI 실행 환경 구축
 - [ ] 모델별 Zero-Shot 및 5% Few-Shot 단일 조건 재현
 - [ ] 2개 모델 × 3개 데이터셋 파일럿 실험
 - [ ] 14개 데이터셋 전체 학습량 스윕
-- [ ] 전환 후보 주변 다중 시드 검증
+- [ ] 전환 후보 주변 다중 시드 및 고정-step 검증
 - [ ] 데이터 특성과 전환 구간 분석
 - [ ] 논문 작성
 
@@ -65,13 +81,14 @@ TSFM-Bench에서 Zero-Shot과 5% Few-Shot 결과가 모두 보고된 장기 예�
 - GPU가 필요한 모델 실행은 Google Colab Pro+에서 수행합니다.
 - 코드·설정·소용량 결과·실험 메타데이터는 이 저장소에 지속적으로 커밋합니다.
 - 데이터셋, 모델 체크포인트, Hugging Face 캐시 및 대용량 중간 산출물은 Git에 저장하지 않습니다.
-- 각 결과에는 모델·데이터셋·예측 길이·학습 비율·시드·실제 학습 윈도 수·Git commit SHA를 기록합니다.
+- 각 결과에는 모델·checkpoint revision·데이터셋·예측 길이·요청 비율·실제 학습 윈도 수·실효 비율·시드·optimizer step·Git commit SHA를 기록합니다.
 - 완료된 실험은 재실행하지 않도록 상태를 기록하고 중단 후 재개할 수 있게 구현합니다.
+- 여러 Colab 작업을 동시에 실행할 경우 결과 branch를 분리해 충돌을 방지합니다.
 
 ## 문서
 
 - [현재 연구계획 요약](docs/research-plan.md)
-- [초기 연구계획 PDF](docs/research-proposal.pdf) — 최종 모델을 2개로 축소하기 전의 후보 모델 검토 초안입니다.
+- [초기 연구계획 PDF](docs/research-proposal.pdf) — 최종 모델과 핵심 프로토콜을 확정하기 전의 후보 모델 검토 초안입니다.
 
 ## 기준 연구
 
