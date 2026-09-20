@@ -1,10 +1,21 @@
-# Data and generated outputs
+# Data and generated outputs (keep only marker/documentation files)
 dataset/
-data/
+data/*
+!data/.gitkeep
 outputs/
-results/
-checkpoints/
-logs/
+results/raw/*
+!results/raw/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Large prediction arrays
+*.npy
+*.npz
+*.parquet
+*.arrow
+*.feather
 
 # Model weights and large files
 *.ckpt
@@ -13,17 +24,42 @@ logs/
 *.bin
 *.safetensors
 
+# Model and framework caches
+.cache/
+huggingface/
+hf_cache/
+torch_cache/
+**/.huggingface/
+**/.torch/
+
+# Atomic-write and Colab temporary files
+*.tmp
+*.partial
+*.part
+.ipynb_checkpoints/
+/content/
+drive/MyDrive/
+
 # Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
-.ipynb_checkpoints/
+.conda/
 .pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
 
 # Environment and editor
 .env
 .env.*
+*.pem
+*.key
+credentials*.json
+token*.json
+secrets*.json
 .vscode/
 .idea/
 

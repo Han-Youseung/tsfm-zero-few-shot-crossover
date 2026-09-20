@@ -1,0 +1,52 @@
+dataset:
+  name: ETTh1
+  path: data/ETTh1.csv
+  timestamp_column: date
+split:
+  method: chronological_ratio
+  train: 0.6
+  validation: 0.2
+  test: 0.2
+window:
+  context_length: 512
+  horizons: [96, 192, 336, 720]
+  drop_last: false
+sampling:
+  strategy: nested_temporally_stratified
+  requested_rate: 0.05
+  seed: 2026
+model:
+  family: ttm
+  repository: ibm-granite/granite-timeseries-ttm-r3
+  revision: null
+  state: provisional
+fine_tuning:
+  adaptation_mode: few_shot
+  budget_type: max_optimizer_steps
+  optimizer: null
+  learning_rate: null
+  max_optimizer_steps: null
+  batch_size: null
+  gradient_accumulation: null
+  amp: null
+  trainable_parameters: null
+evaluation:
+  strategy: rolling_origin
+  rolling_stride: 1
+  normalization: train_fitted_standard_scaler
+  point_forecast_rule: pilot_pending
+  metrics: [mae, mse]
+reproducibility:
+  seeds: [2026]
+  deterministic_requested: false
+storage:
+  results_root: results
+  checkpoints_root: checkpoints
+  cache_root: .cache/huggingface
+  logs_root: logs
+runtime:
+  device: auto
+  num_workers: 0
+protocol_metadata:
+  name: primary_nested_stepbudget_rolling
+  state: provisional
