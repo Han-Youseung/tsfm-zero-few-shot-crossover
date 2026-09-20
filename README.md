@@ -2,7 +2,7 @@
 
 시계열 데이터 특성과 대상 데이터 학습량에 따라 Time-Series Foundation Model(TSFM)의 Few-Shot Fine-Tuning이 Zero-Shot 성능을 넘어서는 **전환 구간**을 분석하는 연구 저장소입니다.
 
-> 현재 단계: 공통 데이터 계약, 누수 방지 분할, rolling window, nested sampling 구현 완료
+> 현재 단계: 실제 dataset bundle metadata audit 완료 — 전처리 출처 검증 전 실험 차단
 
 ## 연구 범위
 
@@ -45,6 +45,8 @@ pytest
 세부 연구 프로토콜은 [docs/research-plan.md](docs/research-plan.md), 출처와 라이선스는 [docs/licenses-and-sources.md](docs/licenses-and-sources.md)에서 관리합니다.
 
 데이터 계층은 60:20:20 시간순 분할, train-only StandardScaler, validation/test rolling-origin window와 모델 독립적인 nested temporally stratified sampling manifest를 제공합니다. 사용법과 누수 방지 규칙은 [데이터 프로토콜](docs/data-protocol.md), [sampling 설명](docs/sampling.md), [dataset registry](docs/datasets.md)에 있습니다. 실제 데이터는 자동 다운로드하지 않습니다.
+
+실제 데이터 배치, ZIP 안전 검사, 전체 audit 명령과 현재 차단 사유는 [real-data audit](docs/data-audit.md)에 기록합니다. 원본 데이터는 Git에 추가하지 않으며 `results/manifests/datasets/`에는 checksum과 집계 metadata만 저장합니다.
 
 ## 저장 원칙
 

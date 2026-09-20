@@ -29,18 +29,26 @@ class DatasetSpec(BaseModel):
     aliases: list[str] = Field(default_factory=list)
     relative_path: str
     file_format: Literal["csv"] = "csv"
+    layout: Literal["wide", "long"] = "wide"
     timestamp_column: str | None = None
     timestamp_required: bool | None = None
     frequency: str | None = None
     expected_rows: int | None = None
     expected_channels: int | None = None
+    official_rows: int | None = None
+    official_channels: int | None = None
+    official_frequency: str | None = None
     target_columns: list[str] | None = None
     all_numeric_targets: bool = False
     excluded_columns: list[str] = Field(default_factory=list)
+    value_column: str | None = None
+    channel_column: str | None = None
+    series_id_column: str | None = None
     missing_value_policy: Literal["error"] = "error"
     duplicate_timestamp_policy: Literal["error"] = "error"
     sort_policy: Literal["error"] = "error"
     dtype: Literal["float32"] = "float32"
+    local_preprocessing_status: Literal["verified_raw", "unverified"] = "unverified"
     split_ratios: tuple[float, float, float] = (0.6, 0.2, 0.2)
     source: SourceSpec
 
@@ -50,6 +58,8 @@ class DatasetSpec(BaseModel):
             raise ValueError("set exactly one of target_columns or all_numeric_targets")
         if abs(sum(self.split_ratios) - 1.0) > 1e-12:
             raise ValueError("split_ratios must sum to 1")
+        if self.layout == "long" and not (self.value_column and self.channel_column):
+            raise ValueError("long layout requires value_column and channel_column")
         return self
 
 

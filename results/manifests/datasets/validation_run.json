@@ -1,0 +1,26 @@
+{
+  "code_commit_sha": "97ff94ac46223bbf5ff537ca65743299fdf36803",
+  "config_hash": "3369a1508281082433c78fe0083966801b3d7085c521919558dc1265ecbee42f",
+  "dataset_states": {
+    "AQShunyi": "blocked",
+    "CzeLan": "blocked",
+    "ETTh1": "blocked",
+    "ETTh2": "blocked",
+    "ETTm1": "blocked",
+    "ETTm2": "blocked",
+    "Electricity": "blocked",
+    "Exchange": "blocked",
+    "PEMS08": "blocked",
+    "Solar": "blocked",
+    "Traffic": "blocked",
+    "Weather": "blocked",
+    "Wind": "blocked",
+    "ZafNoo": "blocked"
+  },
+  "dry_run": false,
+  "generated_at": "2026-09-20T11:53:36.910358+00:00",
+  "input_signature": "b9d4f071c75ecada0dd1b433ab812aa8e03bb5eccb0a0a91f1c7536533b84baa",
+  "schema_version": "1.0",
+  "status": "audit_completed",
+  "validator_version": "streaming-long-csv-v1"
+}

@@ -17,3 +17,15 @@
 The registry supports official name, source URL, author/provider, download URL, license or terms, redistribution status, verification status/date, SHA256, and local filename. All 14 entries currently remain **pending** except for their study labels and local filenames. This is intentional: benchmark hosting is not assumed to be an authoritative source or to grant redistribution rights.
 
 Before real data are used, each entry must be checked against an original provider or authoritative publication, dated, and pinned by local SHA256. Until then, data must not be redistributed or committed.
+
+## Verified source leads checked 2026-09-20
+
+- ETT: the [official ETDataset repository](https://github.com/zhouhaoyi/ETDataset) documents the original wide columns and cites Informer. Its repository license is CC BY-ND 4.0. The local long-format transformed bundle is not the official raw layout, so its redistribution and preprocessing provenance remain pending.
+- Electricity: [UCI ElectricityLoadDiagrams20112014](https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112) reports 370 clients, 15-minute measurements, DOI `10.24432/C58C86`, and CC BY 4.0. The local file has 321 hourly channels, hence is a derived bundle whose transformation terms are not established.
+- PEMS08/Traffic: [Caltrans PeMS](https://dot.ca.gov/programs/traffic-operations/mpr/pems-source) is the original sensor system and requires an account. The exact derivation and redistribution permission for these local matrices remain pending.
+- Weather: the [Max Planck Institute for Biogeochemistry weather portal](https://www.bgc-jena.mpg.de/wetter/weather_data.html) publishes station files under CC BY 4.0. Exact correspondence of the local 21-channel transformed file remains pending.
+- AQShunyi: [UCI Beijing Multi-Site Air Quality](https://archive.ics.uci.edu/dataset/501/beijing+multi+site+air+quality) attributes air-quality observations to the Beijing Municipal Environmental Monitoring Center and meteorology to the China Meteorological Administration. Local preprocessing and redistribution terms remain pending.
+- Solar: [Monash/Zenodo record 4656144](https://zenodo.org/records/4656144) describes 137 Alabama series at ten-minute intervals and traces them to NREL/Lai et al.; the displayed record does not provide a clear license value, so permission remains pending.
+- Wind, Exchange, ZafNoo, and CzeLan: original-source identity and redistribution permission remain pending. Public availability is not treated as permission.
+
+`original_source`, the route used to download a derivative, and the user-supplied local bundle are separate concepts. Using a TSFM benchmark bundle as a transport source does not adopt that benchmark's experimental protocol.

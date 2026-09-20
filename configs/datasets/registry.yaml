@@ -5,18 +5,26 @@ datasets:
     aliases: []
     relative_path: data/ETTh1.csv
     file_format: csv
+    layout: long
     timestamp_column: date
     timestamp_required: true
     frequency: null
     expected_rows: null
     expected_channels: null
-    target_columns: null
-    all_numeric_targets: true
-    excluded_columns: []
+    official_rows: null
+    official_channels: null
+    official_frequency: null
+    target_columns: [data]
+    all_numeric_targets: false
+    excluded_columns: [cols, name]
+    value_column: data
+    channel_column: cols
+    series_id_column: null
     missing_value_policy: error
     duplicate_timestamp_policy: error
     sort_policy: error
     dtype: float32
+    local_preprocessing_status: unverified
     split_ratios: [0.6, 0.2, 0.2]
     source: {official_name: ETTh1, source_url: null, author_or_provider: null, download_url: null, license: null, redistribution: null, verification_status: pending, verified_on: null, file_sha256: null, local_filename: ETTh1.csv}
   - <<: *base
@@ -34,61 +42,62 @@ datasets:
   - <<: *base
     canonical_name: Electricity
     relative_path: data/Electricity.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: Electricity, verification_status: pending, local_filename: Electricity.csv}
   - <<: *base
     canonical_name: Traffic
     relative_path: data/Traffic.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: Traffic, verification_status: pending, local_filename: Traffic.csv}
   - <<: *base
     canonical_name: PEMS08
     relative_path: data/PEMS08.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: PEMS08, verification_status: pending, local_filename: PEMS08.csv}
   - <<: *base
     canonical_name: Solar
     relative_path: data/Solar.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: Solar, verification_status: pending, local_filename: Solar.csv}
   - <<: *base
     canonical_name: Wind
     relative_path: data/Wind.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: Wind, verification_status: pending, local_filename: Wind.csv}
   - <<: *base
     canonical_name: Weather
     relative_path: data/Weather.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: Weather, verification_status: pending, local_filename: Weather.csv}
   - <<: *base
     canonical_name: AQShunyi
     relative_path: data/AQShunyi.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
+    series_id_column: name
     source: {official_name: AQShunyi, verification_status: pending, local_filename: AQShunyi.csv}
   - <<: *base
     canonical_name: Exchange
     relative_path: data/Exchange.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: Exchange, verification_status: pending, local_filename: Exchange.csv}
   - <<: *base
     canonical_name: ZafNoo
     relative_path: data/ZafNoo.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: ZafNoo, verification_status: pending, local_filename: ZafNoo.csv}
   - <<: *base
     canonical_name: CzeLan
     aliases: [CzenLan]
     relative_path: data/CzeLan.csv
-    timestamp_column: null
-    timestamp_required: null
+    timestamp_column: date
+    timestamp_required: true
     source: {official_name: CzeLan, verification_status: pending, local_filename: CzeLan.csv}
