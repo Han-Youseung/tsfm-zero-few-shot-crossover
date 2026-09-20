@@ -12,3 +12,8 @@
 | 14개 실험 데이터셋 | 개별 공식 출처 예정 | 데이터셋 파일 | pending | 다음 단계에서 출처·checksum 고정 | pending | pending |
 
 본 저장소에 TSFM-Bench 코드를 포함하거나 수정해 배포하지 않으며, 해당 프로젝트의 구조를 번안하지 않습니다. 모델 코드와 가중치의 라이선스는 따로 관리하며 revision 고정 시 다시 확인합니다.
+# Dataset licenses and sources
+
+The registry supports official name, source URL, author/provider, download URL, license or terms, redistribution status, verification status/date, SHA256, and local filename. All 14 entries currently remain **pending** except for their study labels and local filenames. This is intentional: benchmark hosting is not assumed to be an authoritative source or to grant redistribution rights.
+
+Before real data are used, each entry must be checked against an original provider or authoritative publication, dated, and pinned by local SHA256. Until then, data must not be redistributed or committed.
