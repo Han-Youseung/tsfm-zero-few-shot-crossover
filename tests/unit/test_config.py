@@ -52,3 +52,9 @@ def test_storage_roots_must_not_overlap(valid_config_payload):
     valid_config_payload["storage"]["checkpoints_root"] = "results/checkpoints"
     with pytest.raises(ValidationError, match="must not overlap"):
         ExperimentConfig.model_validate(valid_config_payload)
+
+
+def test_source_variant_must_match_dataset_namespace(valid_config_payload):
+    valid_config_payload["dataset"]["source_variant"] = "other__official_raw"
+    with pytest.raises(ValidationError, match="namespaced by dataset"):
+        ExperimentConfig.model_validate(valid_config_payload)

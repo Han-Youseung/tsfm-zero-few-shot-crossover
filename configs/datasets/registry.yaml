@@ -2,6 +2,7 @@ version: 1
 datasets:
   - &base
     canonical_name: ETTh1
+    source_variant: ETTh1__bundle_long
     aliases: []
     relative_path: data/ETTh1.csv
     file_format: csv
@@ -29,54 +30,64 @@ datasets:
     source: {official_name: ETTh1, source_url: null, author_or_provider: null, download_url: null, license: null, redistribution: null, verification_status: pending, verified_on: null, file_sha256: null, local_filename: ETTh1.csv}
   - <<: *base
     canonical_name: ETTh2
+    source_variant: ETTh2__bundle_long
     relative_path: data/ETTh2.csv
     source: {official_name: ETTh2, verification_status: pending, local_filename: ETTh2.csv}
   - <<: *base
     canonical_name: ETTm1
+    source_variant: ETTm1__bundle_long
     relative_path: data/ETTm1.csv
     source: {official_name: ETTm1, verification_status: pending, local_filename: ETTm1.csv}
   - <<: *base
     canonical_name: ETTm2
+    source_variant: ETTm2__bundle_long
     relative_path: data/ETTm2.csv
     source: {official_name: ETTm2, verification_status: pending, local_filename: ETTm2.csv}
   - <<: *base
     canonical_name: Electricity
+    source_variant: Electricity__bundle_long
     relative_path: data/Electricity.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: Electricity, verification_status: pending, local_filename: Electricity.csv}
   - <<: *base
     canonical_name: Traffic
+    source_variant: Traffic__bundle_long
     relative_path: data/Traffic.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: Traffic, verification_status: pending, local_filename: Traffic.csv}
   - <<: *base
     canonical_name: PEMS08
+    source_variant: PEMS08__bundle_long
     relative_path: data/PEMS08.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: PEMS08, verification_status: pending, local_filename: PEMS08.csv}
   - <<: *base
     canonical_name: Solar
+    source_variant: Solar__bundle_long
     relative_path: data/Solar.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: Solar, verification_status: pending, local_filename: Solar.csv}
   - <<: *base
     canonical_name: Wind
+    source_variant: Wind__bundle_long
     relative_path: data/Wind.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: Wind, verification_status: pending, local_filename: Wind.csv}
   - <<: *base
     canonical_name: Weather
+    source_variant: Weather__bundle_long
     relative_path: data/Weather.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: Weather, verification_status: pending, local_filename: Weather.csv}
   - <<: *base
     canonical_name: AQShunyi
+    source_variant: AQShunyi__bundle_long
     relative_path: data/AQShunyi.csv
     timestamp_column: date
     timestamp_required: true
@@ -84,18 +95,21 @@ datasets:
     source: {official_name: AQShunyi, verification_status: pending, local_filename: AQShunyi.csv}
   - <<: *base
     canonical_name: Exchange
+    source_variant: Exchange__bundle_long
     relative_path: data/Exchange.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: Exchange, verification_status: pending, local_filename: Exchange.csv}
   - <<: *base
     canonical_name: ZafNoo
+    source_variant: ZafNoo__bundle_long
     relative_path: data/ZafNoo.csv
     timestamp_column: date
     timestamp_required: true
     source: {official_name: ZafNoo, verification_status: pending, local_filename: ZafNoo.csv}
   - <<: *base
     canonical_name: CzeLan
+    source_variant: CzeLan__bundle_long
     aliases: [CzenLan]
     relative_path: data/CzeLan.csv
     timestamp_column: date

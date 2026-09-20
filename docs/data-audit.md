@@ -27,9 +27,9 @@ Use `--dry-run` to avoid writes, `--dataset NAME` to select a subset, `--overwri
 
 The archive contained 24 entries (22 files), expanded to 1,971,892,973 bytes, and passed traversal, absolute-path, symlink, encryption, duplicate-path, executable, and CRC checks. Its SHA256 is `8e7fca31165755daa838ef14a79290f6195503a425fe08c89dc2ce08dcb4ec22`.
 
-All 14 study files were uniquely identified by exact canonical filename. They use a processed long layout (`date`, `data`, `cols`; AQShunyi also has `name`) rather than the original wide formats. The values appear transformed; the bundle does not document whether this transformation was fitted using train-only observations. Consequently every dataset is currently `blocked` for leakage-safe model experiments even though all context/horizon window combinations are structurally feasible.
+All 14 study files were uniquely identified by exact canonical filename. They use a processed long layout (`date`, `data`, `cols`; AQShunyi also has `name`) rather than the original wide formats. Phase 3.5 subsequently resolved the ETT transformation and retained the other unknowns; see [dataset provenance resolution](data-provenance.md) and [data decisions](data-decisions.md).
 
-Weather has 21 duplicate timestamps/rows and 21 irregular intervals per channel alignment. The other 13 files had no parsed NaN, infinity, duplicate timestamp, non-monotonic timestamp, or irregular interval. The audit never sorts, imputes, resamples, deduplicates, or rewrites source files.
+Weather has one identical repeated row in each of 21 channels: 21 duplicate composite keys, 21 fully identical duplicates, and zero conflicting values. This is distinct from normal timestamp repetition across channels. The other 13 files have unique composite keys. The audit never sorts, imputes, resamples, deduplicates, or rewrites source files.
 
 `ready` means all technical, provenance, and preprocessing checks passed; `ready_with_warnings` is technically usable with non-blocking provenance warnings; `blocked` has a correctness or leakage blocker; `missing` has no exact file; and `ambiguous` has multiple exact candidates.
 

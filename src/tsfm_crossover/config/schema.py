@@ -25,8 +25,15 @@ class AdaptationMode(StrEnum):
 
 class DatasetConfig(StrictModel):
     name: str = Field(min_length=1)
+    source_variant: str = Field(min_length=1)
     path: Path
     timestamp_column: str = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def validate_source_variant_name(self) -> DatasetConfig:
+        if not self.source_variant.startswith(f"{self.name}__"):
+            raise ValueError("source_variant must be namespaced by dataset name")
+        return self
 
 
 class SplitConfig(StrictModel):

@@ -9,6 +9,7 @@ def valid_config_payload():
     return {
         "dataset": {
             "name": "fixture",
+            "source_variant": "fixture__official_raw",
             "path": "tests/fixtures/fake.csv",
             "timestamp_column": "date",
         },

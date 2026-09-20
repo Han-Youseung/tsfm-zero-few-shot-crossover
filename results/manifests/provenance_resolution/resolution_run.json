@@ -1,0 +1,13 @@
+{
+  "absolute_paths_stored_in_manifests": false,
+  "code_commit_sha": "780a6c51ddfaf8be629d6c4fa7ee21fef16ceb90",
+  "datasets_analyzed": 14,
+  "generated_at": "2026-09-20T13:26:18.781567+00:00",
+  "input_signature": "8a59dde285f75fd03a1701fd83deb999215a589aacce2d9634244c01ae066b88",
+  "official_datasets_compared": 4,
+  "raw_values_stored_in_manifests": false,
+  "registry_sha256": "2b0f3bd60d95f8f59964d242343a72afd5a9f5f2a8feecc214429a8bd25c4dbf",
+  "resolver_version": "independent-provenance-v1",
+  "schema_version": "1.0",
+  "status": "completed"
+}

@@ -1,0 +1,15 @@
+dataset,timestamp_only_repeated_rows,composite_key_duplicates,fully_identical_duplicate_rows,conflicting_value_duplicates,timestamp_sequence_mismatches,timezone_or_parse_errors,nonfinite_values,policy
+ETTh1,104520,0,0,0,0,0,0,no_action
+ETTh2,104520,0,0,0,0,0,0,no_action
+ETTm1,418080,0,0,0,0,0,0,no_action
+ETTm2,418080,0,0,0,0,0,0,no_action
+Electricity,8417280,0,0,0,0,0,0,no_action
+Traffic,15105384,0,0,0,0,0,0,no_action
+PEMS08,3017664,0,0,0,0,0,0,no_action
+Solar,7148160,0,0,0,0,0,0,no_action
+Wind,292038,0,0,0,0,0,0,no_action
+Weather,1053921,21,21,0,0,0,0,blocked_no_automatic_aggregation
+AQShunyi,350640,0,0,0,0,0,0,no_action
+Exchange,53116,0,0,0,0,0,0,no_action
+ZafNoo,192250,0,0,0,0,0,0,no_action
+CzeLan,199340,0,0,0,0,0,0,no_action

@@ -1,6 +1,7 @@
 dataset:
   name: ETTh1
-  path: data/ETTh1.csv
+  source_variant: ETTh1__official_raw
+  path: data/official_raw/ett/ETTh1.csv
   timestamp_column: date
 split:
   method: chronological_ratio

@@ -26,6 +26,7 @@ class SourceSpec(BaseModel):
 class DatasetSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     canonical_name: str
+    source_variant: str = "unspecified"
     aliases: list[str] = Field(default_factory=list)
     relative_path: str
     file_format: Literal["csv"] = "csv"
