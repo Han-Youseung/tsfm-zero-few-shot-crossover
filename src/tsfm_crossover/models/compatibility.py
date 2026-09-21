@@ -12,6 +12,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .contract import CandidateState, ProbeStatus
+from .selection import ModelSelectionGate
 
 
 class CompatibilityManifest(BaseModel):
@@ -53,10 +54,12 @@ def _reject_local_paths_and_secrets(value: Any, key: str = "") -> None:
         raise ValueError("local absolute paths are forbidden")
 
 
-def validate_manifest(path: str | Path) -> CompatibilityManifest:
+def validate_manifest(path: str | Path) -> CompatibilityManifest | ModelSelectionGate:
     manifest_path = Path(path)
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
     _reject_local_paths_and_secrets(payload)
+    if "candidates" in payload and "selected_candidate" in payload:
+        return ModelSelectionGate.model_validate(payload)
     return CompatibilityManifest.model_validate(payload)
 
 

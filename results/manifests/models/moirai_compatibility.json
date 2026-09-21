@@ -2,6 +2,7 @@
   "schema_version": 1,
   "checked_on": "2026-09-21",
   "model_family": "moirai",
+  "status": "incompatible_with_required_multivariate_protocol",
   "repository": "Salesforce/moirai-2.0-R-small",
   "revision": "30f43ff08c8494f4943ae1521e9d4e94a0fbb389",
   "official_code_repository": "https://github.com/SalesforceAIResearch/uni2ts",
@@ -54,6 +55,9 @@
   },
   "capabilities": {
     "zero_shot": true,
+    "zero_shot_univariate_status": "validated",
+    "zero_shot_multivariate_status": "failed",
+    "full_finetuning_status": "not_validated",
     "full_parameter_finetuning": null,
     "full_parameter_finetuning_evidence": "No Moirai2 training_step, validation_step, configure_optimizers, loss wrapper, or Moirai2 fine-tuning config was found at the pinned official commit.",
     "multivariate": false,
@@ -133,5 +137,6 @@
     "GPU, AMP, peak GPU memory, other horizons, and checkpoint round-trip remain pending Colab.",
     "Weights are CC BY-NC 4.0 and restricted to non-commercial use."
   ],
+  "exclusion_reason": "Official multivariate long-horizon forecasting and full fine-tuning requirements are unmet.",
   "state": "import_validated"
 }

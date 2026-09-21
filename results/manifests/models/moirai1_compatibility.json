@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-09-21",
+  "model_family": "moirai1",
+  "repository": "Salesforce/moirai-1.1-R-small",
+  "revision": "0c24ab99db2c1a70ea2a0fc03bf113329772ac64",
+  "official_code_repository": "https://github.com/SalesforceAIResearch/uni2ts",
+  "code_ref": "main",
+  "code_commit": "cfd46d4510ed8896f263116f32928eede05b0a75",
+  "package_release": "2.0.0",
+  "state": "finetune_validated",
+  "cpu_status": "cpu_validated",
+  "release_tag_commit": "8062ef5a5660d2fea395fd1288ec9c397396c168",
+  "release_note": "The pinned official main commit reports package version 2.0.0; the 2.0.0 release tag itself points to the separately recorded tag commit.",
+  "decision_status": "pending_gpu",
+  "code_license": "Apache-2.0",
+  "weight_license": "CC-BY-NC-4.0",
+  "config_sha256": "37b9eca5a0c3e58c2cdac3ecdbf897acbd009a20d6ba0f8a2ae0e8d92002fd47",
+  "weight_files": [
+    {
+      "name": "model.safetensors",
+      "size_bytes": 55320200,
+      "sha256": "cc46831272ea07e99d78fe05c09e730c7c76a1b272cddbdaf5173dae371cb238"
+    }
+  ],
+  "parameter_count": 13827528,
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.4.1+cpu",
+    "lightning": "2.6.6",
+    "gluonts": "0.14.4",
+    "uni2ts": "2.0.0",
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "hydra_core": "1.3.0",
+    "snapshot": "requirements/moirai1-resolved.txt",
+    "isolation": "separate dependency snapshot; existing MOIRAI 2 environment was not modified"
+  },
+  "data_probe": {
+    "source_variant": "ETTh1__official_raw",
+    "source_file_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+    "zero_shot_split": "validation",
+    "finetune_split": "train",
+    "test_split_used": false,
+    "blocked_bundle_used": false
+  },
+  "multivariate": {
+    "semantics": "joint_target_dimensions",
+    "input_shape": [1, 512, 7],
+    "target_dim": 7,
+    "batch_size": 1,
+    "channelwise_loop": false,
+    "channel_order_preserved": true,
+    "permutation_statistic": "official predictive distribution mean",
+    "permutation_max_absolute_difference": 0.00000858306884765625,
+    "permutation_tolerance": 0.00001,
+    "permutation_equivariant": true
+  },
+  "zero_shot": {
+    "parameter_update": false,
+    "optimizer_created": false,
+    "backward_called": false,
+    "patch_size": 64,
+    "patch_size_basis": "official MOIRAI-1 small LSF configuration; not test-selected",
+    "num_samples_cpu_smoke": 8,
+    "num_samples_experiment_candidate": 100,
+    "point_forecast_rule": "sample median (provisional)",
+    "seed": 1729,
+    "seed_repeat_equal": true
+  },
+  "horizon_results": [
+    {"context": 512, "horizon": 96, "direct_output": true, "sample_shape": [1, 8, 96, 7], "point_shape": [1, 96, 7], "finite": true, "padding_right": 32, "cropping": false, "token_sequence_length": 70, "inference_seconds": 0.5555143000092357},
+    {"context": 512, "horizon": 192, "direct_output": true, "sample_shape": [1, 8, 192, 7], "point_shape": [1, 192, 7], "finite": true, "padding_right": 0, "cropping": false, "token_sequence_length": 77, "inference_seconds": 0.5441005000029691},
+    {"context": 512, "horizon": 336, "direct_output": true, "sample_shape": [1, 8, 336, 7], "point_shape": [1, 336, 7], "finite": true, "padding_right": 48, "cropping": false, "token_sequence_length": 98, "inference_seconds": 0.3297853000112809},
+    {"context": 512, "horizon": 720, "direct_output": true, "sample_shape": [1, 8, 720, 7], "point_shape": [1, 720, 7], "finite": true, "padding_right": 48, "cropping": false, "token_sequence_length": 140, "inference_seconds": 0.5423681999673136}
+  ],
+  "finetune": {
+    "wrapper": "uni2ts.model.moirai.MoiraiFinetune",
+    "objective": "uni2ts.loss.packed.PackedNLLLoss",
+    "optimizer": "official AdamW from configure_optimizers",
+    "finetune_pattern": "full",
+    "custom_loss": false,
+    "peft": false,
+    "optimizer_steps": 1,
+    "finite_loss": true,
+    "finite_gradients": true,
+    "parameter_updated": true,
+    "checkpoint_round_trip": true,
+    "checkpoint_validation_prediction_equal": true,
+    "trainable_parameters": 13827528,
+    "total_parameters": 13827528,
+    "train_seconds": 1.9468864999944344
+  },
+  "scaling": {
+    "model_native": "PackedStdScaler",
+    "external_scaler": false,
+    "output_rescaled_by_distribution": true,
+    "metric_unit": "original units"
+  },
+  "peak_process_rss_mb": 703.56640625,
+  "timing_note": "Warm-cache single-process CPU smoke timings; compatibility diagnostics, not benchmark results.",
+  "tested_device": ["cpu"],
+  "tested_dtype": ["torch.float32"],
+  "gpu_status": "pending_colab",
+  "amp_status": "pending_colab",
+  "peak_gpu_memory_mb": null,
+  "expected_gpu_memory_mb": null,
+  "failures": [],
+  "warnings": [
+    "GPU, CUDA AMP, and peak GPU memory are pending the Colab gate.",
+    "The selected weights are CC-BY-NC-4.0 and restricted to non-commercial use.",
+    "The production num_samples=100 and sample-median point rule remain provisional until the GPU pilot."
+  ],
+  "selection": "first-priority candidate passed the CPU gate; lower-priority and base candidates were not run"
+}

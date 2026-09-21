@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "candidates": [
+    {
+      "candidate": "Salesforce/moirai-1.1-R-small",
+      "priority": 1,
+      "required_capabilities": {
+        "official_salesforce_weights": true,
+        "official_uni2ts_load": true,
+        "joint_multivariate_input": true,
+        "joint_multivariate_output": true,
+        "full_parameter_finetuning": true,
+        "official_objective": true,
+        "context_512": true,
+        "direct_horizons": {"96": true, "192": true, "336": true, "720": true},
+        "no_recursive_forecasting": true,
+        "same_pretrained_checkpoint": true,
+        "original_unit_point_forecast": true,
+        "colab_installable": true,
+        "licenses_confirmed": true,
+        "revision_pinned": true
+      },
+      "capability_results": {
+        "multivariate_zero_shot": "cpu_validated",
+        "full_parameter_finetuning": "cpu_validated_one_step",
+        "four_horizons": "cpu_validated_direct",
+        "gpu": "pending_colab"
+      },
+      "selected": true,
+      "rejection_reasons": [],
+      "evidence": {
+        "compatibility_manifest": "results/manifests/models/moirai1_compatibility.json",
+        "official_wrapper": "uni2ts.model.moirai.MoiraiFinetune",
+        "official_objective": "uni2ts.loss.packed.PackedNLLLoss",
+        "source_variant": "ETTh1__official_raw",
+        "test_split_used": false
+      },
+      "revision": {
+        "huggingface_repository": "Salesforce/moirai-1.1-R-small",
+        "huggingface_commit": "0c24ab99db2c1a70ea2a0fc03bf113329772ac64",
+        "config_sha256": "37b9eca5a0c3e58c2cdac3ecdbf897acbd009a20d6ba0f8a2ae0e8d92002fd47",
+        "code_repository": "https://github.com/SalesforceAIResearch/uni2ts",
+        "code_ref": "main",
+        "release": "2.0.0",
+        "release_tag_commit": "8062ef5a5660d2fea395fd1288ec9c397396c168",
+        "code_commit": "cfd46d4510ed8896f263116f32928eede05b0a75",
+        "code_license": "Apache-2.0",
+        "weight_license": "CC-BY-NC-4.0"
+      },
+      "environment": {
+        "snapshot": "requirements/moirai1-resolved.txt",
+        "python": "3.12.14",
+        "torch": "2.4.1+cpu",
+        "uni2ts": "2.0.0"
+      },
+      "decision_status": "pending_gpu",
+      "decision_date": "2026-09-21",
+      "gpu_validated": false
+    }
+  ],
+  "selected_candidate": "Salesforce/moirai-1.1-R-small",
+  "moirai2_status": "incompatible_with_required_multivariate_protocol",
+  "production_adapter_allowed": false
+}

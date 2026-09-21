@@ -1,0 +1,3 @@
+# Isolated MOIRAI 1.x candidate snapshot; do not combine with TTM requirements.
+-r base.txt
+uni2ts @ git+https://github.com/SalesforceAIResearch/uni2ts.git@cfd46d4510ed8896f263116f32928eede05b0a75
