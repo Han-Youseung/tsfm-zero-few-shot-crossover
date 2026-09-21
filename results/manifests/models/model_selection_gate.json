@@ -1,5 +1,7 @@
 {
   "schema_version": 1,
+  "gpu_compatibility": "pending_gpu",
+  "protocol_frozen": false,
   "candidates": [
     {
       "candidate": "Salesforce/moirai-1.1-R-small",

@@ -88,7 +88,7 @@ def packed_batch(forecast, past, future):
     }
 
 
-def make_forecast(module, horizon):
+def make_forecast(module, horizon, num_samples=SMOKE_SAMPLES):
     from uni2ts.model.moirai import MoiraiForecast
 
     return MoiraiForecast(
@@ -99,11 +99,11 @@ def make_forecast(module, horizon):
         context_length=CONTEXT,
         module=module,
         patch_size=PATCH_SIZE,
-        num_samples=SMOKE_SAMPLES,
+        num_samples=num_samples,
     )
 
 
-def make_finetune(module):
+def make_finetune(module, horizon=96):
     from uni2ts.loss.packed import PackedNLLLoss
     from uni2ts.model.moirai import MoiraiFinetune
 
@@ -120,9 +120,66 @@ def make_finetune(module):
         lr=5e-7,
         weight_decay=0.1,
         context_length=CONTEXT,
-        prediction_length=96,
+        prediction_length=horizon,
         patch_size=PATCH_SIZE,
         finetune_pattern="full",
+    )
+
+
+def gpu_probe(args):
+    import torch
+
+    from tsfm_crossover.models.gpu_smoke import run
+
+    def factory(i, cache, training):
+        from uni2ts.model.moirai import MoiraiModule
+
+        module = MoiraiModule.from_pretrained(
+            i["repository"], revision=i["revision"], cache_dir=cache
+        )
+        return make_finetune(module, i["horizon"]) if training else module
+
+    def underlying(model):
+        return model.module if hasattr(model, "module") else model
+
+    def predict(model, x, i):
+        forecast = make_forecast(underlying(model), i["horizon"], i["num_samples"]).eval()
+        return forecast(
+            x,
+            torch.ones_like(x, dtype=torch.bool),
+            torch.zeros(x.shape[:2], dtype=torch.bool, device=x.device),
+        )
+
+    def loss(model, x, y, i):
+        packer = make_forecast(model.module, i["horizon"])
+        model.train()
+        return model.training_step(packed_batch(packer, x, y), 0)
+
+    def channels(model, x, i):
+        forecast = make_forecast(underlying(model), i["horizon"]).eval()
+        perm = torch.tensor([6, 4, 2, 0, 1, 3, 5], device=x.device)
+
+        def mean(context):
+            distr = forecast._get_distr(
+                PATCH_SIZE,
+                context,
+                torch.ones_like(context, dtype=torch.bool),
+                torch.zeros(context.shape[:2], dtype=torch.bool, device=context.device),
+            )
+            return forecast._format_preds(PATCH_SIZE, distr.mean.unsqueeze(0), CHANNELS)
+
+        a, b = mean(x), mean(x[..., perm])[..., torch.argsort(perm)]
+        torch.testing.assert_close(a, b, rtol=1e-4, atol=1e-5)
+        return float((a - b).abs().max())
+
+    return run(
+        args,
+        "moirai1",
+        factory,
+        predict,
+        loss,
+        lambda m: m.configure_optimizers()["optimizer"],
+        channels,
     )
 
 
@@ -132,7 +189,16 @@ def main() -> int:
     parser.add_argument("--cache-dir", type=Path, default=Path(".cache/moirai1"))
     parser.add_argument("--output", type=Path)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    from tsfm_crossover.models.gpu_smoke import arguments
+
+    arguments(parser, SMOKE_SAMPLES)
     args = parser.parse_args()
+    if args.gpu_gate:
+        if not args.output or not args.expected_commit:
+            parser.error("--gpu-gate requires --output and --expected-commit")
+        return gpu_probe(args)
+    if args.device == "cuda":
+        parser.error("CUDA evidence requires --gpu-gate (legacy CPU path is not a GPU gate)")
 
     import numpy as np
     import pandas as pd

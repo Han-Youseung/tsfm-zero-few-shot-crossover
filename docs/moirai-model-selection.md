@@ -1,5 +1,11 @@
 # MOIRAI model-selection gate
 
+Phase 4.6 prepares the actual CUDA gate using the same pinned 1.1 candidate, patch 64,
+official training wrapper and objective. Colab installation and GPU execution remain
+pending; eight- and 100-sample evidence are separate. See
+[Colab GPU validation](colab-gpu-validation.md). This does not reopen model selection,
+replace the pinned Uni2TS commit, permit production adapters, or freeze the protocol.
+
 Checked on 2026-09-21. This gate selects a model for this study; it does not reproduce
 TSFM-Bench. Only official SalesforceAIResearch/Uni2TS code, Salesforce weights, model
 cards, releases, and the MOIRAI paper were used.

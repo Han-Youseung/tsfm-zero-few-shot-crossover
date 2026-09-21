@@ -1,0 +1,4 @@
+# Dedicated Linux CUDA environment. Installation is pending actual Colab validation.
+# Do not use CPU snapshots or a CPU wheel index.
+-r ttm.txt
+torch==2.11.0

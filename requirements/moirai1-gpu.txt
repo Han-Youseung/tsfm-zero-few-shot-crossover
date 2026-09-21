@@ -1,0 +1,5 @@
+# Dedicated Python 3.11/3.12 Linux CUDA environment; not the CPU snapshot.
+# Default PyPI Linux torch wheel carries CUDA dependencies. Runtime checks are mandatory.
+-r moirai1.txt
+torch==2.4.1
+numpy==1.26.4

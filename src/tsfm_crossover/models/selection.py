@@ -150,6 +150,14 @@ class ModelSelectionGate(StrictModel):
     selected_candidate: str | None
     moirai2_status: Literal["incompatible_with_required_multivariate_protocol"]
     production_adapter_allowed: bool
+    gpu_compatibility: Literal["pending_gpu", "passed"] = "pending_gpu"
+    protocol_frozen: Literal[False] = False
+
+    @model_validator(mode="after")
+    def require_gpu_gate(self) -> ModelSelectionGate:
+        if self.production_adapter_allowed and self.gpu_compatibility != "passed":
+            raise ValueError("production adapter requires both-model GPU gate")
+        return self
 
     @model_validator(mode="after")
     def enforce_priority(self) -> ModelSelectionGate:

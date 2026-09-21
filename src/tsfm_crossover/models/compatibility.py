@@ -58,6 +58,11 @@ def validate_manifest(path: str | Path) -> CompatibilityManifest | ModelSelectio
     manifest_path = Path(path)
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
     _reject_local_paths_and_secrets(payload)
+    if payload.get("kind") in {"gpu_preparation", "gpu_condition"}:
+        from .gpu_gate import GPUCondition, GPUPendingManifest
+
+        model = GPUPendingManifest if payload["kind"] == "gpu_preparation" else GPUCondition
+        return model.model_validate(payload)
     if "candidates" in payload and "selected_candidate" in payload:
         return ModelSelectionGate.model_validate(payload)
     return CompatibilityManifest.model_validate(payload)

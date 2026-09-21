@@ -11,6 +11,58 @@ import time
 from pathlib import Path
 
 
+def gpu_probe(args):
+    import torch
+
+    from tsfm_crossover.models.gpu_smoke import run
+
+    def factory(i, cache, training):
+        from tsfm_public.models.tinytimemixer import (
+            TinyTimeMixerForDecomposedPrediction,
+            TinyTimeMixerForPrediction,
+        )
+
+        cls = (
+            TinyTimeMixerForPrediction
+            if i["horizon"] == 720
+            else TinyTimeMixerForDecomposedPrediction
+        )
+        return cls.from_pretrained(
+            i["repository"],
+            revision=i["revision"],
+            cache_dir=cache,
+            prediction_filter_length=i["horizon"],
+        )
+
+    def inputs(x, i):
+        # Official get_model zeropad contract requires caller-side left zero padding.
+        if i["horizon"] == 720:
+            x = torch.nn.functional.pad(x, (0, 0, 512, 0))
+        return x
+
+    def predict(model, x, i):
+        return model(past_values=inputs(x, i)).prediction_outputs
+
+    def loss(model, x, y, i):
+        return model(past_values=inputs(x, i), future_values=y).loss
+
+    def channels(model, x, i):
+        perm = torch.tensor([6, 4, 2, 0, 1, 3, 5], device=x.device)
+        a, b = predict(model, x, i), predict(model, x[..., perm], i)[..., torch.argsort(perm)]
+        torch.testing.assert_close(a, b, rtol=1e-4, atol=1e-5)
+        return float((a - b).abs().max())
+
+    return run(
+        args,
+        "ttm",
+        factory,
+        predict,
+        loss,
+        lambda m: torch.optim.AdamW(m.parameters(), lr=1e-6),
+        channels,
+    )
+
+
 def digest(model) -> str:
     result = hashlib.sha256()
     for name, value in sorted(model.state_dict().items()):
@@ -23,7 +75,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--cache-dir", type=Path, default=Path(".cache/ttm"))
+    parser.add_argument("--output", type=Path)
+    from tsfm_crossover.models.gpu_smoke import arguments
+
+    arguments(parser, 1)
     args = parser.parse_args()
+    if args.gpu_gate:
+        if not args.output or not args.expected_commit:
+            parser.error("--gpu-gate requires --output and --expected-commit")
+        return gpu_probe(args)
 
     import pandas as pd
     import torch
@@ -67,7 +127,10 @@ def main() -> int:
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-6)
     model.train()
     optimizer.zero_grad(set_to_none=True)
-    output = model(past_values=past, future_values=future)
+    # Legacy CPU smoke also must train only on the train split.
+    train_past = torch.from_numpy(values[:512]).unsqueeze(0)
+    train_future = torch.from_numpy(values[512:608]).unsqueeze(0)
+    output = model(past_values=train_past, future_values=train_future)
     assert torch.isfinite(output.loss)
     output.loss.backward()
     assert any(parameter.grad is not None for parameter in model.parameters())

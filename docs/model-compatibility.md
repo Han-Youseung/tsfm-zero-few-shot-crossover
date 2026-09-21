@@ -1,5 +1,11 @@
 # Phase 4 model compatibility assessment
 
+Phase 4.6 status: preparation only, installation_pending / pending_gpu. The original CPU
+records below are historical and preserved. In particular, the old TTM one-step CPU probe
+trained on a validation window; this is corrected in the executable probe and is not
+accepted as train-only GPU evidence. See [Colab GPU validation](colab-gpu-validation.md)
+for independent four-horizon train-only checks and exact result-return instructions.
+
 Checked on 2026-09-21. This phase is an official-source and interface assessment, not
 a benchmark run. No paper metric, complete test evaluation, or crossover result was
 produced. The only eligible engineering data are the grade-A official raw ETTh1,

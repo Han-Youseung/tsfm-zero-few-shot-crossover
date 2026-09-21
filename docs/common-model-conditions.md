@@ -1,5 +1,10 @@
 # Common TTM–MOIRAI conditions after the CPU gate
 
+Phase 4.6 GPU execution and Colab installation remain pending. See
+[Colab GPU validation](colab-gpu-validation.md) for the separate mandatory FP32 matrix,
+100-sample MOIRAI inference checks, historical TTM CPU training-split caveat, and result import.
+GPU compatibility does not freeze the research protocol or select its metrics/budgets.
+
 The comparison unit is model–dataset–horizon. Both models use the same 60/20/20
 chronological split, selected train-window manifests, validation/test origins, metrics,
 original-unit evaluation, seed policy, and optimizer-step budget rule. Test data never

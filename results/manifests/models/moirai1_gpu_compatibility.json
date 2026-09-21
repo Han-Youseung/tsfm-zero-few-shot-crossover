@@ -1,0 +1,14 @@
+{
+  "kind": "gpu_preparation",
+  "schema_version": 1,
+  "model_family": "moirai1",
+  "gpu_status": "pending_gpu",
+  "installation_status": "installation_pending",
+  "fp32": "not_run",
+  "amp": "not_run",
+  "conditions": [],
+  "protocol_frozen": false,
+  "production_adapter_allowed": false,
+  "notebook": "notebooks/12_moirai1_compatibility.ipynb",
+  "results_policy": "Eight-sample full gate and 100-sample inference remain unexecuted; CPU manifest is preserved."
+}

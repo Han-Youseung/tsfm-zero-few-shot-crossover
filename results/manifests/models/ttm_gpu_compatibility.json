@@ -1,0 +1,14 @@
+{
+  "kind": "gpu_preparation",
+  "schema_version": 1,
+  "model_family": "ttm",
+  "gpu_status": "pending_gpu",
+  "installation_status": "installation_pending",
+  "fp32": "not_run",
+  "amp": "not_run",
+  "conditions": [],
+  "protocol_frozen": false,
+  "production_adapter_allowed": false,
+  "notebook": "notebooks/10_ttm_compatibility.ipynb",
+  "results_policy": "Validated actual evidence is appended under gpu_runs/execution-commit; CPU manifest is preserved."
+}
