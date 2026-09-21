@@ -1,0 +1,5 @@
+# Independent runtime: do not install together with requirements/moirai.txt.
+-r base.txt
+granite-tsfm @ git+https://github.com/ibm-granite/granite-tsfm.git@fe7a35697723e2a2f5246ae979474bfc554e26c0
+# Official commit constraints: Python >=3.11,<3.14; torch >=2.10,<2.12;
+# transformers[torch] >=4.57.6,<6; numpy <3; pandas >=2.3.3,<4.

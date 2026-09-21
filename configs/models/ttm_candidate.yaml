@@ -1,0 +1,26 @@
+schema_version: 1
+family: ttm
+repository: ibm-granite/granite-timeseries-ttm-r3
+revision: ea17cfd2e3edcaea21eb8dcecd18bf88971482fa
+official_code_repository: https://github.com/ibm-granite/granite-tsfm
+code_commit: fe7a35697723e2a2f5246ae979474bfc554e26c0
+package_release: v0.3.9
+state: finetune_validated
+public_access: ungated
+cache_env: HF_HOME
+dependency_file: requirements/ttm.txt
+model_revisions:
+  - name: 512-96-dec-512-r3
+    revision: 7b070728ff280ee2bb682bd8dfbe71da21ca2c7c
+    context_length: 512
+    prediction_length: 96
+  - name: 512-336-dec-512-r3
+    revision: 81f34486a7d43de21f847df1262621c53c525314
+    context_length: 512
+    prediction_length: 336
+  - name: 1024-720-r3
+    revision: aa610521c42d25c3a1ba03ad0d3d1e637b2c8d08
+    context_length: 1024
+    prediction_length: 720
+point_forecast_rule: prediction_outputs point head (provisional)
+external_scaling_policy: disabled_pending_pilot

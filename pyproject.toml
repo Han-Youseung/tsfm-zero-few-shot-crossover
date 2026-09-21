@@ -19,12 +19,20 @@ dev = [
   "ruff>=0.6,<1",
 ]
 
+[project.scripts]
+tsfm-model-compatibility = "tsfm_crossover.models.compatibility:main"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/tsfm_crossover"]
 
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers"
 testpaths = ["tests"]
+markers = [
+  "model_integration: requires an official model package and may download weights",
+  "slow: long-running compatibility checks",
+  "gpu: requires a CUDA GPU",
+]
 
 [tool.ruff]
 target-version = "py311"

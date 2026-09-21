@@ -1,3 +1,8 @@
 # Notebooks
 
-모델 파일럿이 통과한 뒤 Colab Pro+ 실행 노트북을 추가합니다. 현재는 가중치나 캐시를 생성하지 않습니다.
+모델별 격리 Colab Pro+ compatibility probe를 제공합니다.
+
+- `10_ttm_compatibility.ipynb`: 고정 TTM R3 synthetic/ETTh1 validation inference와 1-step full fine-tuning smoke
+- `11_moirai_compatibility.ipynb`: 고정 MOIRAI 2 synthetic/ETTh1 validation inference smoke
+
+MOIRAI 2 notebook은 고정 공식 코드에서 완성된 full fine-tuning API를 찾지 못했으므로 학습을 실행하지 않습니다. 두 notebook 모두 test split을 사용하지 않으며 cache와 weight는 Git에 저장하지 않습니다.

@@ -2,7 +2,7 @@
 
 시계열 데이터 특성과 대상 데이터 학습량에 따라 Time-Series Foundation Model(TSFM)의 Few-Shot Fine-Tuning이 Zero-Shot 성능을 넘어서는 **전환 구간**을 분석하는 연구 저장소입니다.
 
-> 현재 단계: provenance resolution 완료 — 공식 ETT 원본 4종만 조건부 사용 가능, bundle 14종은 차단
+> 현재 단계: 모델 호환성 후보 검증 — 공식 ETT 원본 4종만 engineering probe에 사용 가능, bundle 14종은 차단
 
 ## 연구 범위
 
@@ -27,7 +27,7 @@ python -m pip install -e ".[dev]"
 pytest
 ```
 
-모델 의존성은 파일럿 후 모델별 optional dependency로 분리합니다. 현재 코어 환경은 실제 모델을 다운로드하지 않습니다.
+모델 의존성은 `requirements/ttm.txt`와 `requirements/moirai.txt`로 분리하며 같은 환경에 함께 설치하지 않습니다. 기본 테스트는 실제 모델을 다운로드하지 않습니다.
 
 ## 구조
 
@@ -37,7 +37,7 @@ pytest
 - `src/tsfm_crossover/utils/`: seed와 재현성 유틸리티
 - `src/tsfm_crossover/{data,models,experiments,evaluation,analysis}/`: 다음 단계의 독립 구현 경계
 - `scripts/`: 재실행 가능한 CLI 진입점
-- `notebooks/`: 파일럿 후 추가할 Colab 노트북
+- `notebooks/`: 모델별 Colab compatibility probe
 - `tests/`: CPU 단위·통합 테스트
 - `results/`: 소용량 JSON/CSV, summary, figure, manifest
 - `data/`, `checkpoints/`, `logs/`: Git에 올리지 않는 로컬 산출물
@@ -49,6 +49,8 @@ pytest
 실제 데이터 배치, ZIP 안전 검사, 전체 audit 명령과 현재 차단 사유는 [real-data audit](docs/data-audit.md)에 기록합니다. 원본 데이터는 Git에 추가하지 않으며 `results/manifests/datasets/`에는 checksum과 집계 metadata만 저장합니다.
 
 Bundle 생성 경로, 공식 ETT 값 대조, canonical fingerprint와 데이터셋별 판정은 [data provenance](docs/data-provenance.md), [canonical format](docs/canonical-format.md), [data decisions](docs/data-decisions.md)에 기록합니다.
+
+고정한 모델·공식 코드 revision, 라이선스, context/horizon 제약, scaling 및 아직 실행하지 않은 Colab 검증은 [model compatibility](docs/model-compatibility.md)에 기록합니다. 후보는 아직 `frozen`이 아닙니다.
 
 ## 저장 원칙
 

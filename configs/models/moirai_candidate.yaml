@@ -1,0 +1,13 @@
+schema_version: 1
+family: moirai
+repository: Salesforce/moirai-2.0-R-small
+revision: 30f43ff08c8494f4943ae1521e9d4e94a0fbb389
+official_code_repository: https://github.com/SalesforceAIResearch/uni2ts
+code_commit: cfd46d4510ed8896f263116f32928eede05b0a75
+package_release: 2.0.0
+state: import_validated
+public_access: ungated
+cache_env: HF_HOME
+dependency_file: requirements/moirai.txt
+point_forecast_rule: quantile_0.5 (provisional)
+external_scaling_policy: disabled_pending_pilot

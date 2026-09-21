@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-09-21",
+  "model_family": "moirai",
+  "repository": "Salesforce/moirai-2.0-R-small",
+  "revision": "30f43ff08c8494f4943ae1521e9d4e94a0fbb389",
+  "official_code_repository": "https://github.com/SalesforceAIResearch/uni2ts",
+  "code_commit": "cfd46d4510ed8896f263116f32928eede05b0a75",
+  "package_release": "2.0.0",
+  "code_license": "Apache-2.0",
+  "weight_license": "CC-BY-NC-4.0",
+  "published": "2025-08-06",
+  "architecture": "decoder-only universal forecasting transformer with multi-token direct quantile prediction",
+  "parameter_count": 11387208,
+  "parameter_count_source": "Hugging Face safetensors metadata",
+  "config_sha256": "6b74b03c8ec199fabc352c0203465958142ca468183da68549652734836f853d",
+  "weight_files": [
+    {
+      "name": "model.safetensors",
+      "size_bytes": 45557824,
+      "sha256": "fb5652a3db8ea572606221b7cb1e77bb8962b168e4d4cc752cf31ceb04074669"
+    }
+  ],
+  "environment": {
+    "python": ">=3.10",
+    "torch": ">=2.1,<2.5",
+    "numpy": "~=1.26.0",
+    "scipy": "~=1.11.3",
+    "gluonts": "~=0.14.3",
+    "einops": "==0.7.*",
+    "dependency_file": "requirements/moirai.txt",
+    "cuda_requirement": "unknown"
+  },
+  "resolved_cpu_runtime": {
+    "python": "3.12.14",
+    "uni2ts": "2.0.0",
+    "torch": "2.4.1+cpu",
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "gluonts": "0.14.4",
+    "huggingface_hub": "1.32.0",
+    "snapshot": "requirements/moirai-resolved.txt"
+  },
+  "config": {
+    "d_model": 384,
+    "d_ff": 1024,
+    "num_layers": 6,
+    "max_seq_len_tokens": 512,
+    "patch_size": 16,
+    "num_predict_token": 4,
+    "quantile_levels": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+    "dropout": 0,
+    "scaling": true
+  },
+  "capabilities": {
+    "zero_shot": true,
+    "full_parameter_finetuning": null,
+    "full_parameter_finetuning_evidence": "No Moirai2 training_step, validation_step, configure_optimizers, loss wrapper, or Moirai2 fine-tuning config was found at the pinned official commit.",
+    "multivariate": false,
+    "multivariate_note": "tensor forward accepts target_dim, but the pinned official implementation failed for 7 channels at horizon 96 in its multi-token path; the convenience predict method is documented in code as univariate-only",
+    "covariates_required": false,
+    "missing_values": true,
+    "input_dtype": "float32 expected",
+    "input_shape": "past_target [batch, context, target_dim] plus observed mask",
+    "output_shape": "[batch, 9 quantiles, horizon, target_dim], with singleton target_dim omitted in the observed univariate forward",
+    "output_type": "direct quantile forecasts, not Monte Carlo samples",
+    "point_forecast_rule": "0.5 quantile (provisional)",
+    "internal_scaling": "PackedStdScaler with automatic output rescaling",
+    "external_scaling_policy": "disabled pending pilot; avoid unvalidated double scaling",
+    "amp": "not runtime-validated",
+    "gradient_checkpointing": "unknown",
+    "deterministic_inference": "expected from zero dropout and direct quantiles; not runtime-validated"
+  },
+  "capability_matrix": [
+    {"context": 256, "horizon": 96, "classification": "not runtime-tested; same multivariate multi-token code path as failed 512/96", "packed_tokens": 154},
+    {"context": 256, "horizon": 192, "classification": "not runtime-tested; same multivariate multi-token code path as failed 512/96", "packed_tokens": 196},
+    {"context": 256, "horizon": 336, "classification": "not runtime-tested; same multivariate multi-token code path as failed 512/96", "packed_tokens": 259},
+    {"context": 256, "horizon": 720, "classification": "not runtime-tested; same multivariate multi-token code path as failed 512/96", "packed_tokens": 427},
+    {"context": 512, "horizon": 96, "classification": "runtime failure in official multivariate multi-token rearrange", "packed_tokens": 266},
+    {"context": 512, "horizon": 192, "classification": "not runtime-tested; same multivariate multi-token code path as failed 512/96", "packed_tokens": 308},
+    {"context": 512, "horizon": 336, "classification": "not runtime-tested; same multivariate multi-token code path as failed 512/96", "packed_tokens": 371},
+    {"context": 512, "horizon": 720, "classification": "exceeds max_seq_len for 7 ETTh1 channels", "packed_tokens": 539}
+  ],
+  "pretraining": {
+    "published_scope": "subset of non-leaking GIFT-Eval histories, Chronos-derived mixup, KernelSynth, and internal Salesforce operational data",
+    "ett_inclusion": "not disclosed at dataset-instance level",
+    "overlap_can_be_excluded": false,
+    "paper_limitation": "Zero-Shot means no parameter update using the designated target-data train split; it does not assert unseen-domain or contamination-free evaluation."
+  },
+  "data_probe": {
+    "allowed_variants": ["ETTh1__official_raw", "ETTh2__official_raw", "ETTm1__official_raw", "ETTm2__official_raw"],
+    "smoke_dataset": "ETTh1__official_raw",
+    "split": "validation",
+    "runtime_executed": true,
+    "validation_window_origin": 10964,
+    "test_split_used": false
+  },
+  "tested_combinations": [
+    {
+      "context": 512,
+      "horizon": 96,
+      "channels": 7,
+      "status": "inference_failed",
+      "error_summary": "official multi-token rearrange received 28 prediction tokens where the implementation fixed predict_token to 4"
+    },
+    {
+      "context": 512,
+      "horizon": 96,
+      "channels": 1,
+      "status": "cpu_validated",
+      "synthetic_quantile_shape": [1, 9, 96],
+      "synthetic_point_shape": [1, 96],
+      "validation_quantile_shape": [1, 9, 96],
+      "finite": true,
+      "bitwise_repeat": true,
+      "zero_shot_parameter_hash_unchanged": true,
+      "inference_seconds_two_synthetic_forwards": 0.6140293000498787
+    }
+  ],
+  "tested_device": ["cpu"],
+  "tested_dtype": ["torch.float32"],
+  "cpu_status": "inference_failed",
+  "gpu_status": "pending_colab",
+  "zero_shot_smoke": "univariate_cpu_validated_multivariate_failed",
+  "finetuning_smoke": "finetune_failed",
+  "failures": [
+    "Official 7-channel context-512 horizon-96 forward failed in the multi-token path with an einops shape mismatch (28 prediction tokens versus fixed predict_token 4).",
+    "Official full-parameter fine-tuning API for Moirai2 was not found at the pinned uni2ts commit; no custom objective or PEFT substitute was introduced."
+  ],
+  "warnings": [
+    "The context 512, horizon 720, 7-channel ETTh1 combination exceeds the published 512-token model limit by source-level token accounting and requires runtime confirmation.",
+    "Univariate context-512 horizon-96 inference passed on CPU, but channel-wise looping was not adopted as a multivariate substitute.",
+    "GPU, AMP, peak GPU memory, other horizons, and checkpoint round-trip remain pending Colab.",
+    "Weights are CC BY-NC 4.0 and restricted to non-commercial use."
+  ],
+  "state": "import_validated"
+}

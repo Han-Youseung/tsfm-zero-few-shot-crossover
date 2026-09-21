@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-09-21",
+  "model_family": "ttm",
+  "repository": "ibm-granite/granite-timeseries-ttm-r3",
+  "revision": "ea17cfd2e3edcaea21eb8dcecd18bf88971482fa",
+  "official_code_repository": "https://github.com/ibm-granite/granite-tsfm",
+  "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+  "package_release": "v0.3.9",
+  "code_license": "Apache-2.0",
+  "weight_license": "Apache-2.0",
+  "published": "2026-05-21",
+  "architecture": "Tiny Time Mixer R3 mixture-of-experts family; selected checkpoints use decomposed or standard mixer prediction models",
+  "parameter_count": 5328932,
+  "parameter_count_source": "CPU-loaded 512-96 decomposed checkpoint; count varies by selected revision",
+  "repository_main_parameter_count": 1414514,
+  "config_sha256_main": "8e62cd4f1e4b1655ecc8c6ef9a9cf802d2ec64846a064a5072a59fd23688f062",
+  "weight_files_main": [
+    {
+      "name": "model.safetensors",
+      "size_bytes": 5729424,
+      "sha256": "8ec0509a18a38f65b02f046fc28298ab3acf5d54eecb0a0df959b9fa001bc9fb"
+    }
+  ],
+  "selected_model_revisions": [
+    {
+      "name": "512-96-dec-512-r3",
+      "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c",
+      "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+      "parameter_count": 5328932,
+      "weight_size_bytes": 21441800,
+      "weight_sha256": "8372cf7a0be542fd56b047b190e84bb5eea1cb384d7e60aa0ec32080b9c7bd08"
+    },
+    {
+      "name": "512-336-dec-512-r3",
+      "revision": "81f34486a7d43de21f847df1262621c53c525314",
+      "config_sha256": "a3c69a667950b3a5f9a94ec17aa8857db25345734e1163cec87b30908d43f0eb",
+      "parameter_count": 6227972,
+      "weight_size_bytes": 25037960,
+      "weight_sha256": "eafaf6abe05aad604b50675ea151da18bac19b6ed9b3f832afd7166e5b8271ee"
+    },
+    {
+      "name": "1024-720-r3",
+      "revision": "aa610521c42d25c3a1ba03ad0d3d1e637b2c8d08",
+      "config_sha256": "f976861b95770a65d8918e9764feabe01ec851f0b816f58e717a5d2441e0ecab",
+      "parameter_count": 14574015,
+      "weight_size_bytes": 58364228,
+      "weight_sha256": "66c9a900c99cdd597e051ee311f551827767b520781db98ff2fcaf1171c0cf76"
+    }
+  ],
+  "environment": {
+    "python": ">=3.11,<3.14",
+    "torch": ">=2.10,<2.12",
+    "transformers": ">=4.57.6,<6",
+    "numpy": "<3",
+    "pandas": ">=2.3.3,<4",
+    "dependency_file": "requirements/ttm.txt",
+    "cuda_requirement": "unknown"
+  },
+  "resolved_cpu_runtime": {
+    "python": "3.12.14",
+    "granite_tsfm": "0.3.9",
+    "torch": "2.11.0+cpu",
+    "transformers": "5.17.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "huggingface_hub": "1.32.0",
+    "snapshot": "requirements/ttm-resolved.txt"
+  },
+  "capabilities": {
+    "zero_shot": true,
+    "full_parameter_finetuning": true,
+    "official_finetuning_default": "official examples expose full model fine-tuning; exact Phase 5 budget remains undecided",
+    "multivariate": true,
+    "covariates_required": false,
+    "missing_values": "mask support exists; ETTh1 missing-value runtime probe pending",
+    "input_dtype": "float32 expected",
+    "input_shape": "[batch, context, channels]",
+    "output_shape": "prediction_outputs [batch, horizon, channels]",
+    "output_type": "deterministic point head with optional multi-quantile outputs in R3 config",
+    "point_forecast_rule": "prediction_outputs point head (provisional)",
+    "internal_scaling": "std model-native scaling",
+    "external_scaling_policy": "disabled pending pilot; avoid unvalidated double scaling",
+    "amp": "not runtime-validated",
+    "gradient_checkpointing": "unknown",
+    "deterministic_inference": "not runtime-validated"
+  },
+  "capability_matrix": [
+    {"context": 256, "horizon": 96, "classification": "official zeropad path", "model_revision": "512-96-dec-512-r3"},
+    {"context": 256, "horizon": 192, "classification": "official zeropad plus direct-output crop", "model_revision": "512-336-dec-512-r3"},
+    {"context": 256, "horizon": 336, "classification": "official zeropad path", "model_revision": "512-336-dec-512-r3"},
+    {"context": 256, "horizon": 720, "classification": "official zeropad path", "model_revision": "1024-720-r3"},
+    {"context": 512, "horizon": 96, "classification": "native direct output", "model_revision": "512-96-dec-512-r3"},
+    {"context": 512, "horizon": 192, "classification": "native context plus direct-output crop", "model_revision": "512-336-dec-512-r3"},
+    {"context": 512, "horizon": 336, "classification": "native direct output", "model_revision": "512-336-dec-512-r3"},
+    {"context": 512, "horizon": 720, "classification": "official zeropad path", "model_revision": "1024-720-r3"}
+  ],
+  "pretraining": {
+    "published_scope": "non-leaking historical portions of selected GIFT-Eval datasets plus synthetic KernelSynth data",
+    "ett_inclusion": "not disclosed at dataset-instance level",
+    "overlap_can_be_excluded": false,
+    "paper_limitation": "Zero-Shot means no parameter update using the designated target-data train split; it does not assert unseen-domain or contamination-free evaluation."
+  },
+  "data_probe": {
+    "allowed_variants": ["ETTh1__official_raw", "ETTh2__official_raw", "ETTm1__official_raw", "ETTm2__official_raw"],
+    "smoke_dataset": "ETTh1__official_raw",
+    "split": "validation",
+    "runtime_executed": true,
+    "validation_window_origin": 10964,
+    "test_split_used": false
+  },
+  "tested_combinations": [
+    {
+      "context": 512,
+      "horizon": 96,
+      "channels": 7,
+      "model_revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c",
+      "synthetic_shape": [1, 96, 7],
+      "validation_shape": [1, 96, 7],
+      "finite": true,
+      "bitwise_repeat": true,
+      "zero_shot_parameter_hash_unchanged": true,
+      "finetune_optimizer_steps": 1,
+      "finetune_loss_finite": true,
+      "parameters_updated": true,
+      "training_state_round_trip": true,
+      "inference_seconds_two_synthetic_forwards": 0.14515900000697002
+    }
+  ],
+  "tested_device": ["cpu"],
+  "tested_dtype": ["torch.float32"],
+  "cpu_status": "cpu_validated",
+  "gpu_status": "pending_colab",
+  "zero_shot_smoke": "cpu_validated",
+  "finetuning_smoke": "cpu_validated_one_step",
+  "failures": [],
+  "warnings": [
+    "Context 256 and context 512 with horizon 720 require the official zero-padding path to a 1024-context checkpoint.",
+    "GPU, AMP, peak GPU memory, and non-96 horizons remain pending Colab.",
+    "Initial git-based Windows install hit a long-path checkout error; installation from the same verified official commit checkout succeeded."
+  ],
+  "state": "finetune_validated"
+}

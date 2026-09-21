@@ -44,6 +44,7 @@ drive/MyDrive/
 __pycache__/
 *.py[cod]
 .venv/
+.venv-*/
 venv/
 .conda/
 .pytest_cache/

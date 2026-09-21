@@ -1,0 +1,5 @@
+# Independent runtime: do not install together with requirements/ttm.txt.
+-r base.txt
+uni2ts @ git+https://github.com/SalesforceAIResearch/uni2ts.git@cfd46d4510ed8896f263116f32928eede05b0a75
+# Official commit constraints: Python >=3.10; torch >=2.1,<2.5;
+# numpy ~=1.26.0; scipy ~=1.11.3; gluonts ~=0.14.3; einops ==0.7.*.
