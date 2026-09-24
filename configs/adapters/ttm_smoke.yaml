@@ -1,0 +1,16 @@
+# Engineering smoke values, not pilot-selected research hyperparameters.
+family: ttm
+channel_names: [HUFL, HULL, MUFL, MULL, LUFL, LULL, OT]
+context: 512
+horizon: 96
+num_samples: 1
+prediction_seed: 1729
+training_seed: 1729
+learning_rate: 0.000001
+weight_decay: 0.01
+max_optimizer_steps: 1
+gradient_clip: null
+point_statistic: prediction_outputs
+batch_size: 2
+sampling_rate: 0.005
+sampling_seed: 1729

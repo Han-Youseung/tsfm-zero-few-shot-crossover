@@ -2,7 +2,7 @@
 
 시계열 데이터 특성과 대상 데이터 학습량에 따라 Time-Series Foundation Model(TSFM)의 Few-Shot Fine-Tuning이 Zero-Shot 성능을 넘어서는 **전환 구간**을 분석하는 연구 저장소입니다.
 
-> 현재 단계: 모델 호환성 후보 검증 — 공식 ETT 원본 4종만 engineering probe에 사용 가능, bundle 14종은 차단
+> 현재 단계: 5단계 공통 adapter 구현 — 기존 GPU probe 근거 검증 완료, 새 adapter GPU 통합 검증은 pending. Bundle 14종은 차단.
 
 ## 연구 범위
 
@@ -32,6 +32,9 @@ pytest
 4.6단계 FP32 GPU 근거 12개를 검증했습니다. TTM은 A100, MOIRAI는 T4에서
 ETTh1·7채널·batch 1·context 512의 네 horizon을 실행했습니다.
 [GPU 근거 및 공식 loss 검토](docs/gpu-evidence-review.md)에 범위와 제약을 기록합니다.
+
+공통 adapter의 설정·checkpoint·RNG 정책과 실행 방법은 [adapter 문서](docs/adapters.md)에 있습니다.
+다음 GPU 실행은 `notebooks/20_adapter_integration.ipynb`를 TTM과 MOIRAI의 별도 세션에서 실행합니다.
 
 ## 구조
 
