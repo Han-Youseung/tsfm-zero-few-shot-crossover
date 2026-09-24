@@ -1,6 +1,14 @@
 {
   "amp": "not_run",
+  "archive_sha256": {
+    "moirai1-gpu-results.zip": "b9a60d22491e7b5c7a61fa859c74b9e4323ae57b4a31145841026a5b410be803",
+    "ttm-gpu-results-phase46.zip": "f4290f4667b2a5dbbc638969d59cc2da7070d55d51d92730592f8d80f7ca5a48"
+  },
   "conditions": [
+    "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/ttm-192-1-855b1ffaa16645af.json",
+    "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/ttm-336-1-304b49bc25fc1499.json",
+    "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/ttm-720-1-48426cb9eecf8363.json",
+    "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/ttm-96-1-c0b1172bb4cd556e.json",
     "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/moirai1-192-100-9127499f2df7e091.json",
     "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/moirai1-192-8-5437a6d0d592e362.json",
     "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/moirai1-336-100-86b472987c6e6147.json",
@@ -11,13 +19,11 @@
     "results/manifests/models/gpu_runs/1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5/moirai1-96-8-c319744ac979ced9.json"
   ],
   "execution_commit": "1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5",
-  "fp32": "passed",
-  "gpu_status": "passed",
-  "installation_status": "verified",
-  "kind": "gpu_evidence",
-  "model_family": "moirai1",
+  "gpu_compatibility": "passed",
+  "historical_conditions": 4,
+  "historical_execution_commit": "129ae0397723b8fd2c9d4686af5799aac3405c54",
+  "kind": "gpu_evidence_review",
+  "moirai_100_samples": "passed",
   "production_adapter_allowed": true,
-  "protocol_frozen": false,
-  "schema_version": 1,
-  "scope": "ETTh1; batch 1; 7 channels; context 512; horizons 96/192/336/720"
+  "protocol_frozen": false
 }

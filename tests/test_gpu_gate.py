@@ -173,5 +173,42 @@ def test_completed_condition_resume_requires_no_model_runtime(tmp_path):
     args = SimpleNamespace(
         horizon=96, num_samples=1, expected_commit=COMMIT, output=tmp_path / "complete.json"
     )
-    write_json_atomic(args.output, evidence())
+    # Use an actual imported record: resume now also checks detailed observations.
+    source = next((ROOT / "results/manifests/models/gpu_runs").rglob("ttm-96-*.json"))
+    payload = json.loads(source.read_text())
+    args.expected_commit = payload["identity"]["execution_commit"]
+    write_json_atomic(args.output, payload)
     assert run(args, "ttm", None, None, None, None, None) == 0
+
+
+def test_duplicate_conditions_rejected():
+    row = GPUCondition.model_validate(evidence())
+    with pytest.raises(ValueError, match="duplicate"):
+        summarize([row, row])
+
+
+@pytest.mark.parametrize(
+    "key,value",
+    [
+        ("training_pretrained_parameter_hash", "a" * 64),
+        ("actual_optimizer_steps", 0),
+        ("point_shape", [7, 96, 1]),
+        ("trainable_parameters", 1),
+        ("restore_max_absolute_error", float("nan")),
+    ],
+)
+def test_detailed_evidence_inconsistency_rejected(key, value):
+    source = next((ROOT / "results/manifests/models/gpu_runs").rglob("ttm-96-*.json"))
+    payload = json.loads(source.read_text())
+    payload["details"][key] = value
+    with pytest.raises(ValueError, match="GPU detail"):
+        validate_result(payload, ROOT, payload["identity"]["execution_commit"])
+
+
+def test_100_samples_cannot_replace_eight_sample_training():
+    rows = [
+        GPUCondition.model_validate(evidence(f, h, s))
+        for f, s in (("ttm", 1), ("moirai1", 100))
+        for h in (96, 192, 336, 720)
+    ]
+    assert not summarize(rows)["production_adapter_allowed"]

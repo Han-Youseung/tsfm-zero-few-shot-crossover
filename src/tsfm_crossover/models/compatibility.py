@@ -58,10 +58,30 @@ def validate_manifest(path: str | Path) -> CompatibilityManifest | ModelSelectio
     manifest_path = Path(path)
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
     _reject_local_paths_and_secrets(payload)
-    if payload.get("kind") in {"gpu_preparation", "gpu_condition"}:
-        from .gpu_gate import GPUCondition, GPUPendingManifest
+    if payload.get("kind") == "gpu_evidence_review":
+        from .gpu_gate import GPUEvidenceReview, summarize, validate_result
 
-        model = GPUPendingManifest if payload["kind"] == "gpu_preparation" else GPUCondition
+        review = GPUEvidenceReview.model_validate(payload)
+        root = manifest_path.resolve().parents[3]
+        records = []
+        for name in review.conditions:
+            target = (root / name).resolve()
+            if not target.is_relative_to(root / "results/manifests/models/gpu_runs"):
+                raise ValueError("evidence reference outside gpu_runs")
+            records.append(
+                validate_result(json.loads(target.read_text()), root, review.execution_commit)
+            )
+        if not summarize(records)["production_adapter_allowed"]:
+            raise ValueError("review does not satisfy required GPU matrix")
+        return review
+    if payload.get("kind") in {"gpu_preparation", "gpu_condition", "gpu_evidence"}:
+        from .gpu_gate import GPUCondition, GPUPendingManifest, GPUValidatedManifest
+
+        model = {
+            "gpu_preparation": GPUPendingManifest,
+            "gpu_condition": GPUCondition,
+            "gpu_evidence": GPUValidatedManifest,
+        }[payload["kind"]]
         return model.model_validate(payload)
     if "candidates" in payload and "selected_candidate" in payload:
         return ModelSelectionGate.model_validate(payload)

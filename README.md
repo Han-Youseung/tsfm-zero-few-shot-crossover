@@ -6,7 +6,7 @@
 
 ## 연구 범위
 
-- 모델 후보: `ibm-granite/granite-timeseries-ttm-r3`, `Salesforce/moirai-2.0-R-small`
+- 선택 모델: `ibm-granite/granite-timeseries-ttm-r3`, `Salesforce/moirai-1.1-R-small`
 - 데이터셋: ETTh1, ETTh2, ETTm1, ETTm2, Electricity, Traffic, PEMS08, Solar, Wind, Weather, AQShunyi, Exchange, ZafNoo, CzeLan
 - 학습 비율: `0%, 0.5%, 1%, 2%, 5%, 10%, 20%, 50%, 100%`
 - 예측 길이: `96, 192, 336, 720`
@@ -27,7 +27,11 @@ python -m pip install -e ".[dev]"
 pytest
 ```
 
-모델 의존성은 `requirements/ttm.txt`와 `requirements/moirai.txt`로 분리하며 같은 환경에 함께 설치하지 않습니다. 기본 테스트는 실제 모델을 다운로드하지 않습니다.
+모델 의존성은 `requirements/ttm.txt`와 `requirements/moirai1.txt`로 분리하며 같은 환경에 함께 설치하지 않습니다. 기본 테스트는 실제 모델을 다운로드하지 않습니다.
+
+4.6단계 FP32 GPU 근거 12개를 검증했습니다. TTM은 A100, MOIRAI는 T4에서
+ETTh1·7채널·batch 1·context 512의 네 horizon을 실행했습니다.
+[GPU 근거 및 공식 loss 검토](docs/gpu-evidence-review.md)에 범위와 제약을 기록합니다.
 
 ## 구조
 

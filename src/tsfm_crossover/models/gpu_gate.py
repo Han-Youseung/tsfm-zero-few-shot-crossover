@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import math
 import re
 import subprocess
 from functools import lru_cache
@@ -169,6 +170,37 @@ class GPUPendingManifest(BaseModel):
     results_policy: str
 
 
+class GPUValidatedManifest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    kind: Literal["gpu_evidence"]
+    schema_version: Literal[1]
+    model_family: Literal["ttm", "moirai1"]
+    execution_commit: str = Field(pattern=r"^[0-9a-f]{40}$")
+    gpu_status: Literal["passed"]
+    fp32: Literal["passed"]
+    installation_status: Literal["verified"]
+    amp: Literal["not_run"]
+    conditions: list[str] = Field(min_length=4)
+    protocol_frozen: Literal[False]
+    production_adapter_allowed: Literal[True]
+    scope: str
+
+
+class GPUEvidenceReview(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    kind: Literal["gpu_evidence_review"]
+    execution_commit: str = Field(pattern=r"^[0-9a-f]{40}$")
+    archive_sha256: dict[str, str]
+    conditions: list[str] = Field(min_length=12, max_length=12)
+    historical_execution_commit: str
+    historical_conditions: Literal[4]
+    amp: Literal["not_run"]
+    gpu_compatibility: Literal["passed"]
+    production_adapter_allowed: Literal[True]
+    protocol_frozen: Literal[False]
+    moirai_100_samples: Literal["passed"]
+
+
 def validate_result(payload: dict, root: Path, expected_commit: str) -> GPUCondition:
     from .compatibility import _reject_local_paths_and_secrets
 
@@ -177,10 +209,96 @@ def validate_result(payload: dict, root: Path, expected_commit: str) -> GPUCondi
     i = result.identity
     if i != identity(root, i["model_family"], i["horizon"], expected_commit, i["num_samples"]):
         raise ValueError("revision/code/config/project commit/fingerprint identity mismatch")
+    if result.status == "passed":
+        validate_details(result)
     return result
 
 
+def validate_details(result: GPUCondition) -> None:
+    """Cross-check recorded observations as well as the probe's boolean assertions.
+
+    JSON cannot independently prove a CUDA execution. These observations are also
+    reviewed against the immutable execution source; do not describe them as a rerun.
+    """
+    i, d, e = result.identity, result.details, result.environment
+
+    def require(ok, message):
+        if not ok:
+            raise ValueError("GPU detail evidence: " + message)
+
+    require(e.get("official_code_commit") == i["code_commit"], "official source commit")
+    require(e.get("dtype") == "float32" and e.get("seed") == i["seed"], "dtype/seed")
+    require(
+        e.get("deterministic_algorithms") is True and e.get("deterministic_warn_only") is True,
+        "determinism",
+    )
+    require(d.get("determinism_policy") == i["determinism"], "determinism policy")
+    require(d.get("comparison_tolerance") == {"rtol": 1e-4, "atol": 1e-5}, "tolerance")
+    for key in ("input_device", "prediction_device"):
+        require(str(d.get(key)).startswith("cuda:"), key)
+    require(
+        bool(d.get("parameter_devices"))
+        and all(str(x).startswith("cuda:") for x in d["parameter_devices"]),
+        "parameter devices",
+    )
+    require(
+        d.get("parameter_dtypes") == ["torch.float32"]
+        and d.get("prediction_dtype") == "torch.float32",
+        "tensor dtype",
+    )
+    require(d.get("point_shape") == [1, i["horizon"], 7], "point shape")
+    require(
+        d.get("sample_shape")
+        == (None if i["model_family"] == "ttm" else [1, i["num_samples"], i["horizon"], 7]),
+        "sample shape",
+    )
+    zs = d.get("zero_shot_parameter_hash", "")
+    require(bool(re.fullmatch(r"[0-9a-f]{64}", zs)), "pretrained hash")
+    stages = ["inference"]
+    if i["num_samples"] != 100:
+        require(d.get("training_pretrained_parameter_hash") == zs, "independent pretrained start")
+        trained = d.get("trained_parameter_hash", "")
+        require(bool(re.fullmatch(r"[0-9a-f]{64}", trained)) and trained != zs, "updated hash")
+        require(
+            d.get("total_parameters", 0) > 0
+            and d.get("trainable_parameters") == d["total_parameters"],
+            "parameter coverage",
+        )
+        require(
+            0 < d.get("changed_parameter_tensors", 0) <= d.get("parameter_tensors", 0),
+            "parameter updates",
+        )
+        require(d.get("actual_optimizer_steps") in (1, 2), "optimizer steps")
+        require(isinstance(d.get("parameters_without_gradient"), list), "gradient coverage")
+        require(isinstance(d.get("loss"), (int, float)) and math.isfinite(d["loss"]), "loss")
+        error = d.get("restore_max_absolute_error")
+        # Relative-error verification itself is recorded by restore_prediction;
+        # a finite maximum absolute error must also have been captured.
+        require(
+            isinstance(error, (int, float)) and math.isfinite(error) and error >= 0, "restore error"
+        )
+        stages.append("training_step")
+    else:
+        require(
+            d.get("finetune") == "not_run; covered separately at eight samples",
+            "100 samples must remain inference-only",
+        )
+    for stage in stages:
+        for key in ("wall_seconds", "max_memory_allocated_mb", "max_memory_reserved_mb"):
+            value = d.get(stage, {}).get(key)
+            require(
+                isinstance(value, (int, float)) and math.isfinite(value) and value >= 0,
+                stage + "/" + key,
+            )
+
+
 def summarize(results: list[GPUCondition]) -> dict:
+    keys = [
+        (r.identity["model_family"], r.identity["horizon"], r.identity["num_samples"])
+        for r in results
+    ]
+    if len(keys) != len(set(keys)):
+        raise ValueError("duplicate condition evidence; select one explicit attempt")
     completed = {
         (r.identity["model_family"], r.identity["horizon"], r.identity["num_samples"])
         for r in results
@@ -194,7 +312,7 @@ def summarize(results: list[GPUCondition]) -> dict:
         "production_adapter_allowed": passed,
         "protocol_frozen": False,
         "moirai_100_samples": "passed"
-        if all(("moirai1", h, 100) in completed for h in HORIZONS)
+        if len(commits) == 1 and all(("moirai1", h, 100) in completed for h in HORIZONS)
         else "pending_gpu",
     }
 
@@ -216,6 +334,7 @@ def main():
         validate_result(json.loads(p.read_text()), args.root, args.expected_commit)
         for p in args.files
     ]
+    summary = summarize(results)  # Reject ambiguous inputs before any writes.
     if args.import_results:
         for result in results:
             i = result.identity
@@ -233,7 +352,7 @@ def main():
             )
             if not target.exists():
                 write_json_atomic(target, payload)
-    print(json.dumps(summarize(results), indent=2))
+    print(json.dumps(summary, indent=2))
 
 
 if __name__ == "__main__":

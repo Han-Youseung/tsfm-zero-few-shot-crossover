@@ -2,12 +2,13 @@
 
 ## Status and scope
 
-Preparation only. Local Windows has no accessible CUDA GPU; the inspected model environment
-has torch 2.4.1+cpu. Actual Colab installation is **installation_pending**, GPU evidence is
-**pending_gpu**, AMP is **not_run**, and production adapters remain blocked. No GPU timings,
-memory measurements, successful predictions, training results or restores are claimed.
+Returned Colab evidence passed: eight mandatory FP32 train/restore conditions and
+four additional MOIRAI 100-sample inference conditions at execution `1bb93b80...`.
+Installation was verified in those sessions. AMP remains **not_run**. Adapter
+implementation is allowed; its own GPU integration remains pending. See
+[evidence review](gpu-evidence-review.md) for exact files, scope and source review.
 
-This gate covers official raw ETTh1, seven jointly processed channels, context 512,
+This gate covers official raw ETTh1, seven input/output channels, context 512,
 batch size one, and horizons 96/192/336/720. It is not a full-dataset feasibility test,
 metric benchmark, crossover analysis, hyperparameter search or protocol freeze.
 
@@ -146,3 +147,10 @@ sample count and stochastic seeds; batch size, optimizer, learning rate and step
 precision policy; interpretation of TTM checkpoint differences and padding/crop. Test data
 must never choose any of these. Native scaling only, no external StandardScaler, original-unit
 predictions, and the same Zero-Shot/fine-tuning scaling path remain in force.
+# Returned evidence update
+
+The twelve conditions at `1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5`
+passed the returned-evidence review. TTM ran on A100 and MOIRAI on T4.
+See [review](gpu-evidence-review.md) and `results/manifests/models/gpu_evidence_review.json`.
+The instructions below remain the original probe reproduction route; a new adapter
+must generate separate integration evidence. AMP is not_run; protocol is unfrozen.

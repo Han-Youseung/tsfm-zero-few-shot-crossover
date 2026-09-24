@@ -8,7 +8,7 @@ TSFM-Bench는 관련 선행연구로 인용할 뿐, 결과 재현·성능 개선
 
 ## 모델과 버전 고정
 
-1차 후보는 `ibm-granite/granite-timeseries-ttm-r3`와 `Salesforce/moirai-2.0-R-small`입니다. 파일럿에서 Zero-Shot, Fine-Tuning, full-parameter Fine-Tuning, 다변량, context/horizon, point forecast, Colab Pro+ 자원과 라이선스를 공식 코드·모델 카드로 검증합니다. 통과 시 Hugging Face revision, 공식 코드 commit과 패키지 버전을 고정하고 본 실험 중 교체하지 않습니다.
+선택 모델은 `ibm-granite/granite-timeseries-ttm-r3`와 `Salesforce/moirai-1.1-R-small`입니다. MOIRAI 2.0의 필수 다변량 조건 실패 기록은 보존합니다. 고정한 revision과 공식 코드로 4.6단계 FP32 GPU 호환성을 검증했으며 연구 protocol은 아직 unfrozen입니다. [검증 범위와 실제 objective](gpu-evidence-review.md)를 참고합니다.
 
 ## 공통 실험 프로토콜
 
@@ -16,7 +16,7 @@ TSFM-Bench는 관련 선행연구로 인용할 뿐, 결과 재현·성능 개선
 
 - 14개 데이터셋: ETTh1, ETTh2, ETTm1, ETTm2, Electricity, Traffic, PEMS08, Solar, Wind, Weather, AQShunyi, Exchange, ZafNoo, CzeLan
 - 모든 데이터셋에 시간순 train 60%, validation 20%, test 20%를 적용합니다.
-- 외부 scaler는 train에만 fit하고 validation/test에는 transform만 적용합니다.
+- 현재 두 모델은 native scaling만 사용하며 외부 scaler를 비활성화합니다. 향후 외부 scaler를 채택한다면 train에서만 fit해야 합니다.
 - validation은 early stopping과 사전 모델 설정 확인에만, test는 최종 평가에만 사용합니다.
 - test는 학습, scaler 갱신, early stopping, hyperparameter/checkpoint 선택에 사용하지 않습니다.
 
@@ -67,4 +67,4 @@ Pretrained checkpoint, context, split, normalization, validation/test windows, p
 
 ## 현재 단계
 
-Strict YAML schema, protocol/experiment ID, 결과 schema, 원자적 소용량 결과 저장, 환경·Git 메타데이터와 seed interface만 구현합니다. 실제 데이터, window 생성·선택, 모델, GPU, Colab과 전환점 분석은 다음 단계 범위입니다.
+GPU probe 결과 검증 후 공통 adapter를 구현하는 단계입니다. 전체 실험과 crossover 탐색은 실행하지 않습니다. TTM의 공식 channel-independent 구조와 MOIRAI의 공동 target 처리를 구분하며, 공통성은 동일한 다변량 입출력·데이터·평가 조건에 있습니다. 학습 objective와 평가 metric은 별개입니다.

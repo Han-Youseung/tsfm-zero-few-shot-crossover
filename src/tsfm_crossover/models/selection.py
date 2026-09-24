@@ -28,6 +28,7 @@ class DecisionStatus(StrEnum):
     rejected = "rejected"
     selected_cpu = "selected_cpu"
     pending_gpu = "pending_gpu"
+    gpu_validated = "gpu_validated"
     frozen = "frozen"
 
 

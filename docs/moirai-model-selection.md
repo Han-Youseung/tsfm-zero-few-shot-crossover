@@ -1,10 +1,10 @@
 # MOIRAI model-selection gate
 
-Phase 4.6 prepares the actual CUDA gate using the same pinned 1.1 candidate, patch 64,
-official training wrapper and objective. Colab installation and GPU execution remain
-pending; eight- and 100-sample evidence are separate. See
+Phase 4.6 passed the CUDA gate using the same pinned 1.1 candidate, patch 64,
+official training wrapper and objective. Colab installation and GPU execution are
+validated; eight- and 100-sample evidence are separate. See
 [Colab GPU validation](colab-gpu-validation.md). This does not reopen model selection,
-replace the pinned Uni2TS commit, permit production adapters, or freeze the protocol.
+or replace the pinned Uni2TS commit. Adapter implementation is now allowed; the protocol is unfrozen.
 
 Checked on 2026-09-21. This gate selects a model for this study; it does not reproduce
 TSFM-Bench. Only official SalesforceAIResearch/Uni2TS code, Salesforce weights, model
@@ -15,7 +15,7 @@ cards, releases, and the MOIRAI paper were used.
 `Salesforce/moirai-1.1-R-small` at Hugging Face revision
 `0c24ab99db2c1a70ea2a0fc03bf113329772ac64` passed the local CPU functional gate with
 Uni2TS 2.0.0 at commit `cfd46d4510ed8896f263116f32928eede05b0a75`. It is selected for
-GPU confirmation and remains `pending_gpu`, not `frozen`. Because the first-priority
+GPU confirmation and subsequently reached `gpu_validated`, not `frozen`. Because the first-priority
 small candidate passed, MOIRAI 1.0 and all Base candidates were not downloaded or run.
 
 The selected source is an exact commit on official `main` and reports package version
@@ -89,3 +89,10 @@ the pinned revisions, all four 7-channel shapes, finite samples/loss/gradients, 
 parameter update, successful checkpoint restore, and reported CUDA/AMP peak memory.
 Only then may the decision advance from `pending_gpu`; this CPU result cannot freeze the
 model or authorize a production adapter by itself.
+# Phase 4.6 update
+
+MOIRAI 1.1-R-small passed four FP32 GPU training/restore conditions at eight
+samples and four extra inference checks at 100 samples on T4. Its selected
+checkpoint and official code commit are unchanged. See
+[GPU evidence review](gpu-evidence-review.md). The CPU selection history below
+is preserved; GPU-pending statements there describe the earlier stage.

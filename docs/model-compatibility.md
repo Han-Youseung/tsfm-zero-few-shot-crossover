@@ -1,6 +1,6 @@
 # Phase 4 model compatibility assessment
 
-Phase 4.6 status: preparation only, installation_pending / pending_gpu. The original CPU
+Phase 4.6 status: returned FP32 GPU evidence passed for both selected models. The original CPU
 records below are historical and preserved. In particular, the old TTM one-step CPU probe
 trained on a validation window; this is corrected in the executable probe and is not
 accepted as train-only GPU evidence. See [Colab GPU validation](colab-gpu-validation.md)
@@ -171,3 +171,11 @@ performance result.
 
 The machine-readable candidate files and manifests contain the exact hashes, file
 sizes, warnings, and full capability matrices.
+# Phase 4.6 update
+
+Returned FP32 Colab evidence for both selected models passed at execution
+`1bb93b80b0c22c990cd2b5f7d9ff2a125b21e7c5`. See
+[GPU evidence review](gpu-evidence-review.md) for scope, retained failures,
+TTM channel-independent semantics and quantile objectives. The historical CPU
+observations in this document are retained; earlier pending GPU statements are superseded
+by this update. MOIRAI 2.0 remains excluded. Protocol and AMP remain unfrozen/pending.
