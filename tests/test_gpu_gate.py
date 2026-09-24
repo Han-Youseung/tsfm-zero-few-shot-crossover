@@ -120,6 +120,16 @@ def test_ttm_revisions_are_horizon_specific():
     assert record(horizon=192).identity["revision"] == record(horizon=336).identity["revision"]
 
 
+def test_cuda_median_determinism_policy_is_explicit():
+    policy = record(horizon=96).identity["determinism"]
+    assert policy == {
+        "algorithms_enabled": True,
+        "warn_only": True,
+        "reason": "CUDA median indices lack a strict deterministic implementation",
+        "repeat_comparison": {"rtol": 1e-4, "atol": 1e-5},
+    }
+
+
 def test_100_samples_inference_does_not_require_duplicate_training():
     item = evidence("moirai1", 720, 100)
     item["checks"] = {k: True for k in CHECKS[: CHECKS.index("full_requires_grad")]}

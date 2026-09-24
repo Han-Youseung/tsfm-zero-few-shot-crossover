@@ -107,6 +107,12 @@ def identity(root: Path, family: str, horizon: int, commit: str, samples: int) -
         objective="official model forward loss"
         if family == "ttm"
         else "MoiraiFinetune/PackedNLLLoss",
+        determinism={
+            "algorithms_enabled": True,
+            "warn_only": True,
+            "reason": "CUDA median indices lack a strict deterministic implementation",
+            "repeat_comparison": {"rtol": 1e-4, "atol": 1e-5},
+        },
     )
 
 

@@ -32,6 +32,8 @@ The distinct Uni2TS release-tag commit is not substituted. Installed PEP 610 com
 package versions, resolved packages and individual downloaded config SHA256 are checked.
 CPU dependency snapshots are not applied to CUDA environments. CUDA wheel dependency
 resolution and imports must succeed; pending installation does not mean Colab is verified.
+The notebook installs the Colab `python3.12-venv` system component before creating each
+isolated environment because the pinned runtime image does not include `ensurepip` by default.
 
 TTM uses its official prediction_outputs and loss path, including prediction_filter_length
 192 for the 336-output checkpoint. The 720 condition prepends 512 zero rows to the native
@@ -81,6 +83,13 @@ parameter hash, seed repeat and channel permutation check. No optimizer is creat
 after Zero-Shot completes. MOIRAI records samples [1,S,H,7] and point [1,H,7]. TTM records
 [1,H,7]. Permutation checks use the official predictive distribution mean for MOIRAI,
 not differently ordered random samples. Comparisons use rtol=1e-4, atol=1e-5, not bitwise equality.
+
+PyTorch does not provide a strict deterministic CUDA implementation for the indices output
+of `median`, although decomposed TTM consumes only `.values`. The first A100 attempt at commit
+`129ae0397723b8fd2c9d4686af5799aac3405c54` therefore stopped horizons 96/192/336 at the
+synthetic forward while the standard 720 model passed. The gate now uses deterministic
+algorithms in `warn_only` mode and records that setting. Seeded repeat predictions must still
+pass rtol=1e-4 and atol=1e-5; warnings are not treated as proof of reproducibility.
 
 Full training requires all model parameters to have requires_grad and optimizer membership,
 finite loss and gradients, an actual optimizer step and some parameter changes. Missing

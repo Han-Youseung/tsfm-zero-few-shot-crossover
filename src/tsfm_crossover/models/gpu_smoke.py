@@ -113,6 +113,7 @@ def environment(family, expected_code):
         "dtype": "float32",
         "seed": torch.initial_seed(),
         "deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
+        "deterministic_warn_only": torch.is_deterministic_algorithms_warn_only_enabled(),
         "cudnn_benchmark": torch.backends.cudnn.benchmark,
         "tf32": torch.backends.cuda.matmul.allow_tf32,
         "cublas_workspace_config": os.environ["CUBLAS_WORKSPACE_CONFIG"],
@@ -158,7 +159,9 @@ def run(args, family, factory, predict, loss_fn, optimizer_fn, channel_check):
         np.random.seed(i["seed"])
         torch.manual_seed(i["seed"])
         torch.cuda.manual_seed_all(i["seed"])
-        torch.use_deterministic_algorithms(True)
+        # Decomposed TTM consumes CUDA median values, not its nondeterministic indices.
+        # Warn-only permits the official forward; seeded repeats remain a hard gate.
+        torch.use_deterministic_algorithms(True, warn_only=True)
         torch.backends.cudnn.benchmark = False
         torch.backends.cuda.matmul.allow_tf32 = False
         torch.backends.cudnn.allow_tf32 = False
@@ -244,6 +247,7 @@ def run(args, family, factory, predict, loss_fn, optimizer_fn, channel_check):
             raise ValueError("required Zero-Shot checks did not pass")
         details["zero_shot_parameter_hash"] = before
         details["comparison_tolerance"] = {"rtol": 1e-4, "atol": 1e-5}
+        details["determinism_policy"] = i["determinism"]
         details["inference"]["warm_up"] = "one synthetic forward; shape-specific first validation"
         del model, prediction, repeated, point
         gc.collect()
