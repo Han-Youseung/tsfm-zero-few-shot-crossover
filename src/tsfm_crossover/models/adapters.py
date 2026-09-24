@@ -270,7 +270,7 @@ class ExperimentAdapter(AdapterContract):
             self.model.train(mode)
             set_rng(state)
 
-    def save_training_state(self, path: Path):
+    def save_training_state(self, path: Path, *, loop_state=None):
         import torch
 
         if self.optimizer is None:
@@ -291,9 +291,13 @@ class ExperimentAdapter(AdapterContract):
             "grad_scaler": None,
             "scheduler": None,
             "parameter_hash": parameter_hash(self.parameter_state()),
+            "loop_state": loop_state,
         }
         try:
-            torch.save(payload, temporary)
+            with temporary.open("wb") as handle:
+                torch.save(payload, handle)
+                handle.flush()
+                os.fsync(handle.fileno())
             os.replace(temporary, path)
         finally:
             temporary.unlink(missing_ok=True)
@@ -320,6 +324,7 @@ class ExperimentAdapter(AdapterContract):
         if parameter_hash(self.parameter_state()) != saved["parameter_hash"]:
             raise ValueError("restored parameter hash mismatch")
         set_rng(saved["rng"])
+        self.loaded_loop_state = saved.get("loop_state")
 
     def parameter_state(self):
         if self.model is None:

@@ -1,0 +1,25 @@
+name: phase6_validation_only
+context: 512
+horizons: [96, 192, 336, 720]
+representatives: [ETTh1, Electricity]
+sampling_rate: 0.05
+seed: 1729
+max_steps: 200
+eval_every: 50
+patience_evals: 4
+checkpoint_every: 10
+validation_windows: 64
+training_batch: 1
+evaluation_batch: 1
+accumulation: 1
+learning_rates:
+  ttm: [0.000001, 0.00001, 0.0001]
+  moirai1: [0.0000005, 0.000005, 0.00005]
+num_samples: 100
+batch_candidates: [1, 2, 4, 8, 16, 32, 64]
+memory_fraction: 0.75
+amp_probe: false
+selection_metric: normalized_mae
+dtype: float32
+test_evaluation: false
+protocol_frozen: false

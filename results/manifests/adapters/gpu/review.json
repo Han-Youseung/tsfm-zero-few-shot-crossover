@@ -1,0 +1,22 @@
+{
+  "archives": [
+    {
+      "name": "ttm-adapter-results.zip",
+      "sha256": "9ba6fd57b564da34862c64a6274bf1019d3f0b8553ac51d9201218fad2561e56"
+    },
+    {
+      "name": "moirai1-adapter-results.zip",
+      "sha256": "be79e0b2401a4f49192fbd34ba1dc3c9916b0ca224b36ec074a5ce52bdd1ba7a"
+    }
+  ],
+  "conditions": 8,
+  "execution_commit": "689a284dac1c2b688b3efb6c1e2141fd966068d6",
+  "gpus": [
+    "Tesla T4"
+  ],
+  "moirai_adapter_100_samples": "pending",
+  "pilot_status": "not_run",
+  "protocol_frozen": false,
+  "scope": "ETTh1, batch 2, seven channels, FP32, one training step",
+  "status": "passed"
+}

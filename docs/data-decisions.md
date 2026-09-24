@@ -1,5 +1,9 @@
 # Data decisions after provenance resolution
 
+2026-09-25 update: independent raw preparation is now authorized and partially complete.
+See [phase-6 readiness](phase6-data-readiness.md). The historical bundle decisions below
+remain unchanged; ready new variants do not release their old bundle counterparts.
+
 Checked 2026-09-20. A/B may be used subject to license warnings; C is blocked pending a
 research decision; D is blocked. No C or D dataset was released merely because it parses.
 

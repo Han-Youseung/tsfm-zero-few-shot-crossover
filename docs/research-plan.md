@@ -67,4 +67,6 @@ Pretrained checkpoint, context, split, normalization, validation/test windows, p
 
 ## 현재 단계
 
-GPU probe 결과 검증 후 공통 adapter를 구현하는 단계입니다. 전체 실험과 crossover 탐색은 실행하지 않습니다. TTM의 공식 channel-independent 구조와 MOIRAI의 공동 target 처리를 구분하며, 공통성은 동일한 다변량 입출력·데이터·평가 조건에 있습니다. 학습 objective와 평가 metric은 별개입니다.
+공통 adapter의 8개 GPU 조건을 확인했고, 현재는 [6단계 validation-only pilot](validation-pilot.md) 준비 단계입니다. 실제 pilot GPU 실행과 최종 protocol 확정은 pending입니다. [14개 데이터셋 준비 상태](phase6-data-readiness.md)를 별도 관리하며 기존 bundle을 자동 허용하지 않습니다. Electricity의 준비된 UCI 370채널 variant는 기존 321채널과 구분합니다. 전체 실험과 crossover 탐색은 실행하지 않습니다. TTM의 공식 channel-independent 구조와 MOIRAI의 공동 target 처리를 구분하며, 학습 objective와 평가 metric은 별개입니다.
+
+Pilot은 기존 60:20:20 분할을 그대로 사용하며 train 내부 validation을 추가하지 않습니다. 학습 비율은 기존 중첩 grid 중 5% 한 조건만 사용합니다. 새 요청의 2/5/10/20/50/100%는 기존 grid의 부분집합으로 취급하고, 본 실험의 0.5/1% 제외를 자동 확정하지 않습니다. 후보 선택 지표는 사전에 선언한 채널 macro normalized MAE이며 최종 지표는 pilot 검토 후 결정합니다.

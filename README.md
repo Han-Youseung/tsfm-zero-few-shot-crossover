@@ -2,7 +2,7 @@
 
 시계열 데이터 특성과 대상 데이터 학습량에 따라 Time-Series Foundation Model(TSFM)의 Few-Shot Fine-Tuning이 Zero-Shot 성능을 넘어서는 **전환 구간**을 분석하는 연구 저장소입니다.
 
-> 현재 단계: 5단계 공통 adapter 구현 — 기존 GPU probe 근거 검증 완료, 새 adapter GPU 통합 검증은 pending. Bundle 14종은 차단.
+> 현재 단계: 6단계 validation-only pilot 준비 — adapter GPU 8조건 확인 완료(T4). ETT 4종과 별도 Electricity UCI-370 variant 준비 완료. 실제 A100 pilot은 pending이며 기존 bundle 14종 차단을 유지합니다.
 
 ## 연구 범위
 
@@ -12,7 +12,7 @@
 - 예측 길이: `96, 192, 336, 720`
 - 주 평가: 동일한 test window의 stride 1 rolling-origin MAE·MSE
 
-실험 시작 시점의 최신 공식 TTM·MOIRAI를 파일럿으로 검증한 뒤 Hugging Face revision, 공식 코드 commit과 패키지 버전을 고정합니다. Context length, optimizer, learning rate, step budget, batch size와 fine-tuning 대상 파라미터는 아직 확정되지 않았으며 test 성능을 보고 선택하지 않습니다.
+현재 선택 모델의 Hugging Face revision, 공식 코드 commit과 핵심 모델 패키지 버전은 고정했으며 자동 업그레이드하지 않습니다. Pilot은 context 512와 full-parameter fine-tuning을 사용합니다. 본 실험의 learning rate, step budget, batch size, precision 및 평가 정책은 아직 확정되지 않았으며 test 성능을 보고 선택하지 않습니다.
 
 TSFM-Bench는 관련 선행연구로만 인용합니다. 그 결과·체크포인트·실험 조건을 재현하거나 직접 비교하지 않고, 코드와 프로토콜도 복사·번안하지 않습니다. 구현은 최신 TTM·MOIRAI의 공식 구현과 공개 API를 사용해 독립적으로 작성합니다.
 
@@ -34,7 +34,8 @@ ETTh1·7채널·batch 1·context 512의 네 horizon을 실행했습니다.
 [GPU 근거 및 공식 loss 검토](docs/gpu-evidence-review.md)에 범위와 제약을 기록합니다.
 
 공통 adapter의 설정·checkpoint·RNG 정책과 실행 방법은 [adapter 문서](docs/adapters.md)에 있습니다.
-다음 GPU 실행은 `notebooks/20_adapter_integration.ipynb`를 TTM과 MOIRAI의 별도 세션에서 실행합니다.
+다음 GPU 실행은 `notebooks/30_validation_pilot.ipynb`를 TTM과 MOIRAI의 별도 세션에서 실행합니다.
+[14개 데이터셋 준비 상태](docs/phase6-data-readiness.md)와 [pilot 범위·실행 방법](docs/validation-pilot.md)을 먼저 확인합니다. Test 평가·본 실험·최종 설정 확정은 이번 단계 범위가 아닙니다.
 
 ## 구조
 

@@ -61,6 +61,9 @@ build/
 credentials*.json
 token*.json
 secrets*.json
+# User-returned GPU archives stay local; only validated small JSON is versioned.
+/ttm-adapter-results.zip
+/moirai1-adapter-results.zip
 .vscode/
 .idea/
 

@@ -1,0 +1,63 @@
+{
+  "Exchange": {
+    "license": "permission_verification_pending",
+    "local_acquired": true,
+    "nonfinite": 0,
+    "remaining": "verify timestamps, full preprocessing and data-use terms; no automatic replacement",
+    "sha256": "6a4fbb561dcdee43f071a83badbeec9223a335552278348656738b556f1c2e9d",
+    "shape": [
+      7588,
+      8
+    ],
+    "source_url": "https://raw.githubusercontent.com/laiguokun/multivariate-time-series-data/7f402f185cc2435b5e66aed13a3b560ed142e023/exchange_rate/exchange_rate.txt.gz",
+    "status": "blocked_provenance_or_license",
+    "timestamps": "not supplied in matrix",
+    "variant": "Exchange__author_matrix_unreleased"
+  },
+  "PEMS08": {
+    "license": "permission_verification_pending",
+    "local_acquired": true,
+    "nonfinite": 0,
+    "remaining": "verify timestamps, full preprocessing and data-use terms; no automatic replacement",
+    "sha256": "e1d03ce74e9fb79149e6e7c37c680214822c4a285baa2f42278cacabcd25c075",
+    "shape": [
+      17856,
+      170,
+      3
+    ],
+    "source_url": "https://raw.githubusercontent.com/Davidham3/ASTGCN/d5d40645fa45471f2b473fc49a29ec3f0a993c6d/data/PEMS08/pems08.npz",
+    "status": "blocked_provenance_or_license",
+    "timestamps": "not supplied in matrix",
+    "variant": "PEMS08__author_matrix_unreleased"
+  },
+  "Solar": {
+    "license": "permission_verification_pending",
+    "local_acquired": true,
+    "nonfinite": 0,
+    "remaining": "verify timestamps, full preprocessing and data-use terms; no automatic replacement",
+    "sha256": "1ae9329c3e1032acbb8dd080bfc397c44507006812a715d2788f172820489a1c",
+    "shape": [
+      52560,
+      137
+    ],
+    "source_url": "https://raw.githubusercontent.com/laiguokun/multivariate-time-series-data/7f402f185cc2435b5e66aed13a3b560ed142e023/solar-energy/solar_AL.txt.gz",
+    "status": "blocked_provenance_or_license",
+    "timestamps": "not supplied in matrix",
+    "variant": "Solar__author_matrix_unreleased"
+  },
+  "Traffic": {
+    "license": "permission_verification_pending",
+    "local_acquired": true,
+    "nonfinite": 0,
+    "remaining": "verify timestamps, full preprocessing and data-use terms; no automatic replacement",
+    "sha256": "c7be5a00519d344a5ec0eabdbfec5ea0c7dd1eed5f9b1a3843a93bb88086a56d",
+    "shape": [
+      17544,
+      862
+    ],
+    "source_url": "https://raw.githubusercontent.com/laiguokun/multivariate-time-series-data/7f402f185cc2435b5e66aed13a3b560ed142e023/traffic/traffic.txt.gz",
+    "status": "blocked_provenance_or_license",
+    "timestamps": "not supplied in matrix",
+    "variant": "Traffic__author_matrix_unreleased"
+  }
+}

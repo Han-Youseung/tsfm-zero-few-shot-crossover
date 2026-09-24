@@ -1,0 +1,89 @@
+{
+  "Weather": {
+    "bundle_status": "blocked",
+    "issues": [
+      "duplicate_timestamps",
+      "irregular_intervals"
+    ],
+    "license": "CC-BY-4.0",
+    "name": "Weather",
+    "path": "data/prepared/Weather.csv",
+    "qc": {
+      "channel_names": [
+        "p (mbar)",
+        "T (degC)",
+        "Tpot (K)",
+        "Tdew (degC)",
+        "rh (%)",
+        "VPmax (mbar)",
+        "VPact (mbar)",
+        "VPdef (mbar)",
+        "sh (g/kg)",
+        "H2OC (mmol/mol)",
+        "rho (g/m**3)",
+        "wv (m/s)",
+        "max. wv (m/s)",
+        "wd (deg)",
+        "rain (mm)",
+        "raining (s)",
+        "SWDR (W/m²)",
+        "PAR (µmol/m²/s)",
+        "max. PAR (µmol/m²/s)",
+        "Tlog (degC)",
+        "CO2 (ppm)"
+      ],
+      "channels": 21,
+      "duplicate_timestamps": 1,
+      "frequency_seconds": 600.0,
+      "infinite_values": 0,
+      "irregular_intervals": 2,
+      "missing_values": 0,
+      "non_monotonic": 0,
+      "rows": 52696,
+      "sha256": "3009109032e0781b3de5dadeb304f447ccd69db5658dde22ac4aeef337c3163e",
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "6f24ef6a12e43cb895a8cee36d8705f07abc56f9c4cadcdb0ae9488989a65ca3",
+        "test": {
+          "end": 52696,
+          "start": 42156
+        },
+        "total_rows": 52696,
+        "train": {
+          "end": 31617,
+          "start": 0
+        },
+        "validation": {
+          "end": 42156,
+          "start": 31617
+        }
+      },
+      "statistics_scope": "train_only; full-file integrity counts only",
+      "train_constant_channels": 0
+    },
+    "recipe": "v1: concatenate halves; preserve duplicate rows and all numeric channels",
+    "redistribute_raw": false,
+    "source_files": [
+      {
+        "sha256": "6a0be0552a2a26a04c3b41a5281d4a55ae251d4c65ce630971a8662f43b31f9f",
+        "url": "https://www.bgc-jena.mpg.de/wetter/data/mpi_roof_2020a.zip"
+      },
+      {
+        "sha256": "c37eca910ee2803b17b8c587f3194bc7625abf994576c50f32538dd7cb65ac77",
+        "url": "https://www.bgc-jena.mpg.de/wetter/data/mpi_roof_2020b.zip"
+      }
+    ],
+    "status": "blocked_quality",
+    "variant": "Weather__mpi_roof_2020_raw"
+  }
+}

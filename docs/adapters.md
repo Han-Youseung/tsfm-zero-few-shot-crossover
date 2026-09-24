@@ -65,7 +65,11 @@ For MOIRAI replace the config with `configs/adapters/moirai1_smoke.yaml`. Local 
 verification uses `--device cpu --local-files-only` and cached official weights.
 `--allow-dirty` is only permitted for CPU development; resulting records explicitly
 include dirty_worktree and source SHA256 and cannot claim clean-commit GPU evidence.
-Actual adapter GPU validation remains pending until this new route is executed.
+Returned phase-5 ZIPs now verify eight FP32 GPU conditions on Tesla T4 at
+`689a284dac1c2b688b3efb6c1e2141fd966068d6`; records are under
+`results/manifests/adapters/gpu/`. They do not validate high-channel datasets or
+100-sample MOIRAI adapter inference. Next is the [validation-only pilot](validation-pilot.md),
+not a rerun of those eight conditions.
 
 ## Completed local verification
 
@@ -81,8 +85,9 @@ These are explicitly dirty-worktree development runs based on commit
 `04ac8be8b2d47e1fef9626d082c57b92ed9020df6579ce1a70428a923a6b98a2`.
 They are not relabeled as runs of the later commit that publishes the implementation.
 Default tests: 161 passed, one optional torch module skipped. A separate torch
-environment passed all seven tensor integration tests. Adapter GPU, other horizons
-with the new adapters, AMP and high-channel feasibility remain unverified.
+environment passed all seven tensor integration tests. At that local verification stage,
+adapter GPU, other horizons, AMP and high-channel feasibility were unverified. Later
+returned evidence supersedes only the eight ETTh1 FP32 GPU conditions above.
 
 ## Next pilot decisions
 
