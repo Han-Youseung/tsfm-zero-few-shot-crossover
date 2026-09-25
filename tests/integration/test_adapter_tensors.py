@@ -69,6 +69,17 @@ def test_zero_shot_rng_shape_no_update_and_training_mode():
         adapter.train_step(batch(adapter))
 
 
+def test_prediction_ignores_missing_targets_but_training_rejects_them():
+    adapter = toy()
+    item = batch(adapter)
+    expected = adapter.predict(item)
+    missing = dataclasses.replace(item, future=torch.full_like(item.future, float("nan")))
+    assert torch.equal(expected, adapter.predict(missing))
+    adapter.configure_finetuning()
+    with pytest.raises(ValueError, match="nonfinite future"):
+        adapter.train_step(dataclasses.replace(missing, split="train"))
+
+
 def test_checkpoint_roundtrip_and_resume_cannot_warm_start(tmp_path):
     adapter = toy()
     adapter.configure_finetuning()

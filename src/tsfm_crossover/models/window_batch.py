@@ -52,6 +52,7 @@ def make_window_batch(
     channel_names: tuple[str, ...],
     fingerprint: str,
     sampling_manifest_hash: str,
+    context_values=None,
 ) -> WindowBatch:
     """Only train/validation engineering windows; no scaler or new sampling logic."""
     if not windows or len({w.split for w in windows}) != 1:
@@ -83,7 +84,8 @@ def make_window_batch(
         )
         if expected != w.window_id:
             raise ValueError("window fingerprint/ID mismatch")
-    past = [values[w.context_start : w.context_end] for w in windows]
+    inputs = values if context_values is None else context_values
+    past = [inputs[w.context_start : w.context_end] for w in windows]
     future = [values[w.target_start : w.target_end] for w in windows]
     return WindowBatch(
         past,

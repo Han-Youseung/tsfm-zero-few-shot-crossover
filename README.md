@@ -62,4 +62,8 @@ Bundle 생성 경로, 공식 ETT 값 대조, canonical fingerprint와 데이터�
 
 ## 저장 원칙
 
+승인된 데이터 권고안 적용과 신규 4개 데이터셋의 validation-only GPU 실행 절차는
+[본 실험 전 준비 상태](docs/pre-experiment-readiness.md)에 정리했습니다.
+현재 준비 후보는 9개이며 신규 GPU 검증과 최종 protocol 확정은 아직 남아 있습니다.
+
 소스, YAML, 소용량 결과·요약·그림·manifest와 문서만 Git으로 관리합니다. 데이터셋, 모델 가중치, 캐시, 대용량 예측 배열과 원본 로그는 저장소에 추적하지 않습니다.

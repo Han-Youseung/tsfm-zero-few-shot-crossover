@@ -13,6 +13,7 @@ import yaml
 
 from tsfm_crossover.data.common import stable_hash
 from tsfm_crossover.data.coverage import compute_coverage
+from tsfm_crossover.data.missing import POLICY, causal_context, eligible_windows
 from tsfm_crossover.data.pilot_data import load_pilot_values
 from tsfm_crossover.data.sampling import build_sampling_manifest
 from tsfm_crossover.data.windows import generate_rolling_windows, generate_train_windows
@@ -44,6 +45,10 @@ def prepare_condition(config, row, entry, root, commit):
     candidates = generate_train_windows(
         entry["variant"], fingerprint, split.train, 512, row["horizon"]
     )
+    unfiltered_train_count = len(candidates)
+    context = causal_context(values) if entry.get("missing_policy") == POLICY else values
+    if entry.get("missing_policy") == POLICY:
+        candidates = eligible_windows(candidates, values, context, training=True)
     manifest = build_sampling_manifest(
         candidates,
         dataset_sha256=fingerprint,
@@ -54,8 +59,13 @@ def prepare_condition(config, row, entry, root, commit):
     )
     selected = select_train_windows(candidates, manifest, config.sampling_rate)
     validating = validation_subset(
-        generate_rolling_windows(
-            entry["variant"], fingerprint, "validation", split.validation, 512, row["horizon"]
+        eligible_windows(
+            generate_rolling_windows(
+                entry["variant"], fingerprint, "validation", split.validation, 512, row["horizon"]
+            ),
+            values,
+            context,
+            training=False,
         ),
         config.validation_windows,
     )
@@ -68,6 +78,7 @@ def prepare_condition(config, row, entry, root, commit):
             channel_names=channels,
             fingerprint=fingerprint,
             sampling_manifest_hash=manifest.manifest_hash,
+            context_values=context,
         )
 
     settings = AdapterConfig(
@@ -96,6 +107,8 @@ def prepare_condition(config, row, entry, root, commit):
         "coverage": compute_coverage(selected, (split.train.start, split.train.end)).as_dict(),
         "selected_train_windows": len(selected),
         "total_train_windows": len(candidates),
+        "unfiltered_train_windows": unfiltered_train_count,
+        "missing_policy": entry.get("missing_policy", "complete_observations"),
         "requested_sampling_rate": config.sampling_rate,
         "effective_sampling_rate": len(selected) / len(candidates),
         "test_targets_read": False,
@@ -196,7 +209,15 @@ def stability(
             )
         if adapter.global_step % config.eval_every == 0 or adapter.global_step == config.max_steps:
             metrics, timing = measure(lambda: evaluate(adapter, validating, batch, scale), device)
-            objective = adapter.validation_step(batch(validating[:1]))
+            diagnostic = next(
+                (
+                    w
+                    for w in validating
+                    if all(math.isfinite(v) for row in batch([w]).future[0] for v in row)
+                ),
+                None,
+            )
+            objective = adapter.validation_step(batch([diagnostic])) if diagnostic else None
             score = metrics["macro"][config.selection_metric]
             if score is None or not math.isfinite(score):
                 raise ValueError("selection metric undefined; no checkpoint chosen")

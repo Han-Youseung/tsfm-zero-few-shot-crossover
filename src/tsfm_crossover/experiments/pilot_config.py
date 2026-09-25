@@ -74,7 +74,7 @@ def token_risk(channels, horizon):
 
 def execution_plan(config, prepared, commit):
     rows = []
-    for name in TARGETS:
+    for name in (*TARGETS, *sorted(set(prepared) - set(TARGETS))):
         entry = prepared.get(name, {})
         ready = entry.get("status") == "ready_with_warnings"
         for family in config.learning_rates:

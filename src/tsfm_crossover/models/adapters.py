@@ -183,11 +183,14 @@ class ExperimentAdapter(AdapterContract):
         )
 
     def predict(self, batch):
+        from dataclasses import replace
+
         import torch
 
         if self.model is None:
             raise RuntimeError("load model first")
-        batch = self.prepare_batch(batch)
+        # Prediction never needs targets; missing targets belong to evaluation only.
+        batch = self.prepare_batch(replace(batch, future=None))
         state, mode = rng_state(), self.model.training
         try:
             self.model.eval()

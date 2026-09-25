@@ -10,6 +10,7 @@ import hashlib
 import io
 import itertools
 import json
+import math
 import os
 import shutil
 import urllib.request
@@ -235,9 +236,17 @@ def load_pilot_values(root, entry):
         columns = next(reader)[1:]
         if columns != entry["qc"]["channel_names"]:
             raise ValueError("prepared channel order mismatch")
+        from tsfm_crossover.data.missing import POLICY
+
+        policy = entry.get("missing_policy")
+        if policy not in (None, POLICY):
+            raise ValueError("unsupported missing policy")
         values = [
-            [float(v) for v in row[1:]] for row in itertools.islice(reader, split.validation.end)
+            [float(v) if v.strip() else float("nan") for v in row[1:]]
+            for row in itertools.islice(reader, split.validation.end)
         ]
+        if any(not math.isfinite(v) for row in values for v in row) and policy != POLICY:
+            raise ValueError("missing values require an explicit approved policy")
     if len(values) != split.validation.end:
         raise ValueError("prepared row count mismatch")
     return values, tuple(columns), split
