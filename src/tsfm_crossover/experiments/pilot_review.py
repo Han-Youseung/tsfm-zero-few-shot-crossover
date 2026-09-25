@@ -93,9 +93,11 @@ def validate_metadata(meta, row, config, entry, cpu):
     )
 
 
-def validate_record(record, row, config, entry, cpu):
+def validate_record(
+    record, row, config, entry, cpu, *, commit=EXECUTION_COMMIT, expected_data=None
+):
     identity = {
-        "commit": EXECUTION_COMMIT,
+        "commit": commit,
         "condition": row,
         "config": config.model_dump(mode="json"),
         "data_sha256": entry["qc"]["sha256"],
@@ -111,6 +113,14 @@ def validate_record(record, row, config, entry, cpu):
     require(stable_hash(data["split"]) == stable_hash(split.as_dict()), "split mismatch")
     fingerprint = entry["qc"]["sha256"]
     require(data["fingerprint"] == fingerprint, "data fingerprint mismatch")
+    if expected_data is not None:
+        expected_data = json.loads(json.dumps(expected_data))
+        expected_data["sampling_manifest"]["generated_at"] = data["sampling_manifest"][
+            "generated_at"
+        ]
+        require(
+            stable_hash(expected_data) == stable_hash(data), "prepared eligibility/data mismatch"
+        )
     candidates = generate_train_windows(
         entry["variant"], fingerprint, split.train, 512, row["horizon"]
     )
@@ -119,12 +129,13 @@ def validate_record(record, row, config, entry, cpu):
         dataset_sha256=fingerprint,
         split_config_hash=split.split_config_hash,
         seed=config.seed,
-        code_commit_sha=EXECUTION_COMMIT,
+        code_commit_sha=commit,
         rates=[config.sampling_rate],
         generated_at=data["sampling_manifest"]["generated_at"],
     )
     require(
-        stable_hash(expected.as_dict()) == stable_hash(data["sampling_manifest"]),
+        expected_data is not None
+        or stable_hash(expected.as_dict()) == stable_hash(data["sampling_manifest"]),
         "sampling mismatch",
     )
     windows = validation_subset(
@@ -134,11 +145,12 @@ def validate_record(record, row, config, entry, cpu):
         config.validation_windows,
     )
     require(
-        [w.as_dict() for w in windows] == data["validation_windows"],
+        expected_data is not None or [w.as_dict() for w in windows] == data["validation_windows"],
         "validation/test window mismatch",
     )
     require(
-        data["validation_window_hash"] == stable_hash([w.window_id for w in windows]),
+        expected_data is not None
+        or data["validation_window_hash"] == stable_hash([w.window_id for w in windows]),
         "window hash mismatch",
     )
     require(

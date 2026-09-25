@@ -78,6 +78,21 @@ def test_completed_ladder_is_not_success(evidence):
         validate_record(*evidence)
 
 
+def test_regenerated_eligibility_must_match(evidence):
+    expected = copy.deepcopy(evidence[0]["data"])
+    validate_record(*evidence, expected_data=expected)
+    evidence[0]["data"]["total_train_windows"] = 999
+    with pytest.raises(ValueError, match="eligibility/data mismatch"):
+        validate_record(*evidence, expected_data=expected)
+
+
+def test_new_execution_commit_is_checked(evidence):
+    from tsfm_crossover.experiments.new_data_review import COMMIT
+
+    with pytest.raises(ValueError, match="commit/config"):
+        validate_record(*evidence, commit=COMMIT, expected_data=evidence[0]["data"])
+
+
 def test_wrong_model_revision_rejected():
     with pytest.raises(ValueError, match="revision mismatch"):
         validate_metadata(
