@@ -17,7 +17,7 @@ class PilotConfig(BaseModel):
     representatives: tuple[str, ...] = ("ETTh1", "Electricity")
     sampling_rate: float = Field(default=0.05, gt=0, le=1)
     seed: int = 1729
-    max_steps: int = Field(default=200, ge=1, le=200)
+    max_steps: int = Field(default=200, ge=1, le=1000)
     eval_every: int = Field(default=50, ge=1)
     patience_evals: int = Field(default=4, ge=1)
     checkpoint_every: int = Field(default=10, ge=1)
@@ -40,6 +40,23 @@ class PilotConfig(BaseModel):
 
     @model_validator(mode="after")
     def bounded(self):
+        confirmation = self.name == "preexperiment_budget_confirmation"
+        if self.max_steps > 200 and not confirmation:
+            raise ValueError("steps above 200 require the explicit budget-confirmation protocol")
+        if confirmation and not (
+            self.max_steps == 1000
+            and self.horizons == (96,)
+            and self.representatives == ("ETTh1", "Electricity")
+            and self.learning_rates == {"ttm": [1e-4], "moirai1": [5e-6]}
+            and self.sampling_rate == 0.05
+            and self.seed == 1729
+            and self.training_batch == 1
+            and self.eval_every == 100
+            and self.patience_evals == 3
+            and self.validation_windows == 64
+            and not self.amp_probe
+        ):
+            raise ValueError("budget confirmation is four fixed validation-only runs, not a search")
         if set(self.learning_rates) != {"ttm", "moirai1"}:
             raise ValueError("both models required")
         if any(
@@ -109,6 +126,8 @@ def execution_plan(config, prepared, commit):
                 "data": entry.get("qc", {}).get("sha256"),
             }
         )
+    if config.name == "preexperiment_budget_confirmation":
+        rows = [r for r in rows if r["kind"] == "stability"]
     return {
         "execution_commit": commit,
         "config": config.model_dump(mode="json"),

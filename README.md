@@ -62,8 +62,12 @@ Bundle 생성 경로, 공식 ETT 값 대조, canonical fingerprint와 데이터�
 
 ## 저장 원칙
 
+현재 결정: [Primary 8 및 학습 예산 확인](docs/primary8-budget-decision.md).
+Traffic은 공통 40GB 자원 제약으로 primary에서 제외했으며 80GB 재시도는 필수가 아닙니다.
+다음 실행은 notebook `32_budget_confirmation.ipynb`의 모델별 2개 validation-only 조건입니다.
+
 승인된 데이터 권고안 적용과 신규 4개 데이터셋의 validation-only GPU 실행 절차는
 [본 실험 전 준비 상태](docs/pre-experiment-readiness.md)에 정리했습니다.
-현재 준비 후보는 9개이며 신규 GPU 검증과 최종 protocol 확정은 아직 남아 있습니다.
+해당 문서는 9개 후보 준비 당시 이력이며, 현재 primary는 위 결정에 따른 8개입니다.
 
 소스, YAML, 소용량 결과·요약·그림·manifest와 문서만 Git으로 관리합니다. 데이터셋, 모델 가중치, 캐시, 대용량 예측 배열과 원본 로그는 저장소에 추적하지 않습니다.

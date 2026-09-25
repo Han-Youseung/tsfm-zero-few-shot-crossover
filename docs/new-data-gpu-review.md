@@ -1,5 +1,8 @@
 # 신규 데이터 GPU 결과와 다음 gate
 
+후속 결정: 사용자가 제외를 승인하여 [primary 8 구성](primary8-budget-decision.md)으로
+진행한다. 아래 80GB 재시도는 과거 제안이며 더 이상 필수 작업이 아니다. 실패 증거는 보존한다.
+
 실행 commit: `28e8151931560143aa0955f267f9d8e787549b89`.
 원본 ZIP은 Git에 포함하지 않는다. `new_data_review`는 archive CRC/경로/크기,
 실행 계획, model/code revision, CUDA/FP32, fingerprint, split, train sampling,

@@ -1,0 +1,65 @@
+{
+  "dry_run_design": {
+    "execution_status": "not_run",
+    "few_shot_training_runs": 1536,
+    "horizons": [
+      96,
+      192,
+      336,
+      720
+    ],
+    "model_dataset_horizon_units": 64,
+    "note": "Planning counts only; runtime and final optimizer budget not established",
+    "sampling_rates": [
+      0.005,
+      0.01,
+      0.02,
+      0.05,
+      0.1,
+      0.2,
+      0.5,
+      1.0
+    ],
+    "seeds": [
+      1729,
+      2718,
+      31415
+    ],
+    "total_conditions": 1728,
+    "zero_shot_seed_evaluations": 192
+  },
+  "main_experiment_allowed": false,
+  "primary_datasets": [
+    "ETTh1",
+    "ETTh2",
+    "ETTm1",
+    "ETTm2",
+    "Electricity",
+    "Solar",
+    "Weather",
+    "Tetouan"
+  ],
+  "protocol_frozen": false,
+  "source_sha256": {
+    "a100_review.json": "fe3dfe88154b5dd556527f990bd4549071b5345d357648d96bf52d8c8b838669",
+    "new_data_review.json": "2ab89acf1303bd9918523ebe7907b14b1783261e5761c1b0d7473dabd20136fb",
+    "prepared_primary.json": "3c654a6a8ad4785d246d7f66bd8fec69d426dd15ce3454d9fe8c702ae7fe3b89"
+  },
+  "status": "primary_scope_selected_budget_pending",
+  "test_evaluation": false,
+  "traffic": {
+    "applies_to_both_models_and_all_horizons": true,
+    "primary": false,
+    "reason": "MOIRAI FP32 H720 batch-1 training OOM on A100 40GB",
+    "retry_80gb": {
+      "archive_created": false,
+      "evidence_type": "user_report_not_imported_gpu_result",
+      "experiment_started": false,
+      "reported_gpu": "NVIDIA A100-SXM4-40GB",
+      "reported_vram_gib": 39.4935,
+      "required_min_vram_gib": 75,
+      "status": "not_run_gpu_not_allocated"
+    }
+  },
+  "verified_common_feasibility_conditions": 64
+}

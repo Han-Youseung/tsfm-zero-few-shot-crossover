@@ -1,0 +1,25 @@
+name: preexperiment_budget_confirmation
+context: 512
+horizons: [96]
+representatives: [ETTh1, Electricity]
+sampling_rate: 0.05
+seed: 1729
+max_steps: 1000
+eval_every: 100
+patience_evals: 3
+checkpoint_every: 25
+validation_windows: 64
+training_batch: 1
+evaluation_batch: 1
+accumulation: 1
+learning_rates:
+  ttm: [0.0001]
+  moirai1: [0.000005]
+num_samples: 100
+batch_candidates: [1, 2, 4, 8, 16, 32, 64]
+memory_fraction: 0.75
+amp_probe: false
+selection_metric: normalized_mae
+dtype: float32
+test_evaluation: false
+protocol_frozen: false

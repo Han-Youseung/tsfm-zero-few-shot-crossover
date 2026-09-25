@@ -1,5 +1,8 @@
 # 본 실험 전 준비: 승인된 데이터 권고안 적용
 
+최신 결정은 [primary 8 및 budget 확인](primary8-budget-decision.md)이다.
+아래 9개 후보/80GB 재시도 설명은 준비 당시 이력으로 보존한다.
+
 후속 결과: [신규 GPU 결과 검토](new-data-gpu-review.md). 32조건 중 31조건이 FP32
 batch-1 추론/학습을 통과했으며, Traffic/MOIRAI/H720 학습은 A100 40GB OOM으로
 80GB 재검증이 필요하다. 아래 준비 당시 pending 표시는 해당 후속 기록과 함께 읽는다.
