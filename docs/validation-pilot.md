@@ -168,3 +168,11 @@ and cached-attempt reuse. GPU absence yields pending, not success. These use toy
 not fabricated model or GPU measurements. The earlier real adapter GPU evidence is
 preserved separately. Editable install, lazy import, YAML/model-manifest checks, new
 notebook JSON/syntax/empty outputs and scoped Ruff checks passed. No full experiment ran.
+# Returned pilot evidence
+
+The initial 52 planned conditions have now been returned and validated on A100 40GB.
+See [pre-experiment-progress.md](pre-experiment-progress.md) and
+`results/manifests/pilot/a100_review.json`. Earlier not-run statements below describe
+the preparation snapshot, not the current status. Nine datasets were not included
+in that run; Solar and Traffic preparation is now available for a separate follow-up.
+No test evaluation or final protocol freeze has occurred.

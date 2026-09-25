@@ -64,6 +64,8 @@ secrets*.json
 # User-returned GPU archives stay local; only validated small JSON is versioned.
 /ttm-adapter-results.zip
 /moirai1-adapter-results.zip
+/ttm-phase6-pilot-results.zip
+/moirai1-phase6-pilot-results.zip
 .vscode/
 .idea/
 

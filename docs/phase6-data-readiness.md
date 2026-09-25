@@ -6,6 +6,13 @@ variant stays blocked. The executable overlay is `results/manifests/pilot/prepar
 duplicate/order/gap counts, missing values, train-only constant counts and source links.
 Null means unverified, never zero. Previous audits remain immutable.
 
+Follow-up: `prepared_expansion.json` now adds independently converted Monash Solar
+and Traffic distributions (CC-BY-4.0), bringing prepared variants to **seven**.
+The table below preserves the original phase-6 investigation snapshot; current
+progress and remaining gates are in [pre-experiment-progress.md](pre-experiment-progress.md).
+Solar/Traffic GPU feasibility has not yet run. Do not substitute their new hashes
+into earlier execution records.
+
 | Dataset | Acquired shape (rows x targets) | Status / next action |
 |---|---:|---|
 | ETTh1 | 17,420 x 7 | Official raw ready with CC BY-ND warning; no redistribution |
