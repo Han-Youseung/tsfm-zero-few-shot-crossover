@@ -69,6 +69,45 @@ def test_zero_shot_rng_shape_no_update_and_training_mode():
         adapter.train_step(batch(adapter))
 
 
+def test_official_saved_tensor_offload_preserves_toy_update():
+    first, second = toy(), toy()
+    first.configure_finetuning()
+    second.configure_finetuning()
+    loss = first.train_step(batch(first, "train"))
+    with torch.autograd.graph.save_on_cpu(pin_memory=False):
+        other = second.train_step(batch(second, "train"))
+    assert loss == other
+    assert parameter_hash(first.parameter_state()) == parameter_hash(second.parameter_state())
+
+
+def test_forward_context_does_not_wrap_backward():
+    from contextlib import contextmanager
+
+    active = []
+
+    @contextmanager
+    def context():
+        active.append(True)
+        try:
+            yield
+        finally:
+            active.pop()
+
+    adapter = toy()
+    adapter.configure_finetuning()
+
+    def forward_hook(*args):
+        assert active == [True]
+
+    def gradient_hook(gradient):
+        assert not active
+        return gradient
+
+    adapter.model.register_forward_pre_hook(forward_hook)
+    adapter.model.weight.register_hook(gradient_hook)
+    adapter.train_step(batch(adapter, "train"), forward_context=context())
+
+
 def test_prediction_ignores_missing_targets_but_training_rejects_them():
     adapter = toy()
     item = batch(adapter)

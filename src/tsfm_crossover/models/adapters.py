@@ -225,7 +225,9 @@ class ExperimentAdapter(AdapterContract):
             raise RuntimeError("full parameter optimizer coverage required")
         self.optimizer_created = True
 
-    def train_step(self, batch):
+    def train_step(self, batch, *, forward_context=None):
+        from contextlib import nullcontext
+
         import torch
 
         batch = self.prepare_batch(batch)
@@ -235,7 +237,8 @@ class ExperimentAdapter(AdapterContract):
             raise RuntimeError("optimizer absent or step budget exhausted")
         self.model.train()
         self.optimizer.zero_grad(set_to_none=True)
-        loss = self._loss(batch, training=True)
+        with forward_context if forward_context is not None else nullcontext():
+            loss = self._loss(batch, training=True)
         if loss.ndim != 0 or not torch.isfinite(loss):
             raise ValueError("nonfinite/non-scalar official loss")
         loss.backward()

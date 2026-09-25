@@ -1,0 +1,26 @@
+{
+  "status": "pending_gpu",
+  "installation_status": "installation_pending",
+  "traffic": "conditional_primary_candidate",
+  "primary_eight_decision": "retained_as_historical_baseline_not_final_exclusion",
+  "budget_confirmation_status": "paused_until_memory_profile_review",
+  "gpu_name_whitelist": null,
+  "fixed": {
+    "model": "Salesforce/moirai-1.1-R-small",
+    "revision": "0c24ab99db2c1a70ea2a0fc03bf113329772ac64",
+    "official_code_commit": "cfd46d4510ed8896f263116f32928eede05b0a75",
+    "context": 512,
+    "horizon": 720,
+    "traffic_channels": 862,
+    "patch": 64,
+    "samples": 100,
+    "batch_size": 1,
+    "optimizer_steps": 2,
+    "objective": "MoiraiFinetune/PackedNLLLoss",
+    "external_scaler": false
+  },
+  "candidate_profiles": ["fp32", "fp32_cpu_saved", "bf16", "bf16_cpu_saved"],
+  "test_evaluation": false,
+  "protocol_frozen": false,
+  "main_experiment_allowed": false
+}

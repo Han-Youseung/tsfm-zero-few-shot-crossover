@@ -62,6 +62,10 @@ Bundle 생성 경로, 공식 ETT 값 대조, canonical fingerprint와 데이터�
 
 ## 저장 원칙
 
+최신 우선 작업: [Traffic 복구 검증](docs/traffic-recovery.md).
+Traffic 제외 결정을 철회하여 conditional로 유지하고, notebook 33에서 실제 Colab GPU/RAM에
+맞춰 메모리 경로를 확인합니다. 아래 primary8 및 notebook32 budget 확인은 그동안 보류합니다.
+
 현재 결정: [Primary 8 및 학습 예산 확인](docs/primary8-budget-decision.md).
 Traffic은 공통 40GB 자원 제약으로 primary에서 제외했으며 80GB 재시도는 필수가 아닙니다.
 다음 실행은 notebook `32_budget_confirmation.ipynb`의 모델별 2개 validation-only 조건입니다.

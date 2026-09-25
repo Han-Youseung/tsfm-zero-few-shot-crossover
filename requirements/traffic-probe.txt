@@ -1,0 +1,3 @@
+# Separate memory-probe environment; official model/CUDA pins remain unchanged.
+-r moirai1-gpu.txt
+psutil==6.1.1

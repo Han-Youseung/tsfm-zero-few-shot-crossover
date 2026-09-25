@@ -1,5 +1,9 @@
 # Primary 8 선정 및 학습 예산 확인
 
+후속 사용자 요청으로 Traffic 제외 결정을 철회했다. 이 문서는 당시 결정 이력이며,
+현재는 [Traffic conditional 복구 검증](traffic-recovery.md)을 우선한다.
+budget notebook 32는 이 검토가 끝날 때까지 보류한다.
+
 ## 결정
 
 사용자가 자원 제약에 따른 제외를 승인하고 판단을 위임했다. 이번 primary는
