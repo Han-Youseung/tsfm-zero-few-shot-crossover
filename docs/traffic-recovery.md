@@ -1,5 +1,9 @@
 # Traffic를 유지하기 위한 Colab 자원 기반 검증
 
+최신 결과: [Traffic 일반 FP32 80GB 복구 통과](traffic-recovery-result.md).
+Traffic을 포함한 primary9로 복귀하며, 아래 pending/예산 보류는 준비 당시 이력이다.
+CPU offload와 BF16은 실행하지 않았다. 다음 실행은 notebook32 budget confirmation이다.
+
 ## 진행 상태 저장 오류 수정
 
 최초 준비 commit `ef75e1ef74ef1a8e69d505afde4922ae2df08272`의 probe에는

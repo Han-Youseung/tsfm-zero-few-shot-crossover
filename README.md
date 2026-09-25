@@ -62,6 +62,11 @@ Bundle 생성 경로, 공식 ETT 값 대조, canonical fingerprint와 데이터�
 
 ## 저장 원칙
 
+최신 결과: [Traffic FP32 복구 및 primary9](docs/traffic-recovery-result.md).
+Traffic은 80GB GPU에서 일반 FP32 학습/복원을 통과했습니다. notebook33은 종료하고
+primary9 overlay를 사용하는 notebook32의 validation-only budget 확인을 재개합니다.
+아래 conditional/primary8/보류 설명은 과거 결정 이력입니다.
+
 최신 우선 작업: [Traffic 복구 검증](docs/traffic-recovery.md).
 Traffic 제외 결정을 철회하여 conditional로 유지하고, notebook 33에서 실제 Colab GPU/RAM에
 맞춰 메모리 경로를 확인합니다. 아래 primary8 및 notebook32 budget 확인은 그동안 보류합니다.

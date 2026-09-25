@@ -1,9 +1,12 @@
 {
-  "status": "pending_gpu",
-  "installation_status": "installation_pending",
-  "traffic": "conditional_primary_candidate",
-  "primary_eight_decision": "retained_as_historical_baseline_not_final_exclusion",
-  "budget_confirmation_status": "paused_until_memory_profile_review",
+  "status": "validated_plain_fp32_on_80gb_gpu",
+  "installation_status": "validated_returned_runtime",
+  "traffic": "include_with_gpu_resource_constraint",
+  "primary_eight_decision": "historical_baseline_superseded_by_primary9",
+  "budget_confirmation_status": "may_resume_validation_only",
+  "validated_review": "results/manifests/pilot/traffic_recovery_review.json",
+  "gpu_resource_constraint": "Traffic MOIRAI H720 FP32 training verified on 80GB, not 40GB",
+  "cpu_offload_and_bf16": "not_run",
   "gpu_name_whitelist": null,
   "fixed": {
     "model": "Salesforce/moirai-1.1-R-small",
