@@ -1,5 +1,15 @@
 # Traffic를 유지하기 위한 Colab 자원 기반 검증
 
+## 진행 상태 저장 오류 수정
+
+최초 준비 commit `ef75e1ef74ef1a8e69d505afde4922ae2df08272`의 probe에는
+running JSON 생성 후 진행 상태 갱신 시 `overwrite`를 허용하지 않는 버그가 있었다.
+이 때문에 `DuplicateResultError`가 발생했고 마지막 실패 기록도 저장되지 않았다.
+HF unauthenticated 경고나 GPU OOM을 이 오류의 원인으로 해석하지 않는다.
+수정 버전은 **동일 identity의 running 기록만** 원자적으로 갱신하며, terminal 결과와
+다른 identity는 덮어쓰지 않는다. cleanup 오류도 원래 오류를 가리지 않도록 보존한다.
+이전 JSON/로그는 삭제하지 않고 새 실행 commit의 폴더에서 다시 확인한다.
+
 ## 현재 결정
 
 Traffic의 최종 제외 결정을 철회한다. **기존 8개 + Traffic conditional**이며,

@@ -20,6 +20,19 @@ from tsfm_crossover.tracking.atomic import write_json_atomic
 PROFILES = ("fp32", "fp32_cpu_saved", "bf16", "bf16_cpu_saved")
 
 
+def persist_progress(output, record):
+    """Update only this attempt's running record; preserve terminal evidence."""
+    output = Path(output)
+    exists = output.exists()
+    if exists:
+        previous = json.loads(output.read_text(encoding="utf-8"))
+        if previous.get("identity") != record["identity"]:
+            raise ValueError("progress identity mismatch")
+        if previous.get("status") != "running":
+            raise ValueError("refusing to overwrite terminal probe evidence")
+    write_json_atomic(output, record, overwrite=exists)
+
+
 def availability(profile, cuda, bf16, available_ram_gib):
     if profile not in PROFILES:
         raise ValueError("unknown memory profile")
@@ -117,9 +130,9 @@ def run(root, dataset, profile, output, commit):
     reason = availability(profile, cuda, bf16, host_ram)
     if reason:
         record.update(status="not_run", reason=reason)
-        write_json_atomic(output, record)
+        persist_progress(output, record)
         return record
-    write_json_atomic(output, record)
+    persist_progress(output, record)
     adapter = fresh = None
     try:
         config = PilotConfig(max_steps=2, learning_rates={"ttm": [1e-4], "moirai1": [5e-6]})
@@ -144,7 +157,7 @@ def run(root, dataset, profile, output, commit):
                 return model.predict(batch(valid[:1]))
 
         record["stage"] = "zero_shot"
-        write_json_atomic(output, record)
+        persist_progress(output, record)
         point, timing = measure(lambda: predict(adapter), "cuda")
         record["prediction"] = {
             "shape": list(point.shape),
@@ -186,7 +199,7 @@ def run(root, dataset, profile, output, commit):
                 "absolute_difference": abs(reference_loss - mixed_loss),
             }
         record["stage"] = "training"
-        write_json_atomic(output, record)
+        persist_progress(output, record)
         record["losses"] = []
         for step in range(2):
             loss, timing = measure(
@@ -195,7 +208,7 @@ def run(root, dataset, profile, output, commit):
             record["losses"].append(loss)
             record["timing"][f"training_{step + 1}"] = timing
             record["host_rss_gib"] = psutil.Process().memory_info().rss / 2**30
-            write_json_atomic(output, record)
+            persist_progress(output, record)
         record["checks"]["update"] = training_before != parameter_hash(adapter.parameter_state())
         record["checks"]["steps"] = adapter.global_step == 2
         record["checks"]["full_parameter_coverage"] = all(
@@ -211,7 +224,7 @@ def run(root, dataset, profile, output, commit):
         record["missing_gradient_parameters"] = adapter.last_gradient_missing
         record["metadata"] = adapter.execution_metadata()
         record["stage"] = "restore"
-        write_json_atomic(output, record)
+        persist_progress(output, record)
         expected = predict(adapter).detach().cpu()
         record["checks"]["validation_after_training_finite"] = bool(torch.isfinite(expected).all())
         expected_hash = parameter_hash(adapter.parameter_state())
@@ -259,8 +272,18 @@ def run(root, dataset, profile, output, commit):
     finally:
         for model in (adapter, fresh):
             if model is not None:
-                model.cleanup()
-        write_json_atomic(output, record)
+                try:
+                    model.cleanup()
+                except Exception as cleanup_error:
+                    record.setdefault("cleanup_errors", []).append(
+                        {
+                            "type": type(cleanup_error).__name__,
+                            "message": str(cleanup_error)[:300],
+                        }
+                    )
+                    if record["status"] == "passed":
+                        record["status"] = "failed"
+        persist_progress(output, record)
     return record
 
 
