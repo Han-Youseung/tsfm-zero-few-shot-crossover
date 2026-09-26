@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_colab_execution",
+  "authorization": "User explicitly approved main experiments on 2026-09-26",
+  "protocol": "primary9_bounded_compute_v1",
+  "protocol_frozen": true,
+  "main_experiment_allowed": true,
+  "main_gpu_execution": "not_run",
+  "colab_main_installation": "installation_pending",
+  "local_cuda_available": false,
+  "local_torch": "2.4.1+cpu",
+  "planned_conditions": 1944,
+  "zero_shot_conditions": 216,
+  "few_shot_conditions": 1728,
+  "basic_cpu_tests": {
+    "passed": 243,
+    "skipped": 5
+  },
+  "optional_cpu_integration_tests": {
+    "passed": 25
+  },
+  "cpu_window_preflight": "36 dataset-horizon conditions; train/validation only",
+  "train_features": "9 datasets; train-only descriptors",
+  "source_hashes": {
+    "configs/study/main.yaml": "f50874aed364351630a25e3c01e3e0bde15b215b9f969c9b944515c6d4beb4e0",
+    "requirements/ttm-main.txt": "591ed7aa109ebd832d102828c8d7bfbf980248687f92a253af3fab4f46a51ab0",
+    "requirements/moirai1-main.txt": "139ac701ef73fe2fe5d501700ae443d55d5734bafb85a66d0e9cced07f1bf93b"
+  },
+  "notebook": "notebooks/40_main_study.ipynb",
+  "historical_evidence": "CPU, GPU, MOIRAI2 failure and all pilot manifests preserved; not relabeled as main results",
+  "limitations": [
+    "No main test performance or crossover has been produced",
+    "Three paired seed ranges are descriptive, not confidence intervals",
+    "Traffic MOIRAI H720 full fine-tuning requires >=75 GiB total VRAM gate",
+    "1000 steps is bounded compute, not established convergence"
+  ]
+}

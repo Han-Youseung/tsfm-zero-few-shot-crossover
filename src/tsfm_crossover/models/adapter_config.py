@@ -26,7 +26,7 @@ class AdapterConfig(BaseModel):
     dtype: Literal["float32"] = "float32"
     point_statistic: Literal["prediction_outputs", "torch_sample_median"]
     external_scaler: Literal[False] = False
-    protocol_frozen: Literal[False] = False
+    protocol_frozen: bool = False
 
     @model_validator(mode="after")
     def consistent(self):

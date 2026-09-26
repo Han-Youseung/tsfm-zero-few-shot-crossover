@@ -141,12 +141,14 @@ class ExperimentAdapter(AdapterContract):
             "local_files_only": self.local_files_only,
         }
 
-    def prepare_batch(self, batch):
+    def prepare_batch(self, batch, *, final_test=False):
         import torch
 
         if not isinstance(batch, WindowBatch):
             raise TypeError("WindowBatch required")
-        if batch.split not in {"train", "validation"}:
+        if batch.split not in {"train", "validation"} and not (
+            final_test and batch.split == "test" and batch.future is None
+        ):
             raise ValueError("test split blocked in this engineering adapter")
         if (
             batch.channel_names != self.config.channel_names
@@ -183,6 +185,15 @@ class ExperimentAdapter(AdapterContract):
         )
 
     def predict(self, batch):
+        return self._prediction(batch, final_test=False)
+
+    def predict_test(self, batch):
+        """Explicit final-evaluation entry point; never accepts test labels."""
+        if batch.split != "test" or batch.future is not None:
+            raise ValueError("final prediction requires target-free test context")
+        return self._prediction(batch, final_test=True)
+
+    def _prediction(self, batch, *, final_test):
         from dataclasses import replace
 
         import torch
@@ -190,7 +201,7 @@ class ExperimentAdapter(AdapterContract):
         if self.model is None:
             raise RuntimeError("load model first")
         # Prediction never needs targets; missing targets belong to evaluation only.
-        batch = self.prepare_batch(replace(batch, future=None))
+        batch = self.prepare_batch(replace(batch, future=None), final_test=final_test)
         state, mode = rng_state(), self.model.training
         try:
             self.model.eval()
@@ -354,7 +365,8 @@ class ExperimentAdapter(AdapterContract):
             official_code_repository=self.spec["official_code_repository"],
             code_commit=self.spec["code_commit"],
             state="finetune_validated",
-            point_forecast_rule=self.config.point_statistic + " (provisional)",
+            point_forecast_rule=self.config.point_statistic
+            + (" (main v1)" if self.config.protocol_frozen else " (provisional)"),
         )
 
     def validate_capabilities(self):
@@ -394,9 +406,9 @@ class ExperimentAdapter(AdapterContract):
             "trainable_parameters": trainable,
             "total_parameters": total,
             "parameters_without_gradient": getattr(self, "last_gradient_missing", []),
-            "scheduler": "none; smoke only",
+            "scheduler": "none" if self.config.protocol_frozen else "none; smoke only",
             "amp": "not_run",
-            "protocol_frozen": False,
+            "protocol_frozen": self.config.protocol_frozen,
         }
 
     def cleanup(self):

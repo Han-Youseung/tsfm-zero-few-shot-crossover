@@ -1,0 +1,1840 @@
+{
+  "config": {
+    "batch_size": 1,
+    "context": 512,
+    "drop_last": false,
+    "dtype": "float32",
+    "eval_every_steps": 100,
+    "external_scaler": false,
+    "gradient_accumulation": 1,
+    "gradient_clip": null,
+    "horizons": [
+      96,
+      192,
+      336,
+      720
+    ],
+    "main_experiment_allowed": false,
+    "max_optimizer_steps": 1000,
+    "models": {
+      "moirai1": {
+        "learning_rate": 5e-06,
+        "optimizer": "AdamW",
+        "point_statistic": "torch_sample_median",
+        "samples": 100,
+        "weight_decay": 0.1
+      },
+      "ttm": {
+        "learning_rate": 0.0001,
+        "optimizer": "AdamW",
+        "point_statistic": "prediction_outputs",
+        "samples": 1,
+        "weight_decay": 0.01
+      }
+    },
+    "name": "primary9_bounded_compute_v1",
+    "patience_evals": 3,
+    "prepared_manifest": "results/manifests/pilot/prepared_primary9.json",
+    "primary_metric": "channel_macro_train_std_normalized_mae",
+    "protocol_frozen": false,
+    "sampling_rates": [
+      0.005,
+      0.01,
+      0.02,
+      0.05,
+      0.1,
+      0.2,
+      0.5,
+      1.0
+    ],
+    "seeds": [
+      1729,
+      2718,
+      31415
+    ],
+    "test_evaluation": false,
+    "test_stride": 1,
+    "validation_windows": 64
+  },
+  "few_shot_runs": 1728,
+  "main_experiment_allowed": false,
+  "maximum_optimizer_steps_total": 1728000,
+  "protocol_frozen": false,
+  "remaining_gate": "main_runner_and_analysis_integration_not_validated",
+  "source_sha256": {
+    "config": "1c916e34ba98723c1305002a76e5b449f361638724a390811ad05cfc4bc760d4",
+    "planner": "41fc7d9dde39576424d98490d18cd4aaa66468641a8ef0046265ee5c3bbf809e",
+    "prepared": "2a870d273d4d8f846049d786515cd7569abf68ba42d7d5d9a39269a2d72cc16d"
+  },
+  "status": "cpu_design_preflight_passed",
+  "test_counts": "metadata-only nominal; missing targets masked only at final evaluation",
+  "test_evaluation": false,
+  "total_conditions": 1944,
+  "windows": [
+    {
+      "channels": 7,
+      "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+      "dataset": "ETTh1",
+      "eligible_train_candidates": 9845,
+      "eligible_validation_windows": 3389,
+      "horizon": 96,
+      "raw_train_candidates": 9845,
+      "selected_counts": {
+        "0.005": 49,
+        "0.01": 98,
+        "0.02": 196,
+        "0.05": 492,
+        "0.1": 984,
+        "0.2": 1969,
+        "0.5": 4922,
+        "1.0": 9845
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3389,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+      "dataset": "ETTh1",
+      "eligible_train_candidates": 9749,
+      "eligible_validation_windows": 3293,
+      "horizon": 192,
+      "raw_train_candidates": 9749,
+      "selected_counts": {
+        "0.005": 48,
+        "0.01": 97,
+        "0.02": 194,
+        "0.05": 487,
+        "0.1": 974,
+        "0.2": 1949,
+        "0.5": 4874,
+        "1.0": 9749
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3293,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+      "dataset": "ETTh1",
+      "eligible_train_candidates": 9605,
+      "eligible_validation_windows": 3149,
+      "horizon": 336,
+      "raw_train_candidates": 9605,
+      "selected_counts": {
+        "0.005": 48,
+        "0.01": 96,
+        "0.02": 192,
+        "0.05": 480,
+        "0.1": 960,
+        "0.2": 1921,
+        "0.5": 4802,
+        "1.0": 9605
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3149,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+      "dataset": "ETTh1",
+      "eligible_train_candidates": 9221,
+      "eligible_validation_windows": 2765,
+      "horizon": 720,
+      "raw_train_candidates": 9221,
+      "selected_counts": {
+        "0.005": 46,
+        "0.01": 92,
+        "0.02": 184,
+        "0.05": 461,
+        "0.1": 922,
+        "0.2": 1844,
+        "0.5": 4610,
+        "1.0": 9221
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 2765,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b",
+      "dataset": "ETTh2",
+      "eligible_train_candidates": 9845,
+      "eligible_validation_windows": 3389,
+      "horizon": 96,
+      "raw_train_candidates": 9845,
+      "selected_counts": {
+        "0.005": 49,
+        "0.01": 98,
+        "0.02": 196,
+        "0.05": 492,
+        "0.1": 984,
+        "0.2": 1969,
+        "0.5": 4922,
+        "1.0": 9845
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3389,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b",
+      "dataset": "ETTh2",
+      "eligible_train_candidates": 9749,
+      "eligible_validation_windows": 3293,
+      "horizon": 192,
+      "raw_train_candidates": 9749,
+      "selected_counts": {
+        "0.005": 48,
+        "0.01": 97,
+        "0.02": 194,
+        "0.05": 487,
+        "0.1": 974,
+        "0.2": 1949,
+        "0.5": 4874,
+        "1.0": 9749
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3293,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b",
+      "dataset": "ETTh2",
+      "eligible_train_candidates": 9605,
+      "eligible_validation_windows": 3149,
+      "horizon": 336,
+      "raw_train_candidates": 9605,
+      "selected_counts": {
+        "0.005": 48,
+        "0.01": 96,
+        "0.02": 192,
+        "0.05": 480,
+        "0.1": 960,
+        "0.2": 1921,
+        "0.5": 4802,
+        "1.0": 9605
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3149,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b",
+      "dataset": "ETTh2",
+      "eligible_train_candidates": 9221,
+      "eligible_validation_windows": 2765,
+      "horizon": 720,
+      "raw_train_candidates": 9221,
+      "selected_counts": {
+        "0.005": 46,
+        "0.01": 92,
+        "0.02": 184,
+        "0.05": 461,
+        "0.1": 922,
+        "0.2": 1844,
+        "0.5": 4610,
+        "1.0": 9221
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f0e2232e4ea40e705cbcef25d283423a51f85ecde337fe84113f5eaeacc6b7c6",
+        "test": {
+          "end": 17420,
+          "start": 13936
+        },
+        "total_rows": 17420,
+        "train": {
+          "end": 10452,
+          "start": 0
+        },
+        "validation": {
+          "end": 13936,
+          "start": 10452
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 2765,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+      "dataset": "ETTm1",
+      "eligible_train_candidates": 41201,
+      "eligible_validation_windows": 13841,
+      "horizon": 96,
+      "raw_train_candidates": 41201,
+      "selected_counts": {
+        "0.005": 206,
+        "0.01": 412,
+        "0.02": 824,
+        "0.05": 2060,
+        "0.1": 4120,
+        "0.2": 8240,
+        "0.5": 20600,
+        "1.0": 41201
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13841,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+      "dataset": "ETTm1",
+      "eligible_train_candidates": 41105,
+      "eligible_validation_windows": 13745,
+      "horizon": 192,
+      "raw_train_candidates": 41105,
+      "selected_counts": {
+        "0.005": 205,
+        "0.01": 411,
+        "0.02": 822,
+        "0.05": 2055,
+        "0.1": 4110,
+        "0.2": 8221,
+        "0.5": 20552,
+        "1.0": 41105
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13745,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+      "dataset": "ETTm1",
+      "eligible_train_candidates": 40961,
+      "eligible_validation_windows": 13601,
+      "horizon": 336,
+      "raw_train_candidates": 40961,
+      "selected_counts": {
+        "0.005": 204,
+        "0.01": 409,
+        "0.02": 819,
+        "0.05": 2048,
+        "0.1": 4096,
+        "0.2": 8192,
+        "0.5": 20480,
+        "1.0": 40961
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13601,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+      "dataset": "ETTm1",
+      "eligible_train_candidates": 40577,
+      "eligible_validation_windows": 13217,
+      "horizon": 720,
+      "raw_train_candidates": 40577,
+      "selected_counts": {
+        "0.005": 202,
+        "0.01": 405,
+        "0.02": 811,
+        "0.05": 2028,
+        "0.1": 4057,
+        "0.2": 8115,
+        "0.5": 20288,
+        "1.0": 40577
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13217,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd",
+      "dataset": "ETTm2",
+      "eligible_train_candidates": 41201,
+      "eligible_validation_windows": 13841,
+      "horizon": 96,
+      "raw_train_candidates": 41201,
+      "selected_counts": {
+        "0.005": 206,
+        "0.01": 412,
+        "0.02": 824,
+        "0.05": 2060,
+        "0.1": 4120,
+        "0.2": 8240,
+        "0.5": 20600,
+        "1.0": 41201
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13841,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd",
+      "dataset": "ETTm2",
+      "eligible_train_candidates": 41105,
+      "eligible_validation_windows": 13745,
+      "horizon": 192,
+      "raw_train_candidates": 41105,
+      "selected_counts": {
+        "0.005": 205,
+        "0.01": 411,
+        "0.02": 822,
+        "0.05": 2055,
+        "0.1": 4110,
+        "0.2": 8221,
+        "0.5": 20552,
+        "1.0": 41105
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13745,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd",
+      "dataset": "ETTm2",
+      "eligible_train_candidates": 40961,
+      "eligible_validation_windows": 13601,
+      "horizon": 336,
+      "raw_train_candidates": 40961,
+      "selected_counts": {
+        "0.005": 204,
+        "0.01": 409,
+        "0.02": 819,
+        "0.05": 2048,
+        "0.1": 4096,
+        "0.2": 8192,
+        "0.5": 20480,
+        "1.0": 40961
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13601,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 7,
+      "data_sha256": "db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd",
+      "dataset": "ETTm2",
+      "eligible_train_candidates": 40577,
+      "eligible_validation_windows": 13217,
+      "horizon": 720,
+      "raw_train_candidates": 40577,
+      "selected_counts": {
+        "0.005": 202,
+        "0.01": 405,
+        "0.02": 811,
+        "0.05": 2028,
+        "0.1": 4057,
+        "0.2": 8115,
+        "0.5": 20288,
+        "1.0": 40577
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "7f67ce41a5370019d18677721299641bb7daac82b7643552f3ec07ce46007b99",
+        "test": {
+          "end": 69680,
+          "start": 55744
+        },
+        "total_rows": 69680,
+        "train": {
+          "end": 41808,
+          "start": 0
+        },
+        "validation": {
+          "end": 55744,
+          "start": 41808
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 13217,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 370,
+      "data_sha256": "51790c599a81173b0e6eb35ae8d5ebd697f47887179aebb8c66d561d6b652e1c",
+      "dataset": "Electricity",
+      "eligible_train_candidates": 15175,
+      "eligible_validation_windows": 5166,
+      "horizon": 96,
+      "raw_train_candidates": 15175,
+      "selected_counts": {
+        "0.005": 75,
+        "0.01": 151,
+        "0.02": 303,
+        "0.05": 758,
+        "0.1": 1517,
+        "0.2": 3035,
+        "0.5": 7587,
+        "1.0": 15175
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "5a96e97f79848d9bb59e353511b388062ac13c51e49e51348cd7838eeb40a5bd",
+        "test": {
+          "end": 26304,
+          "start": 21043
+        },
+        "total_rows": 26304,
+        "train": {
+          "end": 15782,
+          "start": 0
+        },
+        "validation": {
+          "end": 21043,
+          "start": 15782
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 5166,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 370,
+      "data_sha256": "51790c599a81173b0e6eb35ae8d5ebd697f47887179aebb8c66d561d6b652e1c",
+      "dataset": "Electricity",
+      "eligible_train_candidates": 15079,
+      "eligible_validation_windows": 5070,
+      "horizon": 192,
+      "raw_train_candidates": 15079,
+      "selected_counts": {
+        "0.005": 75,
+        "0.01": 150,
+        "0.02": 301,
+        "0.05": 753,
+        "0.1": 1507,
+        "0.2": 3015,
+        "0.5": 7539,
+        "1.0": 15079
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "5a96e97f79848d9bb59e353511b388062ac13c51e49e51348cd7838eeb40a5bd",
+        "test": {
+          "end": 26304,
+          "start": 21043
+        },
+        "total_rows": 26304,
+        "train": {
+          "end": 15782,
+          "start": 0
+        },
+        "validation": {
+          "end": 21043,
+          "start": 15782
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 5070,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 370,
+      "data_sha256": "51790c599a81173b0e6eb35ae8d5ebd697f47887179aebb8c66d561d6b652e1c",
+      "dataset": "Electricity",
+      "eligible_train_candidates": 14935,
+      "eligible_validation_windows": 4926,
+      "horizon": 336,
+      "raw_train_candidates": 14935,
+      "selected_counts": {
+        "0.005": 74,
+        "0.01": 149,
+        "0.02": 298,
+        "0.05": 746,
+        "0.1": 1493,
+        "0.2": 2987,
+        "0.5": 7467,
+        "1.0": 14935
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "5a96e97f79848d9bb59e353511b388062ac13c51e49e51348cd7838eeb40a5bd",
+        "test": {
+          "end": 26304,
+          "start": 21043
+        },
+        "total_rows": 26304,
+        "train": {
+          "end": 15782,
+          "start": 0
+        },
+        "validation": {
+          "end": 21043,
+          "start": 15782
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 4926,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 370,
+      "data_sha256": "51790c599a81173b0e6eb35ae8d5ebd697f47887179aebb8c66d561d6b652e1c",
+      "dataset": "Electricity",
+      "eligible_train_candidates": 14551,
+      "eligible_validation_windows": 4542,
+      "horizon": 720,
+      "raw_train_candidates": 14551,
+      "selected_counts": {
+        "0.005": 72,
+        "0.01": 145,
+        "0.02": 291,
+        "0.05": 727,
+        "0.1": 1455,
+        "0.2": 2910,
+        "0.5": 7275,
+        "1.0": 14551
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "5a96e97f79848d9bb59e353511b388062ac13c51e49e51348cd7838eeb40a5bd",
+        "test": {
+          "end": 26304,
+          "start": 21043
+        },
+        "total_rows": 26304,
+        "train": {
+          "end": 15782,
+          "start": 0
+        },
+        "validation": {
+          "end": 21043,
+          "start": 15782
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 4542,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 137,
+      "data_sha256": "3a80b02484e740cf717f2da6712b49a94348af3076ae7dc6f5eb44afdaa8a713",
+      "dataset": "Solar",
+      "eligible_train_candidates": 30929,
+      "eligible_validation_windows": 10417,
+      "horizon": 96,
+      "raw_train_candidates": 30929,
+      "selected_counts": {
+        "0.005": 154,
+        "0.01": 309,
+        "0.02": 618,
+        "0.05": 1546,
+        "0.1": 3092,
+        "0.2": 6185,
+        "0.5": 15464,
+        "1.0": 30929
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "43932da9c9c085c4be3f9adfaf0d23cbd1abda1b80d482d230d577e2ac4c3e63",
+        "test": {
+          "end": 52560,
+          "start": 42048
+        },
+        "total_rows": 52560,
+        "train": {
+          "end": 31536,
+          "start": 0
+        },
+        "validation": {
+          "end": 42048,
+          "start": 31536
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10417,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 137,
+      "data_sha256": "3a80b02484e740cf717f2da6712b49a94348af3076ae7dc6f5eb44afdaa8a713",
+      "dataset": "Solar",
+      "eligible_train_candidates": 30833,
+      "eligible_validation_windows": 10321,
+      "horizon": 192,
+      "raw_train_candidates": 30833,
+      "selected_counts": {
+        "0.005": 154,
+        "0.01": 308,
+        "0.02": 616,
+        "0.05": 1541,
+        "0.1": 3083,
+        "0.2": 6166,
+        "0.5": 15416,
+        "1.0": 30833
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "43932da9c9c085c4be3f9adfaf0d23cbd1abda1b80d482d230d577e2ac4c3e63",
+        "test": {
+          "end": 52560,
+          "start": 42048
+        },
+        "total_rows": 52560,
+        "train": {
+          "end": 31536,
+          "start": 0
+        },
+        "validation": {
+          "end": 42048,
+          "start": 31536
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10321,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 137,
+      "data_sha256": "3a80b02484e740cf717f2da6712b49a94348af3076ae7dc6f5eb44afdaa8a713",
+      "dataset": "Solar",
+      "eligible_train_candidates": 30689,
+      "eligible_validation_windows": 10177,
+      "horizon": 336,
+      "raw_train_candidates": 30689,
+      "selected_counts": {
+        "0.005": 153,
+        "0.01": 306,
+        "0.02": 613,
+        "0.05": 1534,
+        "0.1": 3068,
+        "0.2": 6137,
+        "0.5": 15344,
+        "1.0": 30689
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "43932da9c9c085c4be3f9adfaf0d23cbd1abda1b80d482d230d577e2ac4c3e63",
+        "test": {
+          "end": 52560,
+          "start": 42048
+        },
+        "total_rows": 52560,
+        "train": {
+          "end": 31536,
+          "start": 0
+        },
+        "validation": {
+          "end": 42048,
+          "start": 31536
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10177,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 137,
+      "data_sha256": "3a80b02484e740cf717f2da6712b49a94348af3076ae7dc6f5eb44afdaa8a713",
+      "dataset": "Solar",
+      "eligible_train_candidates": 30305,
+      "eligible_validation_windows": 9793,
+      "horizon": 720,
+      "raw_train_candidates": 30305,
+      "selected_counts": {
+        "0.005": 151,
+        "0.01": 303,
+        "0.02": 606,
+        "0.05": 1515,
+        "0.1": 3030,
+        "0.2": 6061,
+        "0.5": 15152,
+        "1.0": 30305
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "43932da9c9c085c4be3f9adfaf0d23cbd1abda1b80d482d230d577e2ac4c3e63",
+        "test": {
+          "end": 52560,
+          "start": 42048
+        },
+        "total_rows": 52560,
+        "train": {
+          "end": 31536,
+          "start": 0
+        },
+        "validation": {
+          "end": 42048,
+          "start": 31536
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 9793,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 8,
+      "data_sha256": "83cf2bd039b2cb6b649162534be26bde4fcb7a5aba24bd86f67c91f4bf081a09",
+      "dataset": "Tetouan",
+      "eligible_train_candidates": 30842,
+      "eligible_validation_windows": 10388,
+      "horizon": 96,
+      "raw_train_candidates": 30842,
+      "selected_counts": {
+        "0.005": 154,
+        "0.01": 308,
+        "0.02": 616,
+        "0.05": 1542,
+        "0.1": 3084,
+        "0.2": 6168,
+        "0.5": 15421,
+        "1.0": 30842
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "fdad053556008ef78f810cccfd21da48d93d0fb1e75348232510039be10fbd18",
+        "test": {
+          "end": 52416,
+          "start": 41932
+        },
+        "total_rows": 52416,
+        "train": {
+          "end": 31449,
+          "start": 0
+        },
+        "validation": {
+          "end": 41932,
+          "start": 31449
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10389,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 8,
+      "data_sha256": "83cf2bd039b2cb6b649162534be26bde4fcb7a5aba24bd86f67c91f4bf081a09",
+      "dataset": "Tetouan",
+      "eligible_train_candidates": 30746,
+      "eligible_validation_windows": 10292,
+      "horizon": 192,
+      "raw_train_candidates": 30746,
+      "selected_counts": {
+        "0.005": 153,
+        "0.01": 307,
+        "0.02": 614,
+        "0.05": 1537,
+        "0.1": 3074,
+        "0.2": 6149,
+        "0.5": 15373,
+        "1.0": 30746
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "fdad053556008ef78f810cccfd21da48d93d0fb1e75348232510039be10fbd18",
+        "test": {
+          "end": 52416,
+          "start": 41932
+        },
+        "total_rows": 52416,
+        "train": {
+          "end": 31449,
+          "start": 0
+        },
+        "validation": {
+          "end": 41932,
+          "start": 31449
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10293,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 8,
+      "data_sha256": "83cf2bd039b2cb6b649162534be26bde4fcb7a5aba24bd86f67c91f4bf081a09",
+      "dataset": "Tetouan",
+      "eligible_train_candidates": 30602,
+      "eligible_validation_windows": 10148,
+      "horizon": 336,
+      "raw_train_candidates": 30602,
+      "selected_counts": {
+        "0.005": 153,
+        "0.01": 306,
+        "0.02": 612,
+        "0.05": 1530,
+        "0.1": 3060,
+        "0.2": 6120,
+        "0.5": 15301,
+        "1.0": 30602
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "fdad053556008ef78f810cccfd21da48d93d0fb1e75348232510039be10fbd18",
+        "test": {
+          "end": 52416,
+          "start": 41932
+        },
+        "total_rows": 52416,
+        "train": {
+          "end": 31449,
+          "start": 0
+        },
+        "validation": {
+          "end": 41932,
+          "start": 31449
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10149,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 8,
+      "data_sha256": "83cf2bd039b2cb6b649162534be26bde4fcb7a5aba24bd86f67c91f4bf081a09",
+      "dataset": "Tetouan",
+      "eligible_train_candidates": 30218,
+      "eligible_validation_windows": 9764,
+      "horizon": 720,
+      "raw_train_candidates": 30218,
+      "selected_counts": {
+        "0.005": 151,
+        "0.01": 302,
+        "0.02": 604,
+        "0.05": 1510,
+        "0.1": 3021,
+        "0.2": 6043,
+        "0.5": 15109,
+        "1.0": 30218
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "fdad053556008ef78f810cccfd21da48d93d0fb1e75348232510039be10fbd18",
+        "test": {
+          "end": 52416,
+          "start": 41932
+        },
+        "total_rows": 52416,
+        "train": {
+          "end": 31449,
+          "start": 0
+        },
+        "validation": {
+          "end": 41932,
+          "start": 31449
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 9765,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 862,
+      "data_sha256": "1a3e8930c984a6ccae4b96be832ff5097e239f8c7468a4be1a9b2a819eb5b3ff",
+      "dataset": "Traffic",
+      "eligible_train_candidates": 9919,
+      "eligible_validation_windows": 3414,
+      "horizon": 96,
+      "raw_train_candidates": 9919,
+      "selected_counts": {
+        "0.005": 49,
+        "0.01": 99,
+        "0.02": 198,
+        "0.05": 495,
+        "0.1": 991,
+        "0.2": 1983,
+        "0.5": 4959,
+        "1.0": 9919
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f1f24445a3658e17063937cdc507e6e18e5b8ed53341ce5e46ddcd8a46e443b3",
+        "test": {
+          "end": 17544,
+          "start": 14035
+        },
+        "total_rows": 17544,
+        "train": {
+          "end": 10526,
+          "start": 0
+        },
+        "validation": {
+          "end": 14035,
+          "start": 10526
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3414,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 862,
+      "data_sha256": "1a3e8930c984a6ccae4b96be832ff5097e239f8c7468a4be1a9b2a819eb5b3ff",
+      "dataset": "Traffic",
+      "eligible_train_candidates": 9823,
+      "eligible_validation_windows": 3318,
+      "horizon": 192,
+      "raw_train_candidates": 9823,
+      "selected_counts": {
+        "0.005": 49,
+        "0.01": 98,
+        "0.02": 196,
+        "0.05": 491,
+        "0.1": 982,
+        "0.2": 1964,
+        "0.5": 4911,
+        "1.0": 9823
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f1f24445a3658e17063937cdc507e6e18e5b8ed53341ce5e46ddcd8a46e443b3",
+        "test": {
+          "end": 17544,
+          "start": 14035
+        },
+        "total_rows": 17544,
+        "train": {
+          "end": 10526,
+          "start": 0
+        },
+        "validation": {
+          "end": 14035,
+          "start": 10526
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3318,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 862,
+      "data_sha256": "1a3e8930c984a6ccae4b96be832ff5097e239f8c7468a4be1a9b2a819eb5b3ff",
+      "dataset": "Traffic",
+      "eligible_train_candidates": 9679,
+      "eligible_validation_windows": 3174,
+      "horizon": 336,
+      "raw_train_candidates": 9679,
+      "selected_counts": {
+        "0.005": 48,
+        "0.01": 96,
+        "0.02": 193,
+        "0.05": 483,
+        "0.1": 967,
+        "0.2": 1935,
+        "0.5": 4839,
+        "1.0": 9679
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f1f24445a3658e17063937cdc507e6e18e5b8ed53341ce5e46ddcd8a46e443b3",
+        "test": {
+          "end": 17544,
+          "start": 14035
+        },
+        "total_rows": 17544,
+        "train": {
+          "end": 10526,
+          "start": 0
+        },
+        "validation": {
+          "end": 14035,
+          "start": 10526
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 3174,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 862,
+      "data_sha256": "1a3e8930c984a6ccae4b96be832ff5097e239f8c7468a4be1a9b2a819eb5b3ff",
+      "dataset": "Traffic",
+      "eligible_train_candidates": 9295,
+      "eligible_validation_windows": 2790,
+      "horizon": 720,
+      "raw_train_candidates": 9295,
+      "selected_counts": {
+        "0.005": 46,
+        "0.01": 92,
+        "0.02": 185,
+        "0.05": 464,
+        "0.1": 929,
+        "0.2": 1859,
+        "0.5": 4647,
+        "1.0": 9295
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "f1f24445a3658e17063937cdc507e6e18e5b8ed53341ce5e46ddcd8a46e443b3",
+        "test": {
+          "end": 17544,
+          "start": 14035
+        },
+        "total_rows": 17544,
+        "train": {
+          "end": 10526,
+          "start": 0
+        },
+        "validation": {
+          "end": 14035,
+          "start": 10526
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 2790,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 21,
+      "data_sha256": "d5fff8724be037dae63fc0a67c9e64f228bc1e095edaae260f5c0cd49f29ad3e",
+      "dataset": "Weather",
+      "eligible_train_candidates": 29412,
+      "eligible_validation_windows": 10446,
+      "horizon": 96,
+      "raw_train_candidates": 31015,
+      "selected_counts": {
+        "0.005": 147,
+        "0.01": 294,
+        "0.02": 588,
+        "0.05": 1470,
+        "0.1": 2941,
+        "0.2": 5882,
+        "0.5": 14706,
+        "1.0": 29412
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "b18f072424ea4cb8b326b0140f4b08f6a734ea9adaf923b0ce7f222d3387ac1d",
+        "test": {
+          "end": 52704,
+          "start": 42163
+        },
+        "total_rows": 52704,
+        "train": {
+          "end": 31622,
+          "start": 0
+        },
+        "validation": {
+          "end": 42163,
+          "start": 31622
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10446,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 21,
+      "data_sha256": "d5fff8724be037dae63fc0a67c9e64f228bc1e095edaae260f5c0cd49f29ad3e",
+      "dataset": "Weather",
+      "eligible_train_candidates": 27935,
+      "eligible_validation_windows": 10350,
+      "horizon": 192,
+      "raw_train_candidates": 30919,
+      "selected_counts": {
+        "0.005": 139,
+        "0.01": 279,
+        "0.02": 558,
+        "0.05": 1396,
+        "0.1": 2793,
+        "0.2": 5587,
+        "0.5": 13967,
+        "1.0": 27935
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "b18f072424ea4cb8b326b0140f4b08f6a734ea9adaf923b0ce7f222d3387ac1d",
+        "test": {
+          "end": 52704,
+          "start": 42163
+        },
+        "total_rows": 52704,
+        "train": {
+          "end": 31622,
+          "start": 0
+        },
+        "validation": {
+          "end": 42163,
+          "start": 31622
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10350,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 21,
+      "data_sha256": "d5fff8724be037dae63fc0a67c9e64f228bc1e095edaae260f5c0cd49f29ad3e",
+      "dataset": "Weather",
+      "eligible_train_candidates": 25970,
+      "eligible_validation_windows": 10206,
+      "horizon": 336,
+      "raw_train_candidates": 30775,
+      "selected_counts": {
+        "0.005": 129,
+        "0.01": 259,
+        "0.02": 519,
+        "0.05": 1298,
+        "0.1": 2597,
+        "0.2": 5194,
+        "0.5": 12985,
+        "1.0": 25970
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "b18f072424ea4cb8b326b0140f4b08f6a734ea9adaf923b0ce7f222d3387ac1d",
+        "test": {
+          "end": 52704,
+          "start": 42163
+        },
+        "total_rows": 52704,
+        "train": {
+          "end": 31622,
+          "start": 0
+        },
+        "validation": {
+          "end": 42163,
+          "start": 31622
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 10206,
+      "validation_subset_size": 64
+    },
+    {
+      "channels": 21,
+      "data_sha256": "d5fff8724be037dae63fc0a67c9e64f228bc1e095edaae260f5c0cd49f29ad3e",
+      "dataset": "Weather",
+      "eligible_train_candidates": 21427,
+      "eligible_validation_windows": 9822,
+      "horizon": 720,
+      "raw_train_candidates": 30391,
+      "selected_counts": {
+        "0.005": 107,
+        "0.01": 214,
+        "0.02": 428,
+        "0.05": 1071,
+        "0.1": 2142,
+        "0.2": 4285,
+        "0.5": 10713,
+        "1.0": 21427
+      },
+      "split": {
+        "boundary_timestamps": {
+          "test_end": null,
+          "test_start": null,
+          "train_start": null,
+          "validation_start": null
+        },
+        "ratios": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "split_config_hash": "b18f072424ea4cb8b326b0140f4b08f6a734ea9adaf923b0ce7f222d3387ac1d",
+        "test": {
+          "end": 52704,
+          "start": 42163
+        },
+        "total_rows": 52704,
+        "train": {
+          "end": 31622,
+          "start": 0
+        },
+        "validation": {
+          "end": 42163,
+          "start": 31622
+        }
+      },
+      "test_values_read": false,
+      "test_window_count_nominal": 9822,
+      "validation_subset_size": 64
+    }
+  ],
+  "zero_shot_seed_evaluations": 216
+}

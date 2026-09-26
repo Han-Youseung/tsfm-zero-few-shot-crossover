@@ -53,12 +53,13 @@ def make_window_batch(
     fingerprint: str,
     sampling_manifest_hash: str,
     context_values=None,
+    final_test=False,
 ) -> WindowBatch:
     """Only train/validation engineering windows; no scaler or new sampling logic."""
     if not windows or len({w.split for w in windows}) != 1:
         raise ValueError("a nonempty batch from one split is required")
     split = windows[0].split
-    if split not in {"train", "validation"}:
+    if split not in {"train", "validation"} and not (final_test and split == "test"):
         raise ValueError("test split is blocked in adapter engineering")
     bounds = getattr(splits, split)
     for w in windows:

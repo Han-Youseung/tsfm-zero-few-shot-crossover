@@ -39,7 +39,9 @@ def validation_subset(windows, count):
     return [windows[i] for i in indices]
 
 
-def prepare_condition(config, row, entry, root, commit):
+def prepare_condition(
+    config, row, entry, root, commit, *, sampling_rates=None, protocol_frozen=False
+):
     values, channels, split = load_pilot_values(root, entry)
     fingerprint = entry["qc"]["sha256"]
     candidates = generate_train_windows(
@@ -55,7 +57,8 @@ def prepare_condition(config, row, entry, root, commit):
         split_config_hash=split.split_config_hash,
         seed=config.seed,
         code_commit_sha=commit,
-        rates=[config.sampling_rate],
+        rates=[config.sampling_rate] if sampling_rates is None else sampling_rates,
+        generated_at=None if sampling_rates is None else "immutable-study-manifest",
     )
     selected = select_train_windows(candidates, manifest, config.sampling_rate)
     validating = validation_subset(
@@ -82,6 +85,7 @@ def prepare_condition(config, row, entry, root, commit):
         )
 
     settings = AdapterConfig(
+        protocol_frozen=protocol_frozen,
         family=row["family"],
         condition_id=row["id"],
         dataset_fingerprint=fingerprint,
@@ -264,13 +268,15 @@ def stability(
         "actual_unique_train_windows": len(state["visited_train_indices"]),
         "stopping_step": adapter.global_step,
         "best_validation_step": state["best_step"],
-        "convergence": "not_established; bounded pilot only",
+        "convergence": "not_established; bounded-compute main study"
+        if adapter.config.protocol_frozen
+        else "not_established; bounded pilot only",
         "metadata": adapter.execution_metadata(),
         "microbatch": config.training_batch,
         "accumulation": 1,
         "nominal_effective_batch": config.training_batch,
         "drop_last": False,
-        "protocol_frozen": False,
+        "protocol_frozen": adapter.config.protocol_frozen,
         "amp": "not_run",
         "test_evaluation": False,
     }

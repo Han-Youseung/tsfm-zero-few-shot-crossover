@@ -225,12 +225,22 @@ def prepare_one(name, root, cache, expected_sources=None):
 
 def load_pilot_values(root, entry):
     """Read target values only through validation.end; hash may read all raw bytes."""
+    return _load_values(root, entry, final_test=False)
+
+
+def load_final_values(root, entry):
+    """Final evaluation only; caller must first persist checkpoint selection."""
+    return _load_values(root, entry, final_test=True)
+
+
+def _load_values(root, entry, *, final_test):
     if entry["status"] != "ready_with_warnings" or "__bundle" in entry["variant"]:
         raise ValueError("unprepared/blocked dataset")
     path = Path(root) / entry["path"]
     if digest(path) != entry["qc"]["sha256"]:
         raise ValueError("prepared fingerprint mismatch")
     split = chronological_split(entry["qc"]["rows"])
+    end = split.test.end if final_test else split.validation.end
     with path.open(encoding="utf-8", newline="") as handle:
         reader = csv.reader(handle)
         columns = next(reader)[1:]
@@ -243,11 +253,11 @@ def load_pilot_values(root, entry):
             raise ValueError("unsupported missing policy")
         values = [
             [float(v) if v.strip() else float("nan") for v in row[1:]]
-            for row in itertools.islice(reader, split.validation.end)
+            for row in itertools.islice(reader, end)
         ]
         if any(not math.isfinite(v) for row in values for v in row) and policy != POLICY:
             raise ValueError("missing values require an explicit approved policy")
-    if len(values) != split.validation.end:
+    if len(values) != end or any(len(row) != len(columns) for row in values):
         raise ValueError("prepared row count mismatch")
     return values, tuple(columns), split
 

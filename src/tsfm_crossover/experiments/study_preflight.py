@@ -166,7 +166,8 @@ def main():
     args = p.parse_args()
     result = preflight(Path.cwd(), args.config)
     if args.output.exists():
-        if json.loads(args.output.read_text(encoding="utf-8")) != result:
+        # JSON serializes SplitManifest.ratios tuples as lists.
+        if json.loads(args.output.read_text(encoding="utf-8")) != json.loads(json.dumps(result)):
             raise ValueError("refusing to replace preflight evidence")
     else:
         write_json_atomic(args.output, result)

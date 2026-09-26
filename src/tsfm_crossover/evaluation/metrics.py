@@ -88,6 +88,50 @@ class StreamingMetrics:
             ),
         }
 
+    def update_array(self, predictions, targets):
+        """Vectorized FP64 sums for large multivariate test sets (optional NumPy)."""
+        import numpy as np
+
+        pred, target = (
+            np.asarray(predictions, dtype="float64"),
+            np.asarray(targets, dtype="float64"),
+        )
+        if pred.shape != target.shape or pred.ndim != 2 or pred.shape[1] != len(self.count):
+            raise ValueError("metric array shape mismatch")
+        mask = np.isfinite(target)
+        if not np.isfinite(pred[mask]).all():
+            raise ValueError("nonfinite prediction on a valid target")
+        error = np.where(mask, pred - target, 0.0)
+        for c, (n, a, s) in enumerate(
+            zip(mask.sum(0), np.abs(error).sum(0), np.square(error).sum(0), strict=True)
+        ):
+            self.count[c] += int(n)
+            self.absolute[c] += float(a)
+            self.squared[c] += float(s)
+
+    def state(self):
+        from dataclasses import asdict
+
+        return {
+            "scale": asdict(self.scale),
+            "count": self.count.copy(),
+            "absolute": self.absolute.copy(),
+            "squared": self.squared.copy(),
+        }
+
+    def restore(self, state):
+        from tsfm_crossover.data.common import stable_hash
+
+        if stable_hash(state["scale"]) != stable_hash(self.state()["scale"]):
+            raise ValueError("metric train scale mismatch")
+        for key in ("count", "absolute", "squared"):
+            values = state[key]
+            if len(values) != len(self.count) or any(not math.isfinite(v) or v < 0 for v in values):
+                raise ValueError("corrupt streaming metric state")
+            if key == "count" and any(type(v) is not int for v in values):
+                raise ValueError("metric counts must be integers")
+            setattr(self, key, values.copy())
+
 
 def relative_improvement(zero, few):
     # A zero denominator is undefined, not a manufactured perfect improvement.

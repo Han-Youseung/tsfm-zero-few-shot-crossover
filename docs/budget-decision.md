@@ -1,5 +1,8 @@
 # Validation 예산 확인 결과와 bounded-compute 결정
 
+후속 상태: 사용자 승인에 따른 본 실험 v1은 [main-study](main-study.md)에 별도로 고정했다.
+아래의 실행 금지/통합 gate 대기 설명은 budget 검토 당시 기록이며 당시 manifest는 보존한다.
+
 ## 실제 결과
 
 실행 commit `d6c63f812b36d6c17df56016e6b9415558e11cdc`의 두 archive를 검증했다.

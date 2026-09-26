@@ -1,0 +1,108 @@
+{
+  "descriptor_source_sha256": "ce1030620bbba29b1011a9b1af6fb316d9562bbd456e0dad46a1ae97f859be7c",
+  "features": {
+    "ETTh1": {
+      "channel_macro_absolute_linear_trend_in_train_std": 1.0124658604104335,
+      "channel_macro_lag1_correlation": 0.939060164364146,
+      "channels": 7,
+      "constant_channels": 0,
+      "fingerprint": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 10452
+    },
+    "ETTh2": {
+      "channel_macro_absolute_linear_trend_in_train_std": 1.050482257678626,
+      "channel_macro_lag1_correlation": 0.9543759646906199,
+      "channels": 7,
+      "constant_channels": 0,
+      "fingerprint": "a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 10452
+    },
+    "ETTm1": {
+      "channel_macro_absolute_linear_trend_in_train_std": 1.0112232664411667,
+      "channel_macro_lag1_correlation": 0.9782411391825859,
+      "channels": 7,
+      "constant_channels": 0,
+      "fingerprint": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 41808
+    },
+    "ETTm2": {
+      "channel_macro_absolute_linear_trend_in_train_std": 1.0533572059984437,
+      "channel_macro_lag1_correlation": 0.9831229525511211,
+      "channels": 7,
+      "constant_channels": 0,
+      "fingerprint": "db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 41808
+    },
+    "Electricity": {
+      "channel_macro_absolute_linear_trend_in_train_std": 0.5040770148289743,
+      "channel_macro_lag1_correlation": 0.9093290215441986,
+      "channels": 370,
+      "constant_channels": 22,
+      "fingerprint": "51790c599a81173b0e6eb35ae8d5ebd697f47887179aebb8c66d561d6b652e1c",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 15782
+    },
+    "Solar": {
+      "channel_macro_absolute_linear_trend_in_train_std": 0.34818576674585566,
+      "channel_macro_lag1_correlation": 0.9920191227010117,
+      "channels": 137,
+      "constant_channels": 0,
+      "fingerprint": "3a80b02484e740cf717f2da6712b49a94348af3076ae7dc6f5eb44afdaa8a713",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 31536
+    },
+    "Tetouan": {
+      "channel_macro_absolute_linear_trend_in_train_std": 1.2183238466347257,
+      "channel_macro_lag1_correlation": 0.9923987252824633,
+      "channels": 8,
+      "constant_channels": 0,
+      "fingerprint": "83cf2bd039b2cb6b649162534be26bde4fcb7a5aba24bd86f67c91f4bf081a09",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 31449
+    },
+    "Traffic": {
+      "channel_macro_absolute_linear_trend_in_train_std": 0.1898061026044098,
+      "channel_macro_lag1_correlation": 0.8423300204599687,
+      "channels": 862,
+      "constant_channels": 0,
+      "fingerprint": "1a3e8930c984a6ccae4b96be832ff5097e239f8c7468a4be1a9b2a819eb5b3ff",
+      "missing_rate": 0.0,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 10526
+    },
+    "Weather": {
+      "channel_macro_absolute_linear_trend_in_train_std": 1.4975994204888685,
+      "channel_macro_lag1_correlation": 0.9435076362567776,
+      "channels": 21,
+      "constant_channels": 0,
+      "fingerprint": "d5fff8724be037dae63fc0a67c9e64f228bc1e095edaae260f5c0cd49f29ad3e",
+      "missing_rate": 0.0003824944056428466,
+      "scope": "train_only_raw_observations",
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "train_rows": 31622
+    }
+  },
+  "repository_base_commit": "d0246cc0b55e588c803d2a75d0a52bee5a26ea06",
+  "status": "cpu_train_descriptors_computed_not_main_performance",
+  "test_values_read": false,
+  "tracked_source_dirty": true
+}
