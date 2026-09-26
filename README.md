@@ -62,6 +62,10 @@ Bundle 생성 경로, 공식 ETT 값 대조, canonical fingerprint와 데이터�
 
 ## 저장 원칙
 
+최신 단계: [budget 검증 및 학습 예산 결정](docs/budget-decision.md).
+두 모델의 validation-only 예산 확인을 마쳤습니다. 최대1000step bounded-compute 설정을
+채택하고 CPU 사전 점검을 수행하되, 본 실험/분석 계층 통합 gate가 남아 실행은 금지합니다.
+
 최신 결과: [Traffic FP32 복구 및 primary9](docs/traffic-recovery-result.md).
 Traffic은 80GB GPU에서 일반 FP32 학습/복원을 통과했습니다. notebook33은 종료하고
 primary9 overlay를 사용하는 notebook32의 validation-only budget 확인을 재개합니다.

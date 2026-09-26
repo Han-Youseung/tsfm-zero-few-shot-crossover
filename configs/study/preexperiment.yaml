@@ -1,0 +1,34 @@
+name: primary9_bounded_compute_v1
+prepared_manifest: results/manifests/pilot/prepared_primary9.json
+context: 512
+horizons: [96, 192, 336, 720]
+sampling_rates: [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0]
+seeds: [1729, 2718, 31415]
+max_optimizer_steps: 1000
+eval_every_steps: 100
+patience_evals: 3
+validation_windows: 64
+batch_size: 1
+gradient_accumulation: 1
+gradient_clip: null
+drop_last: false
+dtype: float32
+external_scaler: false
+primary_metric: channel_macro_train_std_normalized_mae
+test_stride: 1
+models:
+  ttm:
+    optimizer: AdamW
+    learning_rate: 0.0001
+    weight_decay: 0.01
+    samples: 1
+    point_statistic: prediction_outputs
+  moirai1:
+    optimizer: AdamW
+    learning_rate: 0.000005
+    weight_decay: 0.1
+    samples: 100
+    point_statistic: torch_sample_median
+test_evaluation: false
+protocol_frozen: false
+main_experiment_allowed: false
