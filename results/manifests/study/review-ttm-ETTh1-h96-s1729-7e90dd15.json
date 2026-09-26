@@ -1,0 +1,598 @@
+{
+  "analysis": {
+    "groups": [
+      {
+        "available": 9,
+        "dataset": "ETTh1",
+        "family": "ttm",
+        "horizon": 96,
+        "required": 27,
+        "source_group": "ETT-transformer1",
+        "status": "incomplete"
+      }
+    ],
+    "inference_limit": "seed variation only; no population CI or causal feature claims",
+    "source_group_aggregates": []
+  },
+  "archives": [
+    {
+      "name": "ttm-main-ETTh1-h96-s1729-7e90dd15.zip",
+      "sha256": "dd3ab2fd06c04367b175713ba98462c8972f3b82f2f38bbfacb72f0d3fc962ef"
+    }
+  ],
+  "conditions": [
+    {
+      "actual_optimizer_steps": 0,
+      "actual_unique_train_windows": 0,
+      "best_validation_step": null,
+      "coverage": {
+        "average_time_point_exposure_count": 0.0,
+        "context_coverage_ratio": 0.0,
+        "maximum_time_point_exposure_count": 0,
+        "target_coverage_ratio": 0.0,
+        "total_coverage_ratio": 0.0,
+        "unique_context_time_points": 0,
+        "unique_target_time_points": 0,
+        "unique_total_observed_time_points": 0
+      },
+      "effective_sampling_rate": 0.0,
+      "equivalent_epochs": 0.0,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0",
+          "kind": "zero",
+          "rate": 0.0,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "7183eae0f1b6478279fa340e1766e5f8ed10c7f247072127ad6e4e76dc05fea2",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 0,
+      "stopping_step": 0,
+      "test_metrics": {
+        "mae": 1.7411115647303748,
+        "mse": 10.411144120326068,
+        "normalized_mae": 0.43858973211064844,
+        "normalized_mse": 0.43133795455356067
+      },
+      "test_timing": {
+        "inference_seconds": 298.295361067002,
+        "peak_allocated_mb": 59.14013671875,
+        "peak_reserved_mb": 62.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 0.0,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 500,
+      "actual_unique_train_windows": 49,
+      "best_validation_step": 200,
+      "coverage": {
+        "average_time_point_exposure_count": 2.896927265655387,
+        "context_coverage_ratio": 0.9747416762342136,
+        "maximum_time_point_exposure_count": 4,
+        "target_coverage_ratio": 0.4500574052812859,
+        "total_coverage_ratio": 0.983926521239954,
+        "unique_context_time_points": 10188,
+        "unique_target_time_points": 4704,
+        "unique_total_observed_time_points": 10284
+      },
+      "effective_sampling_rate": 0.004977145759268664,
+      "equivalent_epochs": 10.204081632653061,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0.005",
+          "kind": "few",
+          "rate": 0.005,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "798945d20409238963ee66307668a83001956f261ccb06c57c283624dd31ca51",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 49,
+      "stopping_step": 500,
+      "test_metrics": {
+        "mae": 1.7659980468188294,
+        "mse": 10.989354548429336,
+        "normalized_mae": 0.442951622607153,
+        "normalized_mse": 0.4465802352728589
+      },
+      "test_timing": {
+        "inference_seconds": 263.75266111499786,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 142.09612417200242,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 500,
+      "actual_unique_train_windows": 98,
+      "best_validation_step": 200,
+      "coverage": {
+        "average_time_point_exposure_count": 5.750241266164833,
+        "context_coverage_ratio": 0.9822043628013777,
+        "maximum_time_point_exposure_count": 8,
+        "target_coverage_ratio": 0.771239954075775,
+        "total_coverage_ratio": 0.9913892078071183,
+        "unique_context_time_points": 10266,
+        "unique_target_time_points": 8061,
+        "unique_total_observed_time_points": 10362
+      },
+      "effective_sampling_rate": 0.009954291518537328,
+      "equivalent_epochs": 5.1020408163265305,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0.01",
+          "kind": "few",
+          "rate": 0.01,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "22fd9fb98d088bec60199f4cfdd4e7364c69f7749389f70b73502068abb7611b",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 98,
+      "stopping_step": 500,
+      "test_metrics": {
+        "mae": 1.7385683351308823,
+        "mse": 10.327453198099564,
+        "normalized_mae": 0.43748686018828487,
+        "normalized_mse": 0.4271718748540182
+      },
+      "test_timing": {
+        "inference_seconds": 263.17369033601835,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 143.05916566300357,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 500,
+      "actual_unique_train_windows": 196,
+      "best_validation_step": 200,
+      "coverage": {
+        "average_time_point_exposure_count": 11.492718680682804,
+        "context_coverage_ratio": 0.9828740910830464,
+        "maximum_time_point_exposure_count": 14,
+        "target_coverage_ratio": 0.8987753539992346,
+        "total_coverage_ratio": 0.9920589360887868,
+        "unique_context_time_points": 10273,
+        "unique_target_time_points": 9394,
+        "unique_total_observed_time_points": 10369
+      },
+      "effective_sampling_rate": 0.019908583037074656,
+      "equivalent_epochs": 2.5510204081632653,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0.02",
+          "kind": "few",
+          "rate": 0.02,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "2468f7701bc3036e9727729e11c44772571f1f571a9491aa85e04159efe0a91b",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 196,
+      "stopping_step": 500,
+      "test_metrics": {
+        "mae": 1.7298228183262585,
+        "mse": 10.1816701800967,
+        "normalized_mae": 0.43465417840494874,
+        "normalized_mse": 0.4184240666262523
+      },
+      "test_timing": {
+        "inference_seconds": 266.8310495059968,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 146.41054998499658,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 400,
+      "actual_unique_train_windows": 400,
+      "best_validation_step": 100,
+      "coverage": {
+        "average_time_point_exposure_count": 28.790760346487005,
+        "context_coverage_ratio": 0.984883275928052,
+        "maximum_time_point_exposure_count": 34,
+        "target_coverage_ratio": 0.9450822809031765,
+        "total_coverage_ratio": 0.9940681209337926,
+        "unique_context_time_points": 10294,
+        "unique_target_time_points": 9878,
+        "unique_total_observed_time_points": 10390
+      },
+      "effective_sampling_rate": 0.0499746063991874,
+      "equivalent_epochs": 0.8130081300813008,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0.05",
+          "kind": "few",
+          "rate": 0.05,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "c08714347dc6c6061758a4926aa72b7064935352604a7bea2e442159c0eb9a9d",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 492,
+      "stopping_step": 400,
+      "test_metrics": {
+        "mae": 1.7246105777004692,
+        "mse": 10.011422555466067,
+        "normalized_mae": 0.43529636804221183,
+        "normalized_mse": 0.41774293394286544
+      },
+      "test_timing": {
+        "inference_seconds": 262.1552125169783,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 113.70169465099934,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 400,
+      "actual_unique_train_windows": 400,
+      "best_validation_step": 100,
+      "coverage": {
+        "average_time_point_exposure_count": 57.41573896353167,
+        "context_coverage_ratio": 0.9877535399923459,
+        "maximum_time_point_exposure_count": 66,
+        "target_coverage_ratio": 0.9479525449674704,
+        "total_coverage_ratio": 0.9969383849980865,
+        "unique_context_time_points": 10324,
+        "unique_target_time_points": 9908,
+        "unique_total_observed_time_points": 10420
+      },
+      "effective_sampling_rate": 0.0999492127983748,
+      "equivalent_epochs": 0.4065040650406504,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0.1",
+          "kind": "few",
+          "rate": 0.1,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "63d17e60f448fb988adf67a64fb1001a83576123f23ca408997ea28b1e05d5e1",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 984,
+      "stopping_step": 400,
+      "test_metrics": {
+        "mae": 1.7335374879333945,
+        "mse": 10.192128178314535,
+        "normalized_mae": 0.43593402789788976,
+        "normalized_mse": 0.4224682711452325
+      },
+      "test_timing": {
+        "inference_seconds": 265.0330671770307,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 114.21713588800958,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 500,
+      "actual_unique_train_windows": 500,
+      "best_validation_step": 200,
+      "coverage": {
+        "average_time_point_exposure_count": 114.64776862669987,
+        "context_coverage_ratio": 0.9898584003061615,
+        "maximum_time_point_exposure_count": 130,
+        "target_coverage_ratio": 0.9500574052812859,
+        "total_coverage_ratio": 0.999043245311902,
+        "unique_context_time_points": 10346,
+        "unique_target_time_points": 9930,
+        "unique_total_observed_time_points": 10442
+      },
+      "effective_sampling_rate": 0.2,
+      "equivalent_epochs": 0.25393600812595224,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0.2",
+          "kind": "few",
+          "rate": 0.2,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "4b7f93d0f44cfadbffcc7b71b9aebf5c090399ce1f2eaad6cf3385bedad62301",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 1969,
+      "stopping_step": 500,
+      "test_metrics": {
+        "mae": 1.7250723106657324,
+        "mse": 10.341078650187471,
+        "normalized_mae": 0.434342077532851,
+        "normalized_mse": 0.42250207469009016
+      },
+      "test_timing": {
+        "inference_seconds": 263.5101270949872,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 143.59802639399095,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 400,
+      "actual_unique_train_windows": 400,
+      "best_validation_step": 100,
+      "coverage": {
+        "average_time_point_exposure_count": 286.39831562828977,
+        "context_coverage_ratio": 0.9905281285878301,
+        "maximum_time_point_exposure_count": 316,
+        "target_coverage_ratio": 0.9507271335629545,
+        "total_coverage_ratio": 0.9997129735935706,
+        "unique_context_time_points": 10353,
+        "unique_target_time_points": 9937,
+        "unique_total_observed_time_points": 10449
+      },
+      "effective_sampling_rate": 0.4999492127983748,
+      "equivalent_epochs": 0.08126777732629012,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r0.5",
+          "kind": "few",
+          "rate": 0.5,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "2bf5137aa7330998f857ccdf8b3c143159fe0e1e2b4eac1d9f250cc0ac24f844",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 4922,
+      "stopping_step": 400,
+      "test_metrics": {
+        "mae": 1.728141877933859,
+        "mse": 10.067010571787486,
+        "normalized_mae": 0.4375422614313455,
+        "normalized_mse": 0.42050655273214127
+      },
+      "test_timing": {
+        "inference_seconds": 264.32801383802143,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 114.98454865299846,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    },
+    {
+      "actual_optimizer_steps": 500,
+      "actual_unique_train_windows": 500,
+      "best_validation_step": 200,
+      "coverage": {
+        "average_time_point_exposure_count": 572.6903941829315,
+        "context_coverage_ratio": 0.9908151549942594,
+        "maximum_time_point_exposure_count": 608,
+        "target_coverage_ratio": 0.9510141599693839,
+        "total_coverage_ratio": 1.0,
+        "unique_context_time_points": 10356,
+        "unique_target_time_points": 9940,
+        "unique_total_observed_time_points": 10452
+      },
+      "effective_sampling_rate": 1.0,
+      "equivalent_epochs": 0.05078720162519045,
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "identity": {
+        "commit": "3e18305032484239966026f14395b903c9abf268",
+        "condition": {
+          "dataset": "ETTh1",
+          "family": "ttm",
+          "horizon": 96,
+          "id": "ttm-ETTh1-h96-s1729-r1",
+          "kind": "few",
+          "rate": 1.0,
+          "seed": 1729
+        },
+        "data_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066",
+        "model_pin": {
+          "code_commit": "fe7a35697723e2a2f5246ae979474bfc554e26c0",
+          "config_sha256": "859d94949a7d4091b80d034a8bc53cff2a1f9be6916e7f8de696cd319424cfe2",
+          "repository": "ibm-granite/granite-timeseries-ttm-r3",
+          "revision": "7b070728ff280ee2bb682bd8dfbe71da21ca2c7c"
+        },
+        "prepared_hash": "e4893dff82ccbfade46ff063dcf2da117e7d36fda0c5dbc44d84c6f423b00575",
+        "protocol_hash": "2e1f377b4ba5ef895dfbfa85f8b4f8d72344c41d364796206138de68bf679f9c",
+        "schema_version": 1
+      },
+      "record_hash": "9547bfa059809b77e2b1f692cbd2dc1ef89d9190bca88f04a5000ef25c543139",
+      "runtime_hash": "b56579139a7123472e352030425b0c638115b86ad2aa20b6bf11a37ece101206",
+      "sampling_manifest_hash": "1bb5cc58eb5c661fcec5e7ff84c76fde45acfc7d836c2a341eac9d14d03a2276",
+      "selected_train_windows": 9845,
+      "stopping_step": 500,
+      "test_metrics": {
+        "mae": 1.7133594027682217,
+        "mse": 9.960659642965737,
+        "normalized_mae": 0.43132316784954217,
+        "normalized_mse": 0.4115528505582927
+      },
+      "test_timing": {
+        "inference_seconds": 263.0585958150032,
+        "peak_allocated_mb": 91.14013671875,
+        "peak_reserved_mb": 92.0
+      },
+      "test_window_hash": "ef981ff0716830b7f24e46b0ebad3dd5acbb409f315cb58236e1739935c6cbab",
+      "test_windows": 3389,
+      "total_parameters": 5328932,
+      "total_train_windows": 9845,
+      "train_seconds": 142.65749171399875,
+      "trainable_parameters": 5328932,
+      "vram_gib": 39.4935302734375
+    }
+  ],
+  "execution_commit": "3e18305032484239966026f14395b903c9abf268",
+  "planned_conditions": 1944,
+  "status": "validated_partial",
+  "test_metrics_recomputed_from_predictions": false,
+  "validated_conditions": 9,
+  "validation": "identities, canonical windows/masks, package pins and stopping replay"
+}
