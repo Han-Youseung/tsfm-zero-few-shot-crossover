@@ -92,6 +92,35 @@ pending은 성공이 아니다. 오류가 나면 다음 조건을 임의 실행�
 Drive 잔여 용량도 확인한다. best/last optimizer checkpoint는 조건 수에 따라 상당히 누적된다.
 사용자가 검증 전 checkpoint를 삭제하도록 자동 안내하거나 자동 정리하지 않는다.
 
+## Colab model-cache recovery
+
+Model weights and HF/Xet caches stay on local `/content` storage, while results,
+optimizer checkpoints and public dataset files remain on Drive. The notebook
+sets `HF_HOME` and `HF_XET_CACHE` before starting model subprocesses. After runtime
+loss, download the same immutable model revision again; do not change the model
+or the execution commit to repair a cache. The local weight cache is disposable,
+but experiment checkpoints and evidence are not.
+
+On 2026-09-27, the TTM H96 cached `model.safetensors` resolved to a 79-byte
+relative-path string instead of the pinned 21,441,800-byte tensor file, causing
+`SafetensorError: header too large`. This was a cache/storage failure, not an OOM
+or fine-tuning loss failure. Fresh local download matched the manifest's SHA-256
+`8372cf7a0be542fd56b047b190e84bb5eea1cb384d7e60aa0ec32080b9c7bd08`, parsed all
+742 tensors, and matched the completed Zero-Shot parameter hash. That verification
+did not evaluate test performance or change any research setting.
+
+For an existing Drive-backed model cache, stop before training. Preserve the old
+cache and failure JSON; do not recursively delete either. Download into a new
+local cache, verify config and weight size/hash against the pinned manifest and
+parse the tensors. If a completed Zero-Shot exists, also compare the loaded
+pretrained parameter hash with its locked selection. Only then redirect the local
+`.cache` link, preserving the old link/target, and record the recovery separately.
+Keep `OUT`, the execution commit and the fixed protocol unchanged. Re-running the
+original runner validates and skips completed conditions. The notebook guard
+blocks an old Drive-backed cache for explicit review rather than silently deleting
+or replacing it. A repaired notebook can be opened at a newer revision while
+entering the original execution SHA; never pull new runner code into an active run.
+
 ## CPU 회수·분석
 
 원본 ZIP을 그대로 보존한 채 다음을 실행한다. 기존 파일을 덮어쓰지 않도록 새 output 경로를 사용한다.
