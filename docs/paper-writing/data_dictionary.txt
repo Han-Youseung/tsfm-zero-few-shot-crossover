@@ -1,0 +1,39 @@
+수치표 사전
+
+공통
+model: ttm=TTM-R3, moirai1=MOIRAI 1.1-R-small. Timer 없음.
+rate/requested_rate: 요청한 train 후보 윈도 풀의 분수. 0=Zero-Shot, .005=.5%, 1=100%.
+zero_mean/few_mean: 해당 metric의 3 seeds 단순 평균.
+mean_delta: 같은 seed에서 Zero-Shot 오차 minus FT 오차를 구한 뒤 평균.
+mean_relative_improvement: 각 seed (zero-few)/zero의 평균. 0.015는 1.5% 개선.
+seed_min/max_relative_improvement: seed 3개의 관측 최소/최대. CI 아님.
+improved_seed_count: 양의 개선을 보인 seed 수, 0~3.
+mean_sustained_interval/all_seed_sustained_interval: 모든 이후 격자에서 개선이 유지되는 첫 격자의 표시 구간. null/기준 미충족은 누락 데이터가 아님.
+
+파일별
+datasets.csv (5행): 전체 행 수·채널·분할·train-only 특성·주기·fingerprint·source URL.
+model_settings.csv (2행): 결과에 기록된 실제 model/code pins 및 하이퍼파라미터. 공통 batch/validation 규칙은 methods_and_reproducibility.txt.
+endpoints.csv (40행): 2모델×5데이터×4metric의 100% pool과 crossover 요약.
+curves.csv (320행): 2모델×5데이터×4metric×8 FT 비율. zero_1729/few_1729 등 paired 원 metric 포함.
+conditions.csv (270행): 모든 개별 최종 test 조건; scientific long format. raw MAE/MSE는 원 단위; NMAE/NMSE는 train population std/variance로 오차 정규화.
+channels.csv (72행): 2모델×36채널의 100% pool NMAE 요약. 데이터별 채널 수 합계 7+7+7+7+8=36.
+budget.csv (10행): 24 FT조건/모델–데이터의 상한 도달 수, best step이 상한인 수, 실제 step 범위와 100% pool 고유 방문 비율.
+validation_history.csv (1726행): 기존 FT validation 평가 이력. 특정 조건의 step/4개 metric. final test curve가 아님.
+workbook_inputs.json: 위 CSV와 같은 구조의 typed intermediate; workbook의 계산 대조 근거.
+
+conditions 핵심 열
+selected_pool/train_pool_total: 선택 k와 전체 N. 정확한 유효 비율은 k/N, 요청 r과 floor 차이가 있음.
+actual_optimizer_steps: 학습 종료까지 실제 optimizer update 수. ZS=0.
+best_validation_step: validation 기준 선택 checkpoint의 step. stopping_step과 다름.
+actual_unique_windows: 종료까지 방문한 고유 학습 윈도 수. best checkpoint의 노출 수가 아님.
+equivalent_epochs / average_window_exposures: 구현상 둘 다 누적 윈도 노출/selected_pool. 최대 실제 step 1000, batch1/accumulation1 조건에서 stop/selected_pool.
+train_seconds: runner가 보고한 학습 구간 시간. validation_inference_seconds와 함께 해석. 설치/다운로드 포함 총 프로젝트 GPU 비용 아님.
+test_inference_seconds: final test inference에 기록된 누적 시간. 중단 및 재개 내역이나 장치 차이를 제거한 benchmark 값 아님.
+*_peak_*_mb: 구현에서 기록한 torch GPU 메모리 통계(2^20 bytes 단위). 총 장치 VRAM이나 다른 프로세스 사용량이 아님.
+runtime_hash: evidence/environments.json의 key. 실제 Python/torch/CUDA/driver/package/official commit 매핑.
+data_sha256/test_window_hash/sampling_manifest_hash: 데이터·평가 origin·표본 identity. 같은 문자열 이름만 같다고 같은 실험으로 합치지 않음.
+execution_commit: 실제 고정 실행 코드 commit. 자료집 작성 commit과 구분.
+
+공란과 숫자
+CSV 공란/JSON null은 적용 불가 또는 해당 필드 미기록. 0으로 대체하지 않음. XLSX는 몇 자리만 표시하지만 실제값과 CSV/JSON은 원 수치 정밀도를 유지한다.
+XLSX Summary/Curves의 오차와 상대 개선은 입력 값에서 formula로 계산한다. crossover interval과 channel tables는 검증된 분석의 고정 snapshot이다. 사용자가 입력 값을 편집해도 crossover 경계까지 실시간 다시 계산되는 도구는 아니다. 원본 수치표를 보존하고 사본에서 편집한다.

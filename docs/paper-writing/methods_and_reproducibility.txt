@@ -1,0 +1,88 @@
+방법 및 재현 부록 — 2026-10-09, 기존 실행만 사용
+
+1. 범위와 역할
+본 자료는 TTM-R3와 MOIRAI 1.1-R-small, ETTh1/ETTh2/ETTm1/ETTm2/Tetouan, context 512, H96, seed 1729/2718/31415의 270개 최종 결과만 다룬다. GPU 학습, test 재평가, 하이퍼파라미터 탐색을 추가하지 않았다. Timer, 나머지 네 horizon 계획 및 다른 데이터는 주 분석에 포함하지 않는다. 기존 기록을 삭제하지 않는다.
+실험 실행 commit: 3e18305032484239966026f14395b903c9abf268
+자료집 생성 시 분석 기준 commit: verification.json의 analysis_baseline_commit
+분석 범위: evidence/analysis_scope.yaml
+evidence/original_execution_plan.yaml은 원래 9개 데이터·4개 horizon 계획을 보존한 문서이다. 전체 계획 완료 증거가 아니다.
+
+2. 데이터·누수·윈도
+분할: 시간순 60/20/20. train_end=floor(0.6T), validation_end=floor(0.8T), 나머지가 test. 구간은 0-based half-open [start,end).
+학습 후보: context 512와 target 96이 모두 train 안에 있는 stride-1 윈도. N=train_rows-512-96+1 (현재 다섯 데이터는 결측 없음).
+Validation: target 전체가 validation에 포함되는 후보에서 고정된 64개 origins를 균등 위치로 선택. context에 과거 train 관측이 포함될 수 있다.
+Test: target 전체가 test에 포함되는 모든 stride-1 origins. 한 시점이 여러 lead/origin에서 평가될 수 있으며 그 forecast task마다 오차를 집계한다. 같은 model–dataset–seed의 ZS/FT 및 두 모델 간 동일 test window hash와 channel별 valid count를 검증했다.
+이후 test origin의 입력에 그때까지 관측된 실제 값이 포함되는 rolling-origin 평가이다. 온라인 파라미터 업데이트나 scaler refit은 하지 않는다. train-only 통계량과 checkpoint 선택은 test와 분리한다.
+데이터 표: tables/datasets.csv. 정확한 채널 순서·source URL·fingerprint를 포함한다. ETT 7개 채널 전체, Tetouan 8개 수치 채널 전체를 예측한다. Tetouan은 단순한 3채널 전력 사용량 실험이 아니다.
+본 다섯 데이터의 준비본에는 결측·중복 timestamp가 없으므로 결측 보간·타깃 마스킹 효과를 연구했다고 주장하지 않는다. 원 데이터는 ZIP에 넣지 않았으며 출처의 이용·재배포 조건을 따른다.
+
+3. 표본
+r={0.005,0.01,0.02,0.05,0.1,0.2,0.5,1}; k=max(1,floor(rN)). r=0은 학습 없음.
+동일 seed에서 master order를 하나 만들고 prefix k개를 선택하여 S_0.5% ⊆ ... ⊆ S_100%를 보장한다.
+구현은 K=min(ceil(sqrt(N)),N)개의 연속 시간층, seed에 따른 층 내부 shuffle, bit-reversal 기반 층 순서 및 round별 순서 이동을 사용하여 층을 교차 방문한다. 학습 batch shuffle과 표본 선택은 별도 단계이다.
+모델 간 동일 sampling manifest hash를 확인하였다. 실제 k/N과 요청 r은 floor 때문에 다를 수 있다. 표의 requested_rate는 분수 단위이며 0.005=0.5%, 0.5=50%이다.
+100%는 후보 풀을 모두 허용한다는 뜻이지 모든 후보를 한 번 이상 학습했다는 뜻이 아니다. actual_unique_windows는 학습 종료까지 방문한 고유 윈도 수이다. best_validation_step에서의 노출 수를 직접 측정한 값으로 해석하지 않는다. 실제 구현의 equivalent_epochs와 average_window_exposures는 둘 다 누적 윈도 노출/선택 풀 크기이다. 실제 방문 고유 윈도만을 분모로 쓴 평균이 아님에 주의한다.
+
+4. 모델별 고정값
+TTM
+repository: ibm-granite/granite-timeseries-ttm-r3
+checkpoint selector: 512-96-dec-512-r3
+immutable HF revision: 7b070728ff280ee2bb682bd8dfbe71da21ca2c7c
+official source commit: fe7a35697723e2a2f5246ae979474bfc554e26c0
+granite-tsfm: 0.3.9
+H96 parameter count: 5,328,932 (전체 학습 대상)
+forecast: TinyTimeMixerForDecomposedPrediction의 prediction_outputs
+loss: 공식 decomposed prediction forward가 반환하는 loss. MOIRAI와 동일 objective가 아님.
+H96 context 외부 zero-padding: 없음. horizon crop: 없음. 내부 patch 연산은 유지한다.
+AdamW lr=1e-4, weight_decay=0.01
+가중치/공식 코드 license 기록: Apache-2.0.
+
+MOIRAI
+repository: Salesforce/moirai-1.1-R-small
+immutable HF revision: 0c24ab99db2c1a70ea2a0fc03bf113329772ac64
+official Uni2TS source commit: cfd46d4510ed8896f263116f32928eede05b0a75
+package version: 2.0.0. 2.0.0 tag commit(8062ef5a5660d2fea395fd1288ec9c397396c168)과 같다고 가정하지 않는다.
+parameter count: 13,827,528 (전체 학습 대상)
+wrapper/objective: MoiraiFinetune / PackedNLLLoss
+patch size: 64; joint targets; H96 직접 출력, 채널별 독립 호출이나 재귀 horizon 예측 없음.
+native scaler: PackedStdScaler. forecast samples=100; point statistic=torch.median(dim=samples). 짝수 100개 중 50번째 값을 반환하며 가운데 두 값의 평균이 아니다.
+AdamW lr=5e-6, weight_decay=0.1
+공식 코드: Apache-2.0. 모델 가중치: CC-BY-NC-4.0. 소프트웨어와 가중치 license를 혼동하지 않는다. 상업적 이용 허가로 해석하지 않는다.
+
+공통
+FP32, batch=1, accumulation=1, max_optimizer_steps=1000, eval_every_steps=100, patience_evals=3, validation_windows=64, scheduler 없음, gradient clipping 없음, drop_last=False.
+각 FT 조건은 원 pretrained checkpoint에서 시작한다. validation의 normalized MAE가 최소인 checkpoint를 최종 test에 사용한다. Zero-Shot 모델을 validation이 더 좋다는 이유로 FT 결과 대신 선택하는 fallback은 없다.
+Native scaling을 사용하고 외부 StandardScaler는 비활성화. 결과는 원 단위; 정규화 지표는 오차 집계 과정의 변환이다.
+현재 실행: TTM A100-SXM4-40GB 또는 Tesla T4 / Python 3.12.14 / torch 2.11.0+cu130; MOIRAI A100-SXM4-40GB / Python 3.12.15 / torch 2.4.1+cu121. 실제 condition별 runtime_hash는 conditions.csv, 모든 package/driver/determinism은 evidence/environments.json. 공식 소스 commit도 함께 확인한다.
+deterministic algorithms warn-only와 seed 재현성을 strict bitwise 결정론으로 과장하지 않는다. 시간/메모리는 실행 환경이 섞인 관측 기록으로, 동일 하드웨어 속도 벤치마크가 아니다. 중단 후 재개 및 재실행 비용 전체를 총 학습 시간으로 역산하지 않는다.
+
+5. 수식 (편집 가능한 plain text / LaTeX notation)
+채널 c의 train 평균 및 표준편차:
+mu_c = (1/T_train) sum_{t in train} y_{t,c}
+sigma_c = sqrt[(1/T_train) sum_{t in train} (y_{t,c}-mu_c)^2]
+이는 ddof=0인 population std이다.
+
+평가 원소 집합 Omega_c={(origin,lead): 해당 target이 평가 가능}, n_c=|Omega_c|일 때:
+MAE_c = (1/n_c) sum_{(o,h) in Omega_c} |y_{o+h,c} - yhat_{o,h,c}|
+MSE_c = (1/n_c) sum_{(o,h) in Omega_c} (y_{o+h,c} - yhat_{o,h,c})^2
+NMAE = (1/C') sum_{c in eligible} MAE_c/sigma_c
+NMSE = (1/C') sum_{c in eligible} MSE_c/sigma_c^2
+eligible은 sigma_c>1e-8인 채널; 이번 5개 데이터에서 제외된 정규화 채널은 0개. raw MAE/MSE는 채널별 원 단위 결과도 제공하나 단위가 다른 채널의 raw macro 값을 주요 모델 비교 근거로 삼지 않는다. NMAE는 percentage error나 MASE가 아니다.
+
+paired 오차 차이 D_{r,s}=E_{0,s}-E_{r,s}; 상대 개선 I_{r,s}=D_{r,s}/E_{0,s}.
+mean D_r=(1/3)sum_s D_{r,s}; mean I_r=(1/3)sum_s I_{r,s}.
+평균 지속 개선 격자 j*=min{j: 모든 k>=j에 대해 mean D_{r_k}>0}.
+세 seed 모두 지속 개선 격자 j*=min{j: 모든 k>=j 및 모든 s에 대해 D_{r_k,s}>0}.
+조건을 만족하는 j가 없으면 기준 미충족. 표시 구간은 (r_{j-1},r_j], j=1이면 아래 표시 경계는 0. 연속 함수의 근을 증명하지 않는다. 'first improvement'는 단 한 비율에서 처음 양수가 되는 별도 항목이므로 sustained와 혼동하지 않는다.
+
+6. 추가 분석과 통계 경계
+보조 지표 4종, 채널별 분석, seed 하나 제외, 1%/2% 상대 개선 마진, 출처군 단위 요약은 evidence/analysis.json에 있다. 모두 기존 metric 기록의 CPU 기술통계이며 test 예측을 새로 생성하지 않았다. 1%/2% 마진을 임상적·산업적 유의성 기준이라고 주장하지 않는다.
+원소별 prediction/error array가 없으므로 현재 집계 JSON만으로 새로운 시간-block bootstrap을 수행하거나 valid CI를 만들 수 없다. seed 3개의 최소–최대는 CI가 아니다. 서로 겹친 rolling window를 독립 표본으로 bootstrap하지 않는다.
+train descriptor는 인접 실제 관측의 Pearson lag-1 상관을 채널 평균하고, 각 채널 OLS 추세의 절대 기울기×(train_rows-1)/train_std를 채널 평균한 값이다. 둘 사이 특성과 crossover의 상관 유의성·인과·계절성 결과를 만들지 않는다.
+
+7. 재현 경로 (GPU 실행 없이 이 자료 재생성)
+저장소에서 기본 환경을 설치한 뒤, 원 ZIP 72개를 별도 디렉터리에 놓고 아래를 실행한다.
+python -m tsfm_crossover.analysis.writing_materials --archive-dir ORIGINAL_TTM_ZIP_DIRECTORY --archive ORIGINAL_MOIRAI_ZIP --output-dir NEW_OUTPUT_DIRECTORY
+source_archive_hashes.json의 이름·SHA와 정확히 일치해야 한다. 파일명 동일만으로 성공으로 합치지 않는다. 기존 review 및 data hash가 바뀌면 중단한다. 새 폴더를 요구하므로 원 결과를 덮어쓰지 않는다.
+이미 받은 자료집만으로 수치 확인: tables/*.csv, evidence/final_results.json, evidence/analysis.json을 대조한다. Excel 계산식은 paired 상대 개선과 세 seed 집계를 재계산한다. 문헌은 references.json의 공식 URL을 사용한다.
+원 실행 ZIP과 원 데이터·가중치·전체 prediction arrays·optimizer checkpoint는 포함하지 않는다. 원 실행 결과 JSON 270개와 manifest, hash inventory는 포함한다. ZIP 내부 SHA256SUMS.json과 동봉 검증 스크립트로 운송 무결성을 확인한다.

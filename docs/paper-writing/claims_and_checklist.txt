@@ -1,0 +1,44 @@
+논문 작성·제출 체크리스트와 주장-근거 대응표
+
+지금 할 순서
+1. paper_draft_ko.html/TXT를 학회 Word/한글 서식에 옮긴다.
+2. 저자 이름(국/영문), 소속, 교신저자 연락처, 실제 연구비 지원 정보를 직접 넣는다. 없으면 연구비 문구를 만들지 않는다.
+3. 학회 공지에서 실제 논문 양식·페이지 수·언어·참고문헌 형식·익명 심사·AI 사용 공개 규칙을 확인한다. 이 자료집은 특정 학회 양식 적합 판정을 받지 않았다.
+4. 표 1=데이터, 표 2=고정 모델 설정, 표 3=endpoint 및 전환 구간, 그림 1=상대 개선 곡선. 지면이 부족하면 전체 수치와 설정 hash를 부록/공개 저장소로 옮긴다.
+5. 수치표는 새로 타이핑하기보다 XLSX/CSV에서 복사한다. 비율 0.005는 0.5%, 0.5는 50%이다.
+6. 본문의 데이터 범위·예산·비사전등록·불확실성·사전학습 중복 미감사 한계를 유지한다.
+7. 제출 직전 최종 PDF에서 수식, 한글 폰트, 표 자릿수, 그래프 작은 글씨, 참고문헌 누락을 육안 확인한다.
+8. 공저자 확인과 원 데이터/모델 license 표기 후 제출한다. 추가 실험은 이번 자료 작성에 필요하지 않으며 수행하지 않았다.
+
+주장 → 근거 → 표현 경계
+270조건 완료 → evidence/final_results.json, verification.json → '원래 1,944조건 전체 완료' 금지.
+모델·데이터별 100% 상대 개선 → tables/endpoints.csv normalized_mae → 세 seed paired 비율의 평균. 평균 metric 비율과 미세하게 다를 수 있음.
+평균 및 모든 seed의 지속 개선 구간 → endpoints.csv 및 analysis.json → 연속 정확 임계점, 95% CI, 통계적 유의성 아님.
+TTM·ETTm1 기준 미충족 → conditions.csv/curves.csv → 미실행/누락 아님. 일부 rate에서의 개선과 지속 개선은 다름.
+MOIRAI의 상대 이득이 큼 → curves.csv, endpoint → 절대 오차 우위나 모델 계열 전반 우수 주장 금지.
+100% pool에서 TTM 절대 NMAE가 5변형 모두 낮음 → endpoints.csv → 사전학습 데이터, 목적함수, architecture 차이를 통제한 순수 구조 비교가 아님.
+실제 학습 노출은 pool과 다름 → conditions.csv, budget.csv → 종료 시점 기록. best checkpoint 노출과 동일시 금지.
+TTM 학습이 저렴/빠름 → 현재 자료만으로 통제된 속도 비교 불가 → GPU T4/A100 혼재 및 환경 차이 공개.
+데이터 특성별 차이 → datasets.csv train descriptors → 탐색적 사례. 5변형=독립5데이터라는 주장, 유의성 회귀, 인과 설명 금지.
+Zero-Shot → 대상 train 파라미터 업데이트 없음 → '사전학습에서 이 데이터가 전혀 보이지 않았다'는 뜻 아님.
+공식 구현 사용 → model/code pins → 공식 소스 무패치와 내부 patch size 없는 architecture를 혼동하지 말 것.
+
+추가 실험 없이 반드시 공개할 한계
+- 두 고정 checkpoint, H96만, 다섯 데이터 변형/세 출처군.
+- test 결과가 이용 가능해진 후 최종 분석 범위를 선택함. 사전등록 아님.
+- 1000 optimizer-step 상한, batch1, 조기 종료; 동등한 FLOPs/epoch/수렴 비교 아님.
+- 100% 표본 풀이 모든 후보의 방문 또는 수렴을 뜻하지 않음.
+- 모델별 objective, point statistic, 내부 channel 처리 차이.
+- 3 seeds; MOIRAI training/prediction seed 효과 미분리; 시간 block CI 없음.
+- 0.5% 미만 추가 측정 없음. 희박한 비율 격자 사이 정확 crossover 불명.
+- H96의 물리적 길이는 16/24/96시간으로 서로 다름.
+- 사전학습 corpus 중복 독립 감사 없음.
+- TTM 실행 GPU 혼재, package/runtime 차이로 순수 속도 벤치마크 아님.
+- TTM/MOIRAI는 모두 내부 패치/분할 연산을 사용함. '무패치 모델' 표현 금지.
+- baseline 추가나 equal-epoch robustness가 없으므로 SOTA 우수성/일반적 미세조정 법칙 주장 금지.
+
+Timer 처리
+현재 주 분석은 사용자가 원래 두 모델에 집중하기로 결정한 범위이다. Timer를 단순히 성능이 나빠서 제외했다고 쓰지 않는다. 기존 Timer provenance 검토 및 원본은 저장소/로컬에 보존하며 이 자료집의 결과 표에는 혼합하지 않는다.
+
+새 결과와 혼동하지 말 것
+이번 작업은 기존 ZIP 72개에 대한 CPU 무결성 검사 및 수치·문서 export이다. 신규 GPU 학습, 새 test 평가, 누락 seed 생성, 조정된 하이퍼파라미터 또는 새 CI를 포함하지 않는다. 새로 제공한 그림은 기존 metric의 재시각화이다.

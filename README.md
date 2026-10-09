@@ -14,7 +14,7 @@
 
 선택 모델의 Hugging Face revision, 공식 코드 commit과 GPU budget에서 검증한 패키지 버전을 고정합니다. 본 실험 v1은 context512, FP32, batch1, full-parameter, 최대1000steps, eval100/patience3입니다. TTM LR1e-4, MOIRAI LR5e-6을 모든 dataset/rate에 적용합니다. 이 예산은 수렴을 보장하지 않으며 test 성능으로 설정을 바꾸지 않습니다.
 
-TSFM-Bench는 관련 선행연구로만 인용합니다. 그 결과·체크포인트·실험 조건을 재현하거나 직접 비교하지 않고, 코드와 프로토콜도 복사·번안하지 않습니다. 구현은 최신 TTM·MOIRAI의 공식 구현과 공개 API를 사용해 독립적으로 작성합니다.
+TSFM-Bench는 관련 선행연구로만 인용합니다. 그 결과·체크포인트·실험 조건을 재현하거나 직접 비교하지 않고, 코드와 프로토콜도 복사·번안하지 않습니다. 구현은 실행 전에 검증하고 고정한 TTM·MOIRAI의 공식 구현과 공개 API를 사용해 독립적으로 작성합니다.
 
 ## 설치
 
@@ -72,3 +72,30 @@ Traffic은 primary9에 포함되며 MOIRAI H720 학습만 80GB급 자원을 기�
 [초기 준비](docs/pre-experiment-readiness.md)는 변경된 과거 판단의 기록입니다.
 
 소스, YAML, 소용량 결과·요약·그림·manifest와 문서만 Git으로 관리합니다. 데이터셋, 모델 가중치, 캐시, 대용량 예측 배열과 원본 로그는 저장소에 추적하지 않습니다.
+
+## 추가 실험 없는 논문 작성 자료 (2026-10-09)
+
+기존 원 실행 ZIP 72개 / 최종 test 270조건만 재검증하여 본문 초안, 수식·설정,
+참고문헌, 전체 수치표와 그림을 내보냅니다. 새 학습이나 test 재평가는 하지 않습니다.
+[작성 체크리스트](docs/paper-writing/claims_and_checklist.txt),
+[방법·재현 부록](docs/paper-writing/methods_and_reproducibility.txt),
+[본문 초안 원천](docs/paper-writing/draft-ko.template.txt),
+[참고문헌](docs/paper-writing/references.bib)을 제공합니다.
+
+```bash
+python -m tsfm_crossover.analysis.writing_materials --archive-dir ORIGINAL_TTM_ZIP_DIRECTORY --archive ORIGINAL_MOIRAI_ZIP --output-dir NEW_OUTPUT_DIRECTORY
+```
+
+명령은 원본 ZIP의 이름·SHA와 canonical review를 대조하고 기존 분석을 CPU로
+재계산하여 일치 여부를 확인합니다. 기존 output 폴더를 덮어쓰지 않습니다.
+Excel/PNG 제작 스크립트는 `scripts/build_paper_workbook.mjs`,
+`scripts/render_paper_materials.mjs`이며 별도 문서 도구 환경의
+`@oai/artifact-tool`, `sharp`, `playwright`를 사용합니다.
+`scripts/verify_paper_materials.py`는 `openpyxl`로 내보낸 XLSX를 독립적으로
+읽어 수치·계산식·공란·CSV 정밀도를 검사합니다. 이 선택 도구들은 기본 모델/테스트
+의존성을 바꾸지 않습니다. 생성 ZIP/XLSX/PNG는 로컬 전달 자료이며 Git에는 넣지 않습니다.
+
+학회 양식·분량·저자 정보는 미확정입니다. 본문은 제출용 완성본이 아닌 편집 가능한
+초안입니다. 100% pool은 전체 순회/수렴이 아니며, '지속 개선 기준 미충족'은
+결과 누락이 아닙니다. 최종 범위의 사후 결정, 3개 출처군, seed 3개,
+사전학습 중복 미감사, H96의 물리적 기간 차이 및 T4/A100 혼재를 공개합니다.

@@ -1,0 +1,29 @@
+표·그림 배치와 캡션
+
+표 1. 분석 대상 데이터 변형의 구성. 시간순 train/validation/test 행 수, 관측 간격, 채널 수 및 H96의 실제 예측 기간을 나타낸다. ETT 시간·분 변형은 동일한 두 변압기 출처를 공유한다. Tetouan은 8개 수치 채널 모두를 예측하며 단순한 전력 3채널 설정이 아니다.
+원자료: tables/datasets.csv 또는 Excel Data. train-only 특성 값은 부록으로 이동할 수 있다.
+
+표 2. 고정 모델 및 미세조정 설정. 두 모델에 동일한 최대 optimizer-step 규칙과 공통 표본·평가 윈도를 적용하되 각 모델의 공식 학습 objective와 예측 함수를 유지하였다. 전체 파라미터를 학습 대상으로 하며, 동일 최대 step은 동등한 FLOPs나 수렴을 의미하지 않는다.
+원자료: methods_and_reproducibility.txt, evidence/final_results.json의 adapter_settings와 identity.model_pin.
+
+표 3. 모델–데이터별 Zero-Shot과 100% train-window pool의 normalized MAE 및 지속 개선 구간. 오차 값은 세 seed 평균이며 상대 개선은 동일 seed에서 계산한 상대 오차 감소율의 평균이다. 평균 지속 개선과 모든 seed에서의 지속 개선을 구분한다. '기준 미충족'은 결과 누락이 아니라 이후 모든 관측 비율에서 양의 개선이 유지되는 조건을 충족하지 않았다는 뜻이다.
+원자료: tables/endpoints.csv에서 metric=normalized_mae 또는 Excel Summary.
+
+그림 1. 선택 가능한 train-window pool 크기에 따른 Zero-Shot 대비 normalized MAE 상대 개선. 실선은 세 seed의 paired 상대 개선 평균, 음영은 seed 최소–최대 범위이며 신뢰구간이 아니다. x축은 log scale, 점선 0%는 Zero-Shot과 같은 오차이다. 패널마다 y축 범위가 다르다. 선분 연결은 관측 비율 사이의 참 성능이나 단조성을 가정하지 않는 시각적 가이드이다.
+파일: figures/relative-ETTh1.svg 등 5개, relative-all.svg/PNG. 벡터 SVG가 원본이며 고해상도 PNG도 제공한다.
+
+그림 2. 모델별 Zero-Shot과 100% 후보 풀에서의 평균 normalized MAE. 막대가 낮을수록 오차가 작다. 각 막대는 세 seed 평균이다. 오차막대는 넣지 않았으며 불확실성은 별도 seed 결과를 참고한다. 상대 개선 폭이 큰 MOIRAI가 다섯 endpoint 모두에서 더 낮은 절대 오차를 갖는 것은 아님을 보여준다. 데이터 간 단순 독립 유의성 비교로 해석하지 않는다.
+파일: figures/absolute-nmae.svg/PNG. 원자료: endpoints.csv normalized_mae.
+
+부록 표 A. 모든 270조건의 macro metric, 실제 optimizer steps, best-validation step, stop step, pool/실제 방문량, hardware 및 식별자.
+원자료: conditions.csv / Excel Conditions. 공란은 적용 불가/기록 없음이며 0으로 대체하지 않았다. raw MAE/MSE는 원 단위가 서로 다른 채널을 합친 값이므로 normalized 지표와 함께 해석한다.
+
+부록 표 B. 보조 지표와 채널별 100% pool 결과.
+원자료: endpoints.csv 4개 metric(40행), channels.csv(72행), curves.csv(320행).
+
+부록 표 C. 계산 예산과 train-only 특성.
+원자료: budget.csv(10행), datasets.csv(5행), validation_history.csv. 종료 시점과 best checkpoint 시점 노출은 서로 다르다.
+
+지면이 부족한 경우
+최소 본문: 데이터 표 + 설정 표 + 결과 표 + 상대 개선 5패널 그림 + 한계 문단.
+절대 오차는 결과 표에 이미 포함되므로 그림 2를 부록으로 옮겨도 된다. 그러나 '상대 개선=최종 절대 우위'가 아니라는 문장은 남긴다.

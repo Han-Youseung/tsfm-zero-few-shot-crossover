@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "kind": "paper_writing_materials_cpu_validation",
+  "date": "2026-10-09",
+  "status": "existing_evidence_and_exports_verified",
+  "execution_commit": "3e18305032484239966026f14395b903c9abf268",
+  "analysis_baseline_commit": "a2d308909e7eb77d990af7421699293a6d52a32a",
+  "source_archives_verified": 72,
+  "completed_final_test_conditions": 270,
+  "new_training": false,
+  "test_re_evaluation": false,
+  "dataset_or_protocol_changed": false,
+  "analysis_recomputed_matches_existing": true,
+  "artifacts": {
+    "editable_draft": ["HTML", "UTF-8 text"],
+    "csv_tables": 8,
+    "workbook_sheets": 6,
+    "workbook_formulas_checked": 690,
+    "workbook_formula_perturbation_restored": true,
+    "independent_xlsx_readback": "passed",
+    "curve_rows_checked": 80,
+    "channel_endpoint_rows": 72,
+    "validation_history_rows": 1726,
+    "svg_figures": 7,
+    "png_figures": 7,
+    "references": 10,
+    "html_desktop_and_mobile_layout": "passed"
+  },
+  "tests": {
+    "pytest_passed": 305,
+    "pytest_skipped": 5,
+    "skip_reason": "optional tensor/data integration dependencies not installed; no GPU execution",
+    "ruff_source_tests_scripts_lint": "passed",
+    "ruff_source_tests_scripts_format": "passed",
+    "editable_install_and_import": "passed",
+    "new_notebooks": 0
+  },
+  "remaining_submission_work": [
+    "author and affiliation details",
+    "venue template, length, reference style and disclosure requirements",
+    "coauthor review and final submitted PDF visual QA"
+  ],
+  "claim_limits": [
+    "bounded optimizer-step budget, not convergence or equal FLOPs",
+    "five variants from three source groups, H96 only",
+    "three paired seeds, not confidence intervals",
+    "analysis scope confirmed after results became available",
+    "pretraining corpus overlap not independently audited",
+    "TTM hardware includes A100 40GB and T4; no controlled speed benchmark"
+  ]
+}
