@@ -1,10 +1,48 @@
 # 본 실험 실행: primary9 bounded-compute v1
 
+## 현재 논문 분석 범위 (2026-10-09)
+
+사용자 결정으로 **TTM-R3와 MOIRAI 1.1-R-small / ETTh1·ETTh2·ETTm1·ETTm2·Tetouan /
+H96 / seeds1729·2718·31415**에 집중한다. Zero-Shot 및 8개 Few-Shot 비율의 최종 test
+270조건(모델별135)을 기존 검증 기록과 원본72 ZIP에 대조했다.
+Timer는 구현·provenance 검토 후 주 분석에서 제외하고 기존 결과는 그대로 보존한다.
+채널 독립 자체는 배제 사유가 아니다. TTM도 내부 channel-independent/shared-weight 구조다.
+범위 축소는 결과 이용 가능 후 이루어졌으므로 사전등록 또는 원래1,944조건 전체 완료가 아니다.
+
+실행 commit은 `3e18305032484239966026f14395b903c9abf268`을 유지한다.
+새 분석 코드 commit과 GPU 실행 commit은 다르다. `configs/study/main.yaml`은 수정하지 않는다.
+새 read-only 분석 설정은 `configs/analysis/primary5_h96.yaml`이며,
+`results/summaries/primary5_h96_two_model_analysis.json`에 수치와 원본 hash를 보존한다.
+주 지표는 기존 normalized MAE, 주 전환 기준은 paired seed 평균 오차 차이 >0이다.
+3 seed 모두 개선하는 지속 구간은 별도의 보수적 동반 분석이다.
+보조 지표·seed 제외·예시1%/2%마진·채널·출처군·방문량 검토는 사후 기술적 분석이다.
+신뢰구간, 유의성 검정, 시간 block bootstrap, 동일 epoch 재학습은 수행하지 않았다.
+
+재현 (원본 ZIP은 Git에 포함하지 않음; canonical reviews와 해시는 저장소에 포함):
+
+```bash
+python -m tsfm_crossover.analysis.paper --archive-dir PATH_TO_71_TTM_ZIPS --archive PATH_TO_MOIRAI_ZIP --output-dir NEW_OUTPUT_DIRECTORY
+```
+
+명령은 원본 ZIP의 이름·SHA-256, 270개 결과 내용, 실행 commit, 공통 data/window/mask/
+sampling/metric-scale를 검사한다. 기존 출력 폴더를 덮어쓰지 않으며 모델을 로드하지 않는다.
+성공 시 `analysis.json`, `report.html`, 5개 SVG와 `manuscript_sections.txt`를 생성한다.
+test metric을 예측 배열에서 재계산하지 않고 검증된 집계 결과를 분석한다.
+
+주 해석: TTM/ETTm1은 평균상 개선하지만 3 seed 모두의 지속 개선은 관측하지 못했다.
+MOIRAI/ETTh1·ETTh2의 엄격한 지속 구간은 normalized MSE에서 더 늦어 지표 의존성이 있다.
+100% pool의 실제 unique 방문은 조건별 약0.97–10.16%이며 학습 종료까지의 방문량이다.
+선택된 best checkpoint 시점의 방문량과 동일하다고 보장하지 않는다.
+5개 변형은 3개 출처군이며 그 출처군 간 독립성도 보장하지 않는다.
+H96은 ETTh96시간·ETTm24시간·Tetouan16시간으로, 일반화/인과 특성 회귀를 하지 않는다.
+
+## 아래는 원래 실행 계획 및 재현 경로
+
 사용자의 본 실험 실행 승인을 반영한 설정은 `configs/study/main.yaml`이다.
 과거 `preexperiment.yaml`과 모든 CPU/GPU/pilot manifest는 당시 상태로 보존한다.
 `protocol_frozen=true`는 이 **주 분석 v1의 선택 규칙을 고정**한다는 뜻이며,
 GPU 전체 실행 성공, 수렴, crossover 관측 또는 연구 전체 완료를 뜻하지 않는다.
-로컬 CUDA는 사용할 수 없다. 새 main notebook의 Colab 설치와 실제 main GPU 실행은 pending이다.
+준비 당시 로컬 CUDA와 main GPU 실행은 pending이었다. 현재 실행 증거는 위 제한 범위와 구분한다.
 
 ## 고정된 범위
 

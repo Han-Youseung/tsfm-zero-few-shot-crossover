@@ -1,0 +1,75 @@
+{
+  "descriptors": [
+    {
+      "dataset": "ETTh1",
+      "frequency_seconds": 3600.0,
+      "scope": "train_only_raw_observations",
+      "train_rows": 10452,
+      "channels": 7,
+      "missing_rate": 0.0,
+      "constant_channels": 0,
+      "channel_macro_lag1_correlation": 0.939060164364146,
+      "channel_macro_absolute_linear_trend_in_train_std": 1.0124658604104335,
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "dataset_sha256": "f18de3ad269cef59bb07b5438d79bb3042d3be49bdeecf01c1cd6d29695ee066"
+    },
+    {
+      "dataset": "ETTh2",
+      "frequency_seconds": 3600.0,
+      "scope": "train_only_raw_observations",
+      "train_rows": 10452,
+      "channels": 7,
+      "missing_rate": 0.0,
+      "constant_channels": 0,
+      "channel_macro_lag1_correlation": 0.9543759646906199,
+      "channel_macro_absolute_linear_trend_in_train_std": 1.050482257678626,
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "dataset_sha256": "a3dc2c597b9218c7ce1cd55eb77b283fd459a1d09d753063f944967dd6b9218b"
+    },
+    {
+      "dataset": "ETTm1",
+      "frequency_seconds": 900.0,
+      "scope": "train_only_raw_observations",
+      "train_rows": 41808,
+      "channels": 7,
+      "missing_rate": 0.0,
+      "constant_channels": 0,
+      "channel_macro_lag1_correlation": 0.9782411391825859,
+      "channel_macro_absolute_linear_trend_in_train_std": 1.0112232664411667,
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "dataset_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e"
+    },
+    {
+      "dataset": "ETTm2",
+      "frequency_seconds": 900.0,
+      "scope": "train_only_raw_observations",
+      "train_rows": 41808,
+      "channels": 7,
+      "missing_rate": 0.0,
+      "constant_channels": 0,
+      "channel_macro_lag1_correlation": 0.9831229525511211,
+      "channel_macro_absolute_linear_trend_in_train_std": 1.0533572059984437,
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "dataset_sha256": "db973ca252c6410a30d0469b13d696cf919648d0f3fd588c60f03fdbdbadd1fd"
+    },
+    {
+      "dataset": "Tetouan",
+      "frequency_seconds": 600.0,
+      "scope": "train_only_raw_observations",
+      "train_rows": 31449,
+      "channels": 8,
+      "missing_rate": 0.0,
+      "constant_channels": 0,
+      "channel_macro_lag1_correlation": 0.9923987252824633,
+      "channel_macro_absolute_linear_trend_in_train_std": 1.2183238466347257,
+      "seasonality": "not_estimated_by_this_descriptor_set",
+      "dataset_sha256": "83cf2bd039b2cb6b649162534be26bde4fcb7a5aba24bd86f67c91f4bf081a09"
+    }
+  ],
+  "descriptor_source_sha256": "ce1030620bbba29b1011a9b1af6fb316d9562bbd456e0dad46a1ae97f859be7c",
+  "descriptor_source": "src/tsfm_crossover/analysis/train_features.py",
+  "future_values_parsed_for_descriptors": false,
+  "full_file_bytes_hashed_for_integrity": true,
+  "descriptors_selected_using_test_performance": false,
+  "association_tests_or_causal_claims": false
+}

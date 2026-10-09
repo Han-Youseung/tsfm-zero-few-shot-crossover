@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-09",
+  "status": "analysis_verified",
+  "execution_commit": "3e18305032484239966026f14395b903c9abf268",
+  "repository_base_commit": "0803ebad00e126f8e87433fb6692bc4e71613f6d",
+  "conditions": 270,
+  "source_archives": 72,
+  "pytest": {
+    "passed": 300,
+    "skipped": 5,
+    "new_unit_tests_passed": 25,
+    "command": "python -m pytest -q -p no:cacheprovider",
+    "skips": "optional torch/numpy/pandas integration environments unavailable"
+  },
+  "ruff_src_tests_scripts": "lint_and_format_passed_116_files",
+  "whole_repository_ruff": {
+    "status": "pre_existing_issues_preserved",
+    "lint": "12 errors in notebooks/11_moirai_compatibility.ipynb",
+    "format": [
+      "notebooks/11_moirai_compatibility.ipynb",
+      "docs/new-data-gpu-review.md"
+    ]
+  },
+  "editable_install_and_import": "passed",
+  "yaml_parsed": 14,
+  "manifest_json_parsed": 65,
+  "notebook_json_python_syntax_and_empty_outputs": 12,
+  "ipython_lines_not_executed_or_python_ast_validated": [
+    {
+      "notebook": "11_moirai_compatibility.ipynb",
+      "line": "%pip install -q -r requirements/moirai.txt"
+    },
+    {
+      "notebook": "11_moirai_compatibility.ipynb",
+      "line": "!git rev-parse HEAD"
+    },
+    {
+      "notebook": "11_moirai_compatibility.ipynb",
+      "line": "!python -m pip freeze"
+    }
+  ],
+  "visual_qa": {
+    "desktop": {
+      "title": "TTM·MOIRAI H96 결과와 민감도 검토",
+      "figures": 5,
+      "rows": [
+        10,
+        10,
+        10,
+        10,
+        5,
+        2
+      ],
+      "overflow": false,
+      "unresolved": false
+    },
+    "mobile": {
+      "overflow": false
+    }
+  },
+  "manual_visual_review": "top_table_five_figures_exposure_and_features_reviewed",
+  "secret_absolute_local_path_and_size_checks": "passed_for_changed_files",
+  "execution_config_modified": false,
+  "model_adapter_modified": false,
+  "new_gpu_execution": false,
+  "timer_originals_preserved": true,
+  "evidence_verification": {
+    "analysis_code_sha256": "87d1ca82a9569230c448f9618e20a41bd9e1f1be9f6bfd401008b5f5977785df",
+    "checks": {
+      "canonical_review_bytes": true,
+      "complete_two_model_grid": true,
+      "original_zip_bytes": true,
+      "raw_results_match_canonical_reviews": true,
+      "shared_data_windows_masks_scale_and_sampling": true,
+      "train_only_descriptor_provenance": true
+    },
+    "conditions": 270,
+    "execution_commit": "3e18305032484239966026f14395b903c9abf268",
+    "generated_file_sha256": {
+      "analysis.json": "5e762c493d2c79818a8a1f320935111b88d3b1a703ec3610877ec6b708cb3f37",
+      "figure-ETTh1.svg": "0d92123e1bdce0d276775a44bc50022ff3d3be60745f1f63c2b4f4322c08b564",
+      "figure-ETTh2.svg": "c5a2745a1b2b06df6f7dad9e19c067c919f954164308e37adb06a22d042a7dd3",
+      "figure-ETTm1.svg": "e7977c27f8c3c06d001b5dc2e50575204f341a369213cc62d1ea872dc34e195b",
+      "figure-ETTm2.svg": "6168ba26239b1f8323d4f88bf429e6ff5b20d38a54a18a9776807a47a2815048",
+      "figure-Tetouan.svg": "75ef1815cfd020e2f14e5738a173fc1fcc4ff14760a045b2f051368dbf0c71b3",
+      "manuscript_sections.txt": "2e9eedbe2429bce83d89883716b7de97a1c0ec9514c4b46a090ff1519f4446c2",
+      "report.html": "3e2165e649c013e8dbfbf55262505245a230f07c164980bbf84fbe4eeb4244de"
+    },
+    "new_gpu_execution": false,
+    "source_archives": 72,
+    "status": "source_binding_and_analysis_checks_passed",
+    "test_metric_recomputation_from_predictions": false
+  },
+  "changed_file_sha256": {
+    ".gitattributes": "ec910fec12d0810e39ebe0c54b3b736cecf2d09dba4097ea28891b6f9a94ef10",
+    "README.md": "31845c6ae45ecaa990d7fa72bad3f42750f224609cf67f689f1256519da2200a",
+    "docs/main-study.md": "f5fa9b2dc24d12cd89359b8d120adceb186f8d69771b759d8cdf11d1698047e4",
+    "docs/research-plan.md": "173d240362b950d6f5c0d2b99f11f30eccd471d68d473815a798f45e83a367b4",
+    "configs/analysis/primary5_h96.yaml": "1f5aef959f5e45963ab5a0a89d4bc591b42f6ba7b3cddacc765235893a62c789",
+    "src/tsfm_crossover/analysis/paper.py": "87d1ca82a9569230c448f9618e20a41bd9e1f1be9f6bfd401008b5f5977785df",
+    "src/tsfm_crossover/analysis/paper_report.py": "4e07f1cef25478fd4cf40e6d8b39dc4c317d7f6a2332f95b53d1b40ca1436c02",
+    "src/tsfm_crossover/analysis/paper_template.html": "54b3e3dfb87f5183f4cddd9cd25328d2ed0b165e13720b25c8be8de09250ab46",
+    "tests/unit/test_paper_analysis.py": "e69f95f051239ec48a5ddab3c94ca5f91ac09d17aefbfc13df66dee44acd789d",
+    "results/summaries/primary5_h96_two_model_analysis.json": "5e762c493d2c79818a8a1f320935111b88d3b1a703ec3610877ec6b708cb3f37",
+    "results/manifests/study/primary5_h96_ttm_review.json": "4b0c0c88d039735d8b58e34a4dd5c01d016c6d05d690893d9a1d92f2ffaa123b",
+    "results/manifests/study/primary5_h96_moirai1_review.json": "7e5dc52ac7900cde66b3fa90b1ce9419d86db2ce5a87f8622e2614dc546bb922",
+    "results/manifests/study/primary5_h96_train_descriptors.json": "74d690ff4911adb43d1261939eac3d0ce2464602c6db6d11a6434207d3122c13"
+  }
+}

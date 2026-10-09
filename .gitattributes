@@ -1,0 +1,9 @@
+# Canonical reviewed evidence must keep exact byte hashes across platforms.
+results/manifests/study/primary5_h96_*.json -text whitespace=cr-at-eol
+results/summaries/primary5_h96_two_model_analysis.json -text
+# This existing descriptor source is pinned by the evidence artifact.
+src/tsfm_crossover/analysis/train_features.py text eol=lf
+src/tsfm_crossover/analysis/paper.py text eol=lf
+src/tsfm_crossover/analysis/paper_report.py text eol=lf
+src/tsfm_crossover/analysis/paper_template.html text eol=lf
+configs/analysis/primary5_h96.yaml text eol=lf

@@ -2,13 +2,20 @@
 
 ## 연구 질문과 범위
 
+2026-10-09 사용자 결정: TTM-R3와 MOIRAI 1.1-R-small, ETTh1·ETTh2·ETTm1·ETTm2·Tetouan,
+H96, seeds1729/2718/31415의 270조건을 현재 논문 분석 범위로 한다.
+결과가 이용 가능해진 뒤 범위를 제한했다는 사실을 공개하며 사전등록으로 주장하지 않는다.
+Timer 원본/실패 기록은 보존하고 주 분석에서는 제외한다. 낮은 test 성능에 따른 제외가 아니다.
+TTM도 내부 channel-independent/shared-weight 구조이므로 채널 독립 자체가 Timer 배제 근거는 아니다.
+아래 primary9·네 horizon은 원래 실행 계획을 보존한 것으로, 전체 완료를 뜻하지 않는다.
+
 동일한 사전학습 모델·데이터셋·예측 길이에서 대상 train 데이터로 Fine-Tuning할 때 Zero-Shot 성능을 안정적으로 넘어서는 전환 구간을 측정하고, 이 구간과 시계열 특성의 관계를 분석합니다.
 
 TSFM-Bench는 관련 선행연구로 인용할 뿐, 결과 재현·성능 개선·동일 조건의 직접 비교를 주장하지 않습니다. 코드와 프로토콜도 복사·번안하지 않습니다.
 
 ## 모델과 버전 고정
 
-선택 모델은 `ibm-granite/granite-timeseries-ttm-r3`와 `Salesforce/moirai-1.1-R-small`입니다. MOIRAI 2.0의 실패 기록은 보존합니다. 호환성·파일럿 후 사용자 승인으로 [본 실험 v1](main-study.md)을 고정합니다. 새 본 실험의 실제 GPU 결과는 아직 없으며 [검증 범위와 실제 objective](gpu-evidence-review.md)와 구분합니다.
+선택 모델은 `ibm-granite/granite-timeseries-ttm-r3`와 `Salesforce/moirai-1.1-R-small`입니다. MOIRAI 2.0의 실패 기록은 보존합니다. 호환성·파일럿 후 사용자 승인으로 [본 실험 v1](main-study.md)을 고정했습니다. 현재 제한 범위의 실제 GPU 최종 test 270조건을 검증했으며, 초기 [호환성 검증 범위와 실제 objective](gpu-evidence-review.md)와 구분합니다.
 
 ## 공통 실험 프로토콜
 
@@ -22,7 +29,8 @@ TSFM-Bench는 관련 선행연구로 인용할 뿐, 결과 재현·성능 개선
 
 ### 입력과 예측 길이
 
-검증 후 context512와 horizons96/192/336/720을 고정했습니다. 자원 부족 때문에 임의로 축소하지 않고 해당 조건을 대기시킵니다.
+원래 실행 계획은 context512와 horizons96/192/336/720입니다. 현재 논문 분석은 사용자 결정으로
+H96만 다루며 나머지 horizon의 결과를 추정하지 않습니다. 실행 당시 설정은 소급 수정하지 않습니다.
 
 ### Few-Shot 표본
 
@@ -66,6 +74,16 @@ Pretrained checkpoint, context, split, normalization, validation/test windows, p
 - 데이터, 모델 가중치, cache, 대용량 예측 배열과 원본 로그는 Git에 저장하지 않습니다.
 
 ## 현재 단계
+
+270조건 원본과 canonical review의 hash/내용을 대조하고, paired 전환 구간을 재계산한다.
+주 지표와 학습 설정은 유지한다. 보조 지표, seed 제외, 1%/2% 상대 개선 마진, 채널별 결과,
+출처군 가중/제외, 실제 window 노출은 **결과 확인 후 기술적 민감도 분석**으로 구분한다.
+마진은 예시적 기준이며 도메인상 유의성 기준이 아니다. CI, 유의성, 인과관계를 주장하지 않는다.
+ETT 시간/분 변형은 출처를 공유하며 H96의 물리적 길이도 서로 다르다.
+1,000-step 제한 하에서 100% pool은 전체 window 방문 또는 수렴을 의미하지 않는다.
+시간 block 불확실성 및 동일 epoch GPU 강건성 실험은 수행하지 않았다.
+
+### 과거 실행 준비 기록
 
 사용자의 본 실험 실행 승인 이후 현재 기준은 [main-study](main-study.md)와
 `configs/study/main.yaml`이다. 실행기·resume·test 차단 및 분석의 CPU 통합 검증을 수행하고,

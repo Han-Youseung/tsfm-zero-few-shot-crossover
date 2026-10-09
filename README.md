@@ -2,14 +2,14 @@
 
 시계열 데이터 특성과 대상 데이터 학습량에 따라 Time-Series Foundation Model(TSFM)의 Few-Shot Fine-Tuning이 Zero-Shot 성능을 넘어서는 **전환 구간**을 분석하는 연구 저장소입니다.
 
-> 현재 단계: 사용자 승인에 따라 primary9 본 실험 실행기와 분석·재개 경로를 준비했습니다. 실제 본 실험 GPU 실행은 pending입니다. [실행 가이드](docs/main-study.md), `notebooks/40_main_study.ipynb`를 사용합니다. 과거 bundle은 계속 차단합니다.
+> 현재 단계 (2026-10-09): 사용자 결정으로 **TTM·MOIRAI / ETTh1·ETTh2·ETTm1·ETTm2·Tetouan / H96 / 3 seeds**의 논문 분석에 집중합니다. 완료된 최종 test **270조건**을 원본 ZIP과 재대조했습니다. Timer 원본은 보존하고 주 분석에서는 제외합니다. 원래 primary9·네 horizon 1,944조건 전체 완료를 뜻하지 않습니다. [현재 분석과 한계](docs/main-study.md#현재-논문-분석-범위-2026-10-09)를 확인하세요.
 
 ## 연구 범위
 
 - 선택 모델: `ibm-granite/granite-timeseries-ttm-r3`, `Salesforce/moirai-1.1-R-small`
-- Primary9: ETTh1, ETTh2, ETTm1, ETTm2, Electricity, Solar, Weather, Tetouan, Traffic
+- 현재 분석: ETTh1, ETTh2, ETTm1, ETTm2, Tetouan (서로 독립된 5개 출처가 아닌 3개 출처군)
 - 학습 비율: `0%, 0.5%, 1%, 2%, 5%, 10%, 20%, 50%, 100%`
-- 예측 길이: `96, 192, 336, 720`
+- 현재 예측 길이: `96`; 기존 실행 계획의 `192, 336, 720`은 이번 분석 범위 밖
 - 주 평가: 동일한 test window의 stride1 rolling-origin, train-std normalized channel-macro MAE. Raw MAE/MSE와 normalized MSE는 보조 지표입니다.
 
 선택 모델의 Hugging Face revision, 공식 코드 commit과 GPU budget에서 검증한 패키지 버전을 고정합니다. 본 실험 v1은 context512, FP32, batch1, full-parameter, 최대1000steps, eval100/patience3입니다. TTM LR1e-4, MOIRAI LR5e-6을 모든 dataset/rate에 적용합니다. 이 예산은 수렴을 보장하지 않으며 test 성능으로 설정을 바꾸지 않습니다.
@@ -62,7 +62,8 @@ Bundle 생성 경로, 공식 ETT 값 대조, canonical fingerprint와 데이터�
 
 ## 저장 원칙
 
-최신 절차는 [본 실험 v1](docs/main-study.md)입니다. Traffic을 포함한 primary9가 현재 기준입니다.
+현재 논문 분석 설정은 `configs/analysis/primary5_h96.yaml`입니다. 원래 실행 설정
+`configs/study/main.yaml`의 primary9·네 horizon은 소급 변경하지 않습니다.
 아래는 과거 단계별 판단 기록이며 현재 실행 지침이 아닙니다.
 
 근거: [budget 검증](docs/budget-decision.md), [Traffic80GB 복구](docs/traffic-recovery-result.md).

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TTM·MOIRAI H96 결과와 민감도 검토</title>
+<style>
+body { margin:0; color:#223640; background:#f3f6f8; font:16px/1.7 "Segoe UI","Malgun Gothic",sans-serif }
+main { max-width:1190px; margin:30px auto; padding:30px; background:white }
+h1 { font-size:31px; margin:12px 0 } h2 { margin-top:36px; font-size:23px }
+p { max-width:1050px } .notice { border-left:5px solid #236580; padding:14px 20px; background:#eef5f8 }
+.warning { border-left-color:#a87424; background:#fff7ea }
+.figures { display:grid; grid-template-columns:1fr 1fr; gap:18px } svg { width:100%; border:1px solid #dce4e8 }
+table { border-collapse:collapse; font-size:14px; width:100% } th,td { text-align:left; padding:9px; border-bottom:1px solid #dce4e8 }
+th { background:#f2f6f8 } .scroll { overflow:auto } a { color:#1c647f } code { overflow-wrap:anywhere }
+@media(max-width:800px) { main { margin:0; padding:16px } .figures { grid-template-columns:1fr } }
+@media print { body { background:white } main { margin:0; padding:0 } .scroll { overflow:visible } }
+</style>
+</head>
+<body><main>
+<p>2026-10-09 · 검증된 본 실험 결과의 제한 범위 분석</p>
+<h1>TTM·MOIRAI: H96 전환 구간과 민감도 검토</h1>
+<div class="notice"><b>주 분석: 두 모델 × 5개 데이터셋 × 3 seed × 9개 비율 = 270조건.</b><br>
+Timer는 사용자 결정에 따라 제외하며 원본은 보존합니다. 원래 primary9·네 horizon 실행 설정은 수정하지 않았습니다.
+범위 축소와 추가 민감도 검토는 결과 이용 가능 이후의 결정이며, 신규 사전등록 결과로 주장하지 않습니다.</div>
+<p>원본 ZIP 72개를 고정된 canonical review와 hash로 다시 연결했습니다. 학습·test 재실행, checkpoint 재선택,
+하이퍼파라미터 변경은 없습니다. 아래의 seed 범위는 신뢰구간이 아니며, 겹치는 test window를 IID 표본으로 취급하지 않습니다.</p>
+<h2>1. 논문용 주 결과</h2>
+<p>NMAE는 채널별 train 표준편차로 오차를 나눈 후 채널 평균한 값입니다. 모델 입력에 외부 scaler를 적용한 것이 아닙니다.
+주 규칙은 같은 seed에서 계산한 ZS−FT 차이의 평균이 양수인 것이며, 세 seed 모두 양수인 구간을 함께 보고합니다.</p>
+{{MAIN_TABLE}}
+<p>100% 열은 전체 적격 train pool을 허용한 조건입니다. 수렴한 full-data 성능이나 test로 선택한 최적 비율이 아닙니다.
+(0%, 0.5%]는 0.5%에서 이미 개선했음을 뜻하며, 더 작은 비율에서 정확히 언제 전환됐는지는 알 수 없습니다.
+미관측은 측정한 격자와 예산에서 관측되지 않았다는 뜻이지, 학습이 원천적으로 효과가 없다는 뜻이 아닙니다.</p>
+<div class="figures">{{FIGURES}}</div>
+<p>선: paired seed 상대 개선률 평균. 음영: 세 paired seed의 최소–최대. 양수는 개선입니다.
+관측점 연결선은 시각화일 뿐, 그 사이의 연속 성능이나 단조성을 추정하지 않습니다. 패널마다 세로축 범위가 다릅니다.</p>
+<h2>2. 결과 확인 후의 민감도 분석</h2>
+<p>주 지표를 바꾸지 않고 보조 NMSE, 상대 개선 마진, leave-one-seed-out 결과를 확인했습니다.
+1%·2%는 설명용 진단 마진이며 검증된 실용성·유의성 기준이 아닙니다. 모든 0%·1%·2% 결과와 raw MAE/MSE는 JSON에 보존했습니다.</p>
+{{SENSITIVITY_TABLE}}
+<p>seed 제외 열은 1729 / 2718 / 31415를 각각 제외한 순서입니다. 이는 두 seed에서의 평균 민감도이지 새 반복 실험이 아닙니다.
+학습 seed와 MOIRAI prediction seed가 함께 변하므로, 이 표는 학습 불확실성과 sampling 불확실성을 분리하지 못합니다.</p>
+<h2>3. 실제 학습 노출과 예산의 한계</h2>
+{{EXPOSURE_TABLE}}
+<div class="notice warning">학습 비율은 <b>선택된 pool의 크기</b>이고, 실제로 방문한 window 비율과 다릅니다.
+batch 1·최대 1000 step에서는 큰 pool을 모두 순회하지 못할 수 있습니다. 작은 pool은 여러 번 반복됩니다.
+따라서 이 연구는 고정 계산 예산 아래의 전환 특성을 분석하며, 충분히 수렴한 모델의 데이터 효율성 임계점을 추정한 것이 아닙니다.</div>
+<p>방문량은 best checkpoint 시점이 아니라 학습 종료까지의 기록입니다.
+best=1000은 관측 validation 중 마지막 step이 최선이었다는 뜻입니다. 그 이후 개선 여부는 모릅니다.
+같은 epoch 예산 재학습, 더 긴 step 예산 및 수렴성 검증은 이번에 실행하지 않았습니다.</p>
+<h2>4. 채널 평균이 가리는 차이</h2>
+{{CHANNEL_TABLE}}
+<p>이번 사후 분석은 모든 그룹에서 공통으로 100% endpoint를 보고하며 test 최적 비율을 고르지 않았습니다.
+평균 개선과 모든 채널·seed의 개선은 다릅니다. 채널별 전체 지속 구간과 paired endpoint 값은 JSON에 포함했습니다.</p>
+<h2>5. 데이터 특성 해석 범위</h2>
+{{FEATURE_TABLE}}
+<p>ETTh1/ETTm1은 같은 변압기, ETTh2/ETTm2도 같은 변압기입니다. 따라서 3개 출처군으로 묶습니다.
+이 3개 출처군 간의 통계적 독립성까지 보장하는 것은 아닙니다.
+H96은 데이터셋마다 실제 시간 길이가 다르고 lag1의 실제 시간 간격도 다릅니다. 상관·추세는 train에서만 계산한 기술량이며,
+계절성·인과관계 또는 일반화 가능한 특성–전환점 회귀를 추정하지 않았습니다.</p>
+<p>100% endpoint 상대 개선률의 집계 민감도:</p>
+{{AGGREGATE_TABLE}}
+<p>출처군 동일 가중은 같은 변압기의 hourly/minutely를 먼저 평균합니다. 출처 제외 범위는 신뢰구간이 아니며,
+큰 상대 개선이 더 낮은 절대 오차 또는 모델 간 보편적 우월성을 뜻하지 않습니다.</p>
+<h2>6. 논문에 쓸 수 있는 결론과 남은 검증</h2>
+<ul>
+<li>고정된 두 모델·H96·5개 변형에서 전환 구간과 개선 크기가 달라짐을 기술할 수 있습니다.</li>
+<li>선택 pool·실제 방문·반복 노출·계산 예산을 분리하여 보고해야 합니다.</li>
+<li>TTM은 channel-independent shared weights, MOIRAI는 joint-target 처리입니다. 동일 내부 구조를 주장하지 않습니다.</li>
+<li>Timer 제외는 구현·provenance 감사 후의 범위 결정이며, 채널 독립 구조나 낮은 test 성능 자체를 배제 기준으로 삼지 않습니다.</li>
+<li>이번 단계의 CPU 분석을 완료했습니다. 시간 block 불확실성에는 per-window 손실 근거가 필요합니다.</li>
+<li>동일 epoch 강건성은 별도 validation-only 설계와 승인된 추가 GPU 실행이 필요합니다. 현재 결과로 임의 튜닝하지 않습니다.</li>
+</ul>
+<p><a href="analysis.json">전체 검증·분석 JSON</a> · <a href="manuscript_sections.txt">논문 방법·결과·한계 초안</a> ·
+<a href="verification.json">검증 기록</a></p>
+<p>실행 commit: <code>3e18305032484239966026f14395b903c9abf268</code>.
+분석 설정: <code>configs/analysis/primary5_h96.yaml</code>. 새 분석 commit은 실험 실행 commit과 구분합니다.</p>
+</main></body></html>

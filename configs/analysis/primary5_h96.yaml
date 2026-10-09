@@ -1,0 +1,27 @@
+schema_version: 1
+name: primary5_h96_two_model_analysis_v1
+decision_date: '2026-10-09'
+scope_timing: user_confirmed_restricted_scope_after_results_available
+execution_commit: 3e18305032484239966026f14395b903c9abf268
+families: [ttm, moirai1]
+datasets: [ETTh1, ETTh2, ETTm1, ETTm2, Tetouan]
+horizon: 96
+context: 512
+seeds: [1729, 2718, 31415]
+rates: [0.0, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0]
+primary_metric: normalized_mae
+secondary_metrics: [normalized_mse, mae, mse]
+diagnostic_relative_margins: [0.0, 0.01, 0.02]
+diagnostics_timing: posthoc_descriptive_not_confirmatory
+timer_included: false
+timer_reason: user_chose_two_original_models_after_implementation_and_provenance_audit
+timer_excluded_for_poor_test_performance: false
+execution_protocol_changed: false
+reviews:
+  - path: results/manifests/study/primary5_h96_ttm_review.json
+    sha256: 4b0c0c88d039735d8b58e34a4dd5c01d016c6d05d690893d9a1d92f2ffaa123b
+  - path: results/manifests/study/primary5_h96_moirai1_review.json
+    sha256: 7e5dc52ac7900cde66b3fa90b1ce9419d86db2ce5a87f8622e2614dc546bb922
+descriptors:
+  path: results/manifests/study/primary5_h96_train_descriptors.json
+  sha256: 74d690ff4911adb43d1261939eac3d0ce2464602c6db6d11a6434207d3122c13
